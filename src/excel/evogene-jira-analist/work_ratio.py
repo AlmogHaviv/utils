@@ -9,6 +9,7 @@ file_name = "jira-may-5.csv"
 column1_name = 'Assignee'
 column2_name = 'Work Ratio'
 column3_name = 'Custom field (Product)'
+save_path1 = '/graphs'
 
 ### data reciving from csv ### 
 # reading csv file and returning the data of the two columns by thier name
@@ -124,6 +125,11 @@ def pie_chart_data(title, labels, sizes):
     # Add labels with percentages and numbers
     plt.setp(text, size=12, weight="bold")
 
+    # Generate a title for saving the chart
+    save_path = f"chart_{title}.png"
+    # Save the chart
+    plt.savefig(save_path)
+
     # Display the chart
     plt.show()
 
@@ -137,8 +143,6 @@ def func(pct, allvals):
 # creates the pie chart by worker name 
 def worker_by_name_pie(file_name, column1_name, column2_name):
     a = getting_2_columns_from_csv_file(file_name, column1_name, column2_name)
-    for key in a:
-        print(key, a[key])
     for key in a:
         worker = data_for_worker_visualition(a, key)
         pie_chart_data(worker[0], worker[1], worker[2])
@@ -175,6 +179,4 @@ def pie_chart_by_product(column1_name, column2_name, column3_name, file_name):
 
 ### excecution###
 
-a = getting_3_columns_from_csv_file(file_name, column1_name, column2_name, column3_name)
-
-pie_chart_by_product(column1_name, column2_name, column3_name, file_name)
+worker_by_name_pie(file_name, column1_name, column2_name)
