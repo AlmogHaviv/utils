@@ -77,8 +77,14 @@ def data_for_worker_visualition(dict, name):
                 sizes[1] += 1
             else:
                 sizes[2] +=1
-
-    return (name, labels, sizes)
+    final_sizes = []
+    final_lables = []
+    for i,num in enumerate(sizes):
+        if num != 0:
+            final_sizes.append(num)
+            final_lables.append(labels[i])
+        
+    return (name, final_lables, final_sizes)
 
 
 # organizing the data for a full sprint pie chart
@@ -87,9 +93,16 @@ def data_for_sprint_visualition(dict, sprint_month):
     sizes = [0, 0, 0, 0]
     for key in dict: # taking the given information on every worker and adding it up 
         worker_data = data_for_worker_visualition(dict, key)
-        for i in range(4):
-            sizes[i] += worker_data[2][i]
-    return (f'{sprint_month} sprint ratio', labels, sizes)
+        for i, name in enumerate(worker_data[1]):
+            if name == 'over 110%':
+                sizes[0] += worker_data[2][i]
+            elif name == '110 % - 90 %':
+                sizes[1] += worker_data[2][i]
+            elif name == 'uder 90%':
+                sizes[2] += worker_data[2][i]
+            else:
+                sizes[3] += worker_data[2][i]
+    return (f'{sprint_month} Sprint Ratio', labels, sizes)
 
 
 # organizing the data for visualizion by team or product
@@ -99,28 +112,32 @@ def data_for_team_visualizion(dict, team):
     for key in dict: # taking the given information on every worker and adding it up
         if key in team: 
             worker_data = data_for_worker_visualition(dict, key)
-            for i in range(4):
-                sizes[i] += worker_data[2][i]
-    return ('team', labels, sizes)
+            for i, name in enumerate(worker_data[1]):
+                if name == 'over 110%':
+                    sizes[0] += worker_data[2][i]
+                elif name == '110 % - 90 %':
+                    sizes[1] += worker_data[2][i]
+                elif name == 'uder 90%':
+                    sizes[2] += worker_data[2][i]
+                else:
+                    sizes[3] += worker_data[2][i]
+    final_sizes = []
+    final_lables = []
+    for i,num in enumerate(sizes):
+        if num != 0:
+            final_sizes.append(num)
+            final_lables.append(labels[i])
+    return ('team', final_lables, final_sizes)
 
 
 ### pie charts cretors ###
-# creating the charts
-def pie_chart_data(title, labels, sizes):
-    # Create the pie chart
-    plt.pie(sizes, labels=labels, autopct='%1.1f%%')
-    # Add a title
-    plt.title(title)
-    # Display the chart
-    plt.show()
-
-
 def pie_chart_data(title, labels, sizes):
     # Create the pie chart
     _, _, text = plt.pie(sizes, labels=labels, autopct=lambda pct: func(pct, sizes), labeldistance=1.05)
     
     # Add a title
-    plt.title(title)
+    cap_title = title.title()
+    plt.title(cap_title)
     
     # Add labels with percentages and numbers
     plt.setp(text, size=12, weight="bold")
@@ -136,7 +153,7 @@ def pie_chart_data(title, labels, sizes):
 
 # Custom function to display both percentage and number
 def func(pct, allvals):
-    absolute = int(pct/100.*np.sum(allvals))
+    absolute = int(pct / 100. * np.sum(allvals))
     return "{:.1f}%\n({:d})".format(pct, absolute)
 
 
@@ -179,4 +196,4 @@ def pie_chart_by_product(column1_name, column2_name, column3_name, file_name):
 
 ### excecution###
 
-worker_by_name_pie(file_name, column1_name, column2_name)
+pie_chart_by_product(column1_name, column2_name, column3_name, file_name)
