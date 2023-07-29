@@ -4,8 +4,11 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 
+from datetime import datetime, timedelta
+
+
 ### global variabels ###
-file_name = "jira-may-5.csv"
+file_name = "v1-yearly.csv"
 column1_name = 'Assignee'
 column2_name = 'Work Ratio'
 column3_name = 'Custom field (Product)'
@@ -13,7 +16,7 @@ save_path1 = '/graphs'
 
 ### data reciving from csv ### 
 # reading csv file and returning the data of the two columns by thier name
-def getting_2_columns_from_csv_file(file_path, column1_name, column2_name):
+def getting_2_columns_from_csv_file(file_path, column1_name, column2_name, monthly=True):
     # teams that are in the data and we do not want to pay attention to
     dev_team = ['TALN', 'liavs', 'maorw', 'morank', 'vladz']
     product_team = ['nira', 'hamutal.e', 'boazm', 'larisar', "elanitec", 'anatol', 'drorf']
@@ -22,6 +25,32 @@ def getting_2_columns_from_csv_file(file_path, column1_name, column2_name):
     
     column1_data = df[column1_name].tolist()
     column2_data = df[column2_name].tolist()
+
+    # works only if the monthly report is asked
+    if monthly:
+        current_date_time = datetime.now()
+        first_day_of_current_month = current_date_time.replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+        last_month_name = last_day_of_previous_month.strftime("%b")
+        if last_day_of_previous_month.year < first_day_of_current_month.year:
+            last_year = last_day_of_previous_month.year
+        else:
+            last_year = first_day_of_current_month.year
+        last_year = str(last_day_of_previous_month.year)[2:]
+        df["Sprint"] = pd.to_datetime(df["Sprint"], format="%d %b %y")
+        months_list = df["Sprint"].dt.strftime("%b").tolist()
+        years_list = df["Sprint"].dt.strftime("%y").tolist()
+        full_lst =[]
+        for i in range(len(column1_data)):
+            obj = [[months_list[i],years_list[i]], column1_data[i], column2_data[i]]
+            full_lst.append(obj)
+        column1_data = []
+        column2_data = []
+        for lst in full_lst:
+            if lst[0][0] == last_month_name and lst[0][1] == last_year:
+                column1_data.append(lst[1])
+                column2_data.append(lst[2])
+        
 
     integrated_dict = {} # create dictionery to calculate the values
     for i, name  in enumerate(column1_data):
@@ -38,7 +67,7 @@ def getting_2_columns_from_csv_file(file_path, column1_name, column2_name):
 
 
 # reciving three columns for data integration
-def getting_3_columns_from_csv_file(file_path, column1_name, column2_name, column3_name):
+def getting_3_columns_from_csv_file(file_path, column1_name, column2_name, column3_name, monthly=True):
     # teams that are in the data and we do not want to pay attention to
     dev_team = ['TALN', 'liavs', 'maorw', 'morank', 'vladz']
     product_team = ['nira', 'hamutal.e', 'boazm', 'larisar', "elanitec", 'anatol', 'drorf']
@@ -48,6 +77,34 @@ def getting_3_columns_from_csv_file(file_path, column1_name, column2_name, colum
     column1_data = df[column1_name].tolist()
     column2_data = df[column2_name].tolist()
     column3_data = df[column3_name].tolist()
+
+    
+    # works only if the monthly report is asked
+    if monthly:
+        current_date_time = datetime.now()
+        first_day_of_current_month = current_date_time.replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
+        last_month_name = last_day_of_previous_month.strftime("%b")
+        if last_day_of_previous_month.year < first_day_of_current_month.year:
+            last_year = last_day_of_previous_month.year
+        else:
+            last_year = first_day_of_current_month.year
+        last_year = str(last_day_of_previous_month.year)[2:]
+        df["Sprint"] = pd.to_datetime(df["Sprint"], format="%d %b %y")
+        months_list = df["Sprint"].dt.strftime("%b").tolist()
+        years_list = df["Sprint"].dt.strftime("%y").tolist()
+        full_lst =[]
+        for i in range(len(column1_data)):
+            obj = [[months_list[i],years_list[i]], column1_data[i], column2_data[i], column3_data[i]]
+            full_lst.append(obj)
+        column1_data = []
+        column2_data = []
+        column3_data = []
+        for lst in full_lst:
+            if lst[0][0] == last_month_name and lst[0][1] == last_year:
+                column1_data.append(lst[1])
+                column2_data.append(lst[2])
+                column3_data.append(lst[3])
 
     integrated_dict = {} # create dictionery to calculate the values
     for i, name  in enumerate(column1_data):
@@ -158,36 +215,37 @@ def func(pct, allvals):
 
 
 # creates the pie chart by worker name 
-def worker_by_name_pie(file_name, column1_name, column2_name):
-    a = getting_2_columns_from_csv_file(file_name, column1_name, column2_name)
+def worker_by_name_pie(file_name, column1_name, column2_name, monthly=True):
+    a = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
     for key in a:
         worker = data_for_worker_visualition(a, key)
         pie_chart_data(worker[0], worker[1], worker[2])
 
 
 #  creates pie chart for  full sprint
-def pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name):
-        dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name)
+def pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, monthly=True):
+        dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
         full_data_for_sprint = data_for_sprint_visualition(dict_for_ratio, sprint_name)
         pie_chart_data(full_data_for_sprint[0], full_data_for_sprint[1], full_data_for_sprint[2])
 
 
 #creates the pie chart for team
-def pie_chart_by_team(column1_name, column2_name, file_name):
+def pie_chart_by_team(column1_name, column2_name, file_name, monthly=True):
         bi = ['gala', 'markb', 'iliab', 'michala', 'liorr']
         algo = [ 'robertoo', 'itair', 'anatm', 'renanam']
         dev = ['duduz', 'nerias', 'noama', 'hodaya']
         teams = [bi, algo, dev]
         teams1 = ['bi', 'algo', 'dev']
-        dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name)
+        dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
         for i, team in enumerate(teams):
             full_data_for_team = data_for_team_visualizion(dict_for_ratio, team)
+            print(f'{teams1[i]} sprint ratio', full_data_for_team[1], full_data_for_team[2])
             pie_chart_data(f'{teams1[i]} sprint ratio', full_data_for_team[1], full_data_for_team[2])
 
 
 #creates the pie chart for product
-def pie_chart_by_product(column1_name, column2_name, column3_name, file_name):
-        dict_for_ratio = getting_3_columns_from_csv_file(file_name, column1_name, column2_name, column3_name)
+def pie_chart_by_product(column1_name, column2_name, column3_name, file_name, monthly=True):
+        dict_for_ratio = getting_3_columns_from_csv_file(file_name, column1_name, column2_name, column3_name, monthly)
         for key in dict_for_ratio:
             full_data_for_team = data_for_team_visualizion(dict_for_ratio, [key])
             pie_chart_data(f'{key} sprint ratio', full_data_for_team[1], full_data_for_team[2])
@@ -196,4 +254,5 @@ def pie_chart_by_product(column1_name, column2_name, column3_name, file_name):
 
 ### excecution###
 
-pie_chart_by_product(column1_name, column2_name, column3_name, file_name)
+# pie_chart_by_team(column1_name, column2_name, file_name)
+pie_chart_by_product(column1_name, column2_name, column3_name, file_name, monthly=True)
