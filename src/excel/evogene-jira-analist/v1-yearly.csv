@@ -1,0 +1,439 @@
+Summary,Issue key,Project name,Assignee,Creator,Original Estimate,Original Estimate Days,Time Spent,Time Spent Days,Work Ratio,Custom field (Budget),Custom field (Epic Link),Custom field (Epic Name),Custom field (Product),Sprint,Custom field (Teams)
+Funda- normalization function,CPB-820,CPB,anatm,gala,,0,57600,2,,P276 - CTO Architecture (CPB),,,CPB,1 Jan 23,Algo
+Analyze selected CORBAC runs Algo DEC 2022,MIC-688,MicroBoost,anatm,anatol,86400,3,86400,3,100%,P265 - CSO microbials (CSO/Product),MIC-563,,MicroBoost,1 Jan 23,Algo
+CLONE - Analyze selected CORBAC runs Algo Jan 2023,MIC-707,MicroBoost,anatm,drorf,28800,1,28800,1,100%,P265 - CSO microbials (CSO/Product),MIC-563,,MicroBoost,1 Jan 23,Algo
+Add repair prediction for LocalGoGenome,CRIS-380,CrisprIL,anatm,erane,115200,4,115200,4,100%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Algo
+add LOGO for regression in EvoML ,CRIS-395,CrisprIL,anatm,erane,86400,3,57600,2,66%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Algo
+Local GoGenome - gRNAs on target max CFD and primers DEC22,CRIS-370,CrisprIL,anatm,erane,144000,5,403200,14,280%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Algo
+add repair prediction for plants in Gogenome,CRIS-379,CrisprIL,anatm,erane,86400,3,144000,5,166%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Algo
+CLONE - Local GoGenome - gRNAs on target max CFD and primers JAN23,CRIS-397,CrisprIL,anatm,sharonl,403200,14,403200,14,100%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Algo
+add primers information for LocalGoGenome,CRIS-378,CrisprIL,anatm,erane,144000,5,374400,13,260%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Feb 23,Algo
+Summarize DL predict and Tomato repair model,CRIS-410,CrisprIL,anatm,nira,57600,2,28800,1,50%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Mar 23,Algo
+Pareto rewrite into Airflow March,CHEM-622,ChemPass,anatm,robertoo,230400,8,144000,5,62%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Algo
+Customizing library screening using DeepDock (after model creation) - cloned,CHEM-569,ChemPass,anatm,robertoo,144000,5,316800,11,220%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Algo
+Customizing library screening using DeepDock (after model creation) .April,CHEM-654,ChemPass,anatm,hamutal.e,86400,3,144000,5,166%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Apr 23,Algo
+Pareto - modifications after QA- Algo,CHEM-665,ChemPass,anatm,hamutal.e,,0,14400,0.5,,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Apr 23,Algo
+Transfering the immuno-oncology microbiome-based machine-learning classifier constructed per Biomica?s request - April,BIOM-247,Biomica,anatm,nira,201600,7,115200,4,57%,P255 - IBD (Biomica 2023),,,CPB,1 Apr 23,Algo
+CorBac run Failure - QA for LAV-470,MIC-856,MicroBoost,anatm,anatol,0,0,14400,0.5,9223372036854770000%,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 May 23,Algo
+Forester user list with GTDB ,MIC-847,MicroBoost,anatm,anatol,28800,1,86400,3,300%,P271 - CPB Upkeep Computational (2023),MIC-715,,MicroBoost,1 May 23,Algo
+ a bug in deepdock_predict ,CHEM-711,ChemPass,anatm,hamutal.e,,0,64800,2.25,,P274 - Product- Upkeep CP  (2023),CHEM-173,,ChemPass,1 May 23,Algo
+Transfering the immuno-oncology microbiome-based machine-learning classifier constructed per Biomica?s request - May,BIOM-261,Biomica,anatm,drorf,201600,7,223200,7.75,110%,P255 - IBD (Biomica 2023),,,CPB,1 May 23,Algo
+email message following Forester failed runs,MIC-850,MicroBoost,anatm,anatol,14400,0.5,28800,1,200%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Jun 23,Algo
+CLONE - Forester - All StrainDB option (BIOMICA UI),MIC-907,MicroBoost,anatm,elanitec,57600,2,18000,0.625,31%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Jun 23,Algo
+EvoDL adjustments,CPB-994,CPB,anatm,robertoo,86400,3,86400,3,100%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jun 23,Algo
+De novo design - literature search,CHEM-697,ChemPass,anatm,hamutal.e,144000,5,147600,5.125,102%,P264 - Product-CP (Chempass 2023),CHEM-633,,ChemPass,1 Jun 23,Algo
+Unconstrained MolGPT,CHEM-744,ChemPass,anatm,hamutal.e,230400,8,230400,8,100%,P264 - Product-CP (Chempass 2023),CHEM-633,,ChemPass,1 Jun 23,Algo
+Implement use of DB instead of acc2name to replace RefSeq or GenBank assembly accession in GTDB based tree,MIC-865,MicroBoost,anatm,larisar,144000,5,86400,3,60%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jun 23,Algo
+Adding All Public productions option to Forester (LavieBio),MIC-823,MicroBoost,anatm,anatol,144000,5,144000,5,100%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 May 23,Algo
+Unconstrained MolGPT,CHEM-235,ChemPass,anatm,michalslu,432000,15,316800,11,73%,P264 - CSO small molecules (CSO/Product),CHEM-633,,ChemPass,1 Jul 23,Algo
+Add Castor Bean  genome to genome editing tool,CPB-1032,CPB,anatm,Iliaz,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jul 23,Algo
+Delftia_tsuruhatensis_GCF_001571325.1_23v1 caused a Forester run failure,MIC-817,MicroBoost,iliab,anatol,,0,57600,2,,P273 - Product- Upkeep MB  (2023),MIC-708,,MicroBoost,1 Apr 23,Algo
+Model for essentiality prediction - Dec22,CHEM-544,ChemPass,itair,michalslu,288000,10,86400,3,30%,P264 - CSO small molecules (CSO/Product),CHEM-519,,ChemPass,1 Dec 22,Algo
+Evocogs on the fly loader,CPB-819,CPB,itair,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Algo
+Clustering rewrite into Airflow,CHEM-563,ChemPass,itair,robertoo,230400,8,460800,16,200%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+CPBC UPKEEP: POINTHIT code rewrite - Glide rewrite,CHEM-565,ChemPass,itair,robertoo,57600,2,144000,5,250%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+CPBC UPKEEP: POINTHIT code rewrite - Phase_Search rewrite,CHEM-568,ChemPass,itair,robertoo,201600,7,374400,13,185%,P264 - CSO small molecules (CSO/Product),CHEM-595,,CPB,1 Feb 23,Algo
+CLONE - CPBC UPKEEP: POINTHIT code rewrite - Glide rewrite,CHEM-613,ChemPass,itair,robertoo,86400,3,172800,6,200%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Algo
+CLONE - CPBC UPKEEP: POINTHIT code rewrite - Phase_Search rewrite - MARCH,CHEM-628,ChemPass,itair,itair,201600,7,259200,9,128%,P264 - CSO small molecules (CSO/Product),CHEM-595,,CPB,1 Mar 23,Algo
+CPBC UPKEEP: POINTHIT code rewrite - Close Point-Hit DAG,CHEM-559,ChemPass,itair,robertoo,57600,2,144000,5,250%,P264 - CSO small molecules (CSO/Product),CHEM-595,,CPB,1 Mar 23,Algo
+Data Integration- Algo,CHEM-600,ChemPass,itair,alinsb,57600,2,57600,2,100%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Mar 23,Algo
+CLONE - Customizing library screening using DeepDock (after model creation)-cloned,CHEM-636,ChemPass,itair,robertoo,72000,2.5,72000,2.5,100%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Algo
+Clustering- modifications after QA- algo,CHEM-608,ChemPass,itair,alinsb,28800,1,14400,0.5,50%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Feb 23,Algo
+Monitoring system- Algo,CHEM-643,ChemPass,itair,alinsb,86400,3,14400,0.5,16%,P264 - Product-CP (Chempass 2023),,,ChemPass,1 Apr 23,Algo
+Pointhit POC support-Algo,CHEM-639,ChemPass,itair,alinsb,86400,3,82800,2.875,95%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Apr 23,Algo
+Scaling evocogs_build_with_ko ,CPB-967,CPB,itair,iliab,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Algo
+?EvoCOG on the fly update for ~8000 genomes QA,CPB-973,CPB,itair,iliab,57600,2,28800,1,50%,P279 - CPB projects Computational (CPB 2023),MIC-725,,CPB,1 May 23,Algo
+Neighborhood View - data to be prepared by Algo,MIC-843,MicroBoost,itair,anatol,144000,5,129600,4.5,90%,P265 - Product- MB (Microboost 2023),MIC-839,,MicroBoost,1 May 23,Algo
+CLONE - Identify Plasmids- DL - May,CPB-961,CPB,itair,robertoo,144000,5,259200,9,180%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Algo
+CLONE - Understanding Strain Comparison,CI-9,CPBC Internal,itair,elanitec,43200,1.5,172800,6,400%,P82 - ICL (Lavie 2023),,,CPB,1 May 23,Algo
+Identify Plasmids- DL,CPB-885,CPB,itair,gala,288000,10,262800,9.125,91%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Algo
+evocogs on the fly,CPB-943,CPB,itair,gala,28800,1,14400,0.5,50%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Algo
+Target selection,CHEM-713,ChemPass,itair,nira,201600,7,216000,7.5,107%,P264 - Product-CP (Chempass 2023),CHEM-519,,ChemPass,1 Jun 23,Algo
+t-SNE tool development - Algo ,CHEM-700,ChemPass,itair,hamutal.e,86400,3,100800,3.5,116%,P264 - Product-CP (Chempass 2023),CHEM-699,,ChemPass,1 Jun 23,Algo
+CLONE - Focused PointHit / Standalone mode - mod DAG,CHEM-735,ChemPass,itair,robertoo,86400,3,14400,0.5,16%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 Jun 23,Algo
+Neighborhood View - Algo support for Dev,MIC-873,MicroBoost,itair,larisar,86400,3,158400,5.5,183%,P265 - Product- MB (Microboost 2023),MIC-839,,MicroBoost,1 Jun 23,Algo
+Focused PointHit / Standalone Mode - Modifications after QA,CHEM-747,ChemPass,itair,hamutal.e,28800,1,14400,0.5,50%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 Jul 23,Algo
+Run Reseq on castor bean genome,CPB-1030,CPB,itair,Iliaz,86400,3,43200,1.5,50%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jul 23,Algo
+CLONE - De novo design - RA score prediction .Jul 2023,CHEM-729,ChemPass,itair,hamutal.e,288000,10,28800,1,10%,P264 - Product-CP (Chempass 2023),CHEM-633,,ChemPass,1 Jul 23,Algo
+Neighborhood View - Algo support for Dev Jul-2023,MIC-912,MicroBoost,itair,larisar,57600,2,28800,1,50%,P265 - Product- MB (Microboost 2023),MIC-839,,MicroBoost,1 Jul 23,Algo
+Clustering- modifications after QA-Dev,CHEM-609,ChemPass,nerias,alinsb,28800,1,28800,1,100%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Feb 23,Algo
+Vendor availability / minor changes,CHEM-587,ChemPass,robertoo,hamutal.e,28800,1,28800,1,100%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+Enamine REAL update - Jan23,CHEM-585,ChemPass,robertoo,hamutal.e,28800,1,10800,0.375,37%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+New molecules are added to CHEMUNITY and unavailable are removed.,CHEM-564,ChemPass,robertoo,robertoo,115200,4,14400,0.5,12%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+CLONE -  CPBC UPKEEP: POINTHIT code rewrite basic packages,CHEM-614,ChemPass,robertoo,robertoo,86400,3,86400,3,100%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Algo
+CPBC UPKEEP: POINTHIT code rewrite - Interaction filter rewrite,CHEM-567,ChemPass,robertoo,robertoo,115200,4,175680,6.1,152%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Algo
+CLONE - CPBC UPKEEP: POINTHIT code rewrite first milestone,CHEM-570,ChemPass,robertoo,robertoo,28800,1,57600,2,200%,P264 - CSO small molecules (CSO/Product),CHEM-595,,CPB,1 Jan 23,Algo
+ CPBC UPKEEP: POINTHIT code rewrite basic packages,CHEM-573,ChemPass,robertoo,sharonl,28800,1,21600,0.75,75%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+CPBC UPKEEP: POINTHIT code rewrite - Cavity filter and Toxicity filter rewrite - cloned,CHEM-560,ChemPass,robertoo,robertoo,115200,4,97200,3.375,84%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Algo
+CLONE - New molecules are added to CHEMUNITY and unavailable are removed.,CHEM-612,ChemPass,robertoo,robertoo,115200,4,81360,2.825,70%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Algo
+CLONE - CPBC UPKEEP: POINTHIT code rewrite - Cavity filter and Toxicity filter rewrite - Mar 2023,CHEM-626,ChemPass,robertoo,hamutal.e,28800,1,28800,1,100%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Algo
+CLONE - CPBC UPKEEP: Ligand Preparation code rewrite - Feb2023,CHEM-611,ChemPass,robertoo,robertoo,57600,2,115200,4,200%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Algo
+PointHit config modifications after QA- algo after Dev,CHEM-632,ChemPass,robertoo,alinsb,,0,7200,0.25,,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Mar 23,Algo
+Evolve did not find a structure for a protein with solved structure on PDB,GEN-101,Generator,robertoo,inbarp,,0,28800,1,,P277 - CrisprIL_WP1 (CRISPR) (2023),,,Generator,,Algo
+CLONE - CPBC UPKEEP: Ligand Preparation code rewrite - Jan2023,CHEM-576,ChemPass,robertoo,robertoo,86400,3,14400,0.5,16%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Algo
+ New molecules are added to CHEMUNITY and unavailable are removed. March - cloned,CHEM-624,ChemPass,robertoo,robertoo,57600,2,45360,1.575,78%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Algo
+CPBC UPKEEP: Active Search DAG finalization ,CHEM-572,ChemPass,robertoo,robertoo,230400,8,244800,8.5,106%,P264 - CSO small molecules (CSO/Product),CHEM-595,,CPB,1 Mar 23,Algo
+Vendor availabilty (minor changes) after QA- algo. April,CHEM-651,ChemPass,robertoo,hamutal.e,14400,0.5,10800,0.375,75%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Apr 23,Algo
+New molecules are added to CHEMUNITY and unavailable are removed. April,CHEM-650,ChemPass,robertoo,hamutal.e,28800,1,104400,3.625,362%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Apr 23,Algo
+CPBC UPKEEP: Active Search DAG finalization - fixes,CHEM-662,ChemPass,robertoo,robertoo,57600,2,115200,4,200%,P264 - CSO small molecules (CSO/Product),CHEM-595,,CPB,1 Apr 23,Algo
+Ag Models,CHEM-648,ChemPass,robertoo,hamutal.e,288000,10,39600,1.375,13%,P264 - CSO small molecules (CSO/Product),CHEM-682,,ChemPass,1 Apr 23,Algo
+DeepDock - modifications after QA - Algo,CHEM-677,ChemPass,robertoo,hamutal.e,28800,1,10800,0.375,37%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Algo
+ActiveSearch- modifications after QA- Algo,CHEM-676,ChemPass,robertoo,alinsb,28800,1,28800,1,100%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Algo
+CLONE - Pointhit POC support-Algo1,CHEM-685,ChemPass,robertoo,robertoo,57600,2,50400,1.75,87%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Algo
+CLONE - Ag Models - May,CHEM-668,ChemPass,robertoo,robertoo,144000,5,336960,11.7,233%,P264 - CSO small molecules (CSO/Product),CHEM-682,,ChemPass,1 May 23,Algo
+Plan CHEM_DBupdate rewrite,CPB-962,CPB,robertoo,robertoo,57600,2,32400,1.125,56%,P271 - CPB Upkeep Computational (2023),,,ChemPass,1 May 23,Algo
+Active Search - output modifications,CHEM-710,ChemPass,robertoo,hamutal.e,14400,0.5,10860,0.377083333,75%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 Jun 23,Algo
+Single molecule run - Roberto,AG-1177,AgPlenus,robertoo,hamutal.e,,0,14400,0.5,,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Apr 23,Algo
+Single molecule run error ,AG-1163,AgPlenus,robertoo,hamutal.e,,0,12600,0.4375,,P271 - CPB Upkeep Computational (2023),,,ChemPass,1 Feb 23,Algo
+CLONE - Production report job ID 1674721723060 failed,LAV-445,LavieBio,robertoo,elanitec,0,0,1800,0.0625,9223372036854770000%,P271 - CPB Upkeep Computational (2023),,,MicroBoost,1 Jan 23,Algo
+Single molecule run error,AG-1151,AgPlenus,robertoo,dafnam,,0,32400,1.125,,P271 - CPB Upkeep Computational (2023),,,ChemPass,1 Jan 23,Algo
+De novo design - literature search,CHEM-646,ChemPass,robertoo,hamutal.e,288000,10,208800,7.25,72%,P21 - agPlenus Tech (2023),CHEM-633,De Novo Design,ChemPass,1 Jun 23,Algo
+Virtual libraries update (cloned),CHEM-704,ChemPass,robertoo,hamutal.e,57600,2,21600,0.75,37%,P264 - Product-CP (Chempass 2023),CHEM-703,,ChemPass,1 Jun 23,Algo
+Focused PointHit / Standalone mode,CHEM-719,ChemPass,robertoo,hamutal.e,115200,4,28800,1,25%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 Jun 23,Algo
+Running AiZynthFinder on a batch -cloned,CHEM-723,ChemPass,robertoo,hamutal.e,86400,3,86400,3,100%,P21 - agPlenus Tech (2023),CHEM-633,,ChemPass,1 Jun 23,Algo
+CLONE - Running AiZynthFinder on a batch .July 2023,CHEM-732,ChemPass,robertoo,hamutal.e,57600,2,79920,2.775,138%,P264 - Product-CP (Chempass 2023),CHEM-633,,ChemPass,1 Jul 23,Algo
+Fingerprints addition and Similarity function .Jul 23,CHEM-733,ChemPass,robertoo,hamutal.e,144000,5,147600,5.125,102%,P264 - Product-CP (Chempass 2023),CHEM-703,,ChemPass,1 Jul 23,Algo
+Fingerprints and similarity metric modifications in Active search ,CHEM-748,ChemPass,robertoo,hamutal.e,86400,3,57600,2,66%,P264 - Product-CP (Chempass 2023),CHEM-703,,ChemPass,1 Jul 23,Algo
+Unconstrained MolGPT - Comp Chem -cloned,CHEM-734,ChemPass,robertoo,hamutal.e,144000,5,24480,0.85,17%,P264 - Product-CP (Chempass 2023),CHEM-633,,ChemPass,1 Jul 23,Algo
+CLONE - Virtual libraries update .July -cloned,CHEM-727,ChemPass,robertoo,hamutal.e,57600,2,72000,2.5,125%,P264 - Product-CP (Chempass 2023),CHEM-703,,ChemPass,1 Jul 23,Algo
+Forester fails to run - QA tasks CI-8 and CI-11,MIC-857,MicroBoost,anatm,elanitec,,0,36000,1.25,,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 May 23,Dev
+UPKEEP: Evocogs loaders maintenance - Jan23,CPB-732,CPB,duduz,duduz,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Dev
+Interpro loader - Code review,CPB-777,CPB,duduz,duduz,28800,1,7200,0.25,25%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+IGV not responding,LAV-438,LavieBio,duduz,osnate,0,0,3600,0.125,9223372036854770000%,P19 - BioStimulants internal (LavieBio),,,MicroBoost,1 Jan 23,Dev
+CLONE - DB and files inconsistently solution - Dev - Jan,CPB-833,CPB,duduz,duduz,86400,3,288000,10,333%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Dev
+UPKKEEP: BLAST DB maintenance,CPB-707,CPB,duduz,duduz,86400,3,316800,11,366%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Feb 23,Dev
+BACUM loader - Code review,CPB-782,CPB,duduz,duduz,28800,1,14400,0.5,50%,P997-271 - Upkeep Computational ,CPB-762,,MicroBoost,1 Mar 23,Dev
+Load annotations support (Dudu),CPB-927,CPB,duduz,duduz,57600,2,158400,5.5,275%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Mar 23,Dev
+UPKKEEP: BLAST DB maintenance - Mar,CPB-923,CPB,duduz,duduz,115200,4,68400,2.375,59%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Mar 23,Dev
+Dedicated Environment for ChemPass - Mar,CHEM-621,ChemPass,duduz,duduz,86400,3,57600,2,66%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Dev
+Dev support and upkeep (Dudu) - Mar,CPB-922,CPB,duduz,duduz,86400,3,3600,0.125,4%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Mar 23,Dev
+Add GCF/AssemblyID column in u_productions table in DB,MIC-747,MicroBoost,duduz,larisar,28800,1,28800,1,100%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Mar 23,Dev
+Genome page main UI - Available Annotations,MIC-782,MicroBoost,duduz,larisar,144000,5,111600,3.875,77%,P279 - CPB projects Computational (CPB 2023),MIC-720,,MicroBoost,1 Apr 23,Dev
+Advanced search research and support,CPB-966,CPB,duduz,duduz,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),,,MicroBoost,1 Apr 23,Dev
+Agplenus and CPB Environment update,CHEM-638,ChemPass,duduz,duduz,57600,2,18000,0.625,31%,P264 - Product-CP (Chempass 2023),CHEM-595,,CPB,1 Apr 23,Dev
+Update FORESTER UI,MIC-726,MicroBoost,duduz,anatol,57600,2,28800,1,50%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Mar 23,Dev
+Forester - Interactive table at JOBS tab,MIC-728,MicroBoost,duduz,anatol,57600,2,18000,0.625,31%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Mar 23,Dev
+Forester - Runs limitations,MIC-729,MicroBoost,duduz,anatol,28800,1,28800,1,100%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Mar 23,Dev
+Limiting the amount of the categories in Forester,MIC-827,MicroBoost,duduz,anatol,57600,2,28800,1,50%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 May 23,Dev
+adding to the Forester compressed folder name also the jobID,MIC-853,MicroBoost,duduz,anatol,14400,0.5,7200,0.25,50%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 May 23,Dev
+Genome page main UI - Droplist Annotations: EvoCOGs,MIC-761,MicroBoost,duduz,larisar,28800,1,32400,1.125,112%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+CLONE - Forester user list with GTDB and Forester PRUNE,MIC-864,MicroBoost,duduz,anatol,28800,1,18000,0.625,62%,P271 - CPB Upkeep Computational (2023),MIC-715,,MicroBoost,1 May 23,Dev
+Genome page main UI - Droplist Annotations: KOs,MIC-762,MicroBoost,duduz,larisar,86400,3,72000,2.5,83%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+"Gapseq, Metabacum",MIC-795,MicroBoost,duduz,anatol,0,0,28800,1,9223372036854770000%,P273 - Product- Upkeep MB  (2023),,,MicroBoost,1 Apr 23,Dev
+Advanced search support,CPB-972,CPB,duduz,duduz,57600,2,115200,4,200%,P279 - CPB projects Computational (CPB 2023),,,MicroBoost,1 May 23,Dev
+Adding All Public productions option to Forester (LavieBio) ,MIC-824,MicroBoost,duduz,anatol,28800,1,28800,1,100%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 May 23,Dev
+Addition of two app links to AgPlenus Dashboard,CHEM-712,ChemPass,duduz,hamutal.e,1800,0.0625,1800,0.0625,100%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 May 23,Dev
+CLONE - Delete all metabacum and clinicalDB exiting queries,BIOM-256,Biomica,duduz,elanitec,14400,0.5,3600,0.125,25%,P255 - IBD (Biomica 2023),MIC-828,,CPB,1 May 23,Dev
+Agplenus and CPB Environment update- modifications after QA- cloned,CHEM-674,ChemPass,duduz,alinsb,14400,0.5,18000,0.625,125%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Dev
+Previous Biomica's datasets uploaded to metabacum: delete incorrect data from DB,CPB-959,CPB,duduz,larisar,28800,1,28800,1,100%,P271 - CPB Upkeep Computational (2023),MIC-828,,MicroBoost,1 Jun 23,Dev
+CLONE - Prepare and upload clinical metadata of Sheba samples to Clinical DB,INTBIOM-2,Biomica Internal,duduz,elanitec,57600,2,43200,1.5,75%,P255 - IBD (Biomica 2023),,,MicroBoost,1 Jul 23,Dev
+Update SOURCE column of LAVIEBIO u_productions,MIC-882,MicroBoost,duduz,larisar,28800,1,14400,0.5,50%,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 Jul 23,Dev
+Evolve - Adjustments to plants (Generator),CPB-1020,CPB,duduz,duduz,86400,3,28800,1,33%,P271 - CPB Upkeep Computational (2023),,,Generator,1 Jul 23,Dev
+Dev support (Dudu) - Jun,CPB-1001,CPB,duduz,duduz,86400,3,79200,2.75,91%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jun 23,Dev
+Generator dashboard,CPB-1002,CPB,duduz,duduz,86400,3,126000,4.375,145%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jun 23,Dev
+Node18 and Oracle 19 QA - Generator,CPB-999,CPB,duduz,duduz,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jul 23,Dev
+Dev support (Dudu) - Jul,CPB-1028,CPB,duduz,duduz,86400,3,86400,3,100%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jul 23,Dev
+Generator dashboard - Jul,CPB-1029,CPB,duduz,duduz,57600,2,72000,2.5,125%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jul 23,Dev
+Clusters loader,CPB-770,CPB,hodayam,duduz,115200,4,104400,3.625,90%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+LoadProductions DAG,CPB-775,CPB,hodayam,duduz,144000,5,176400,6.125,122%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+PointHit UI,CHEM-589,ChemPass,hodayam,hamutal.e,288000,10,28800,1,10%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Dev
+UI to proceed after PointHit and DeepDock - Focused_PointHit,CHEM-549,ChemPass,hodayam,duduz,144000,5,129600,4.5,90%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Dev
+PointHit UI / Full PointHit - Feb,CHEM-617,ChemPass,hodayam,duduz,144000,5,172800,6,120%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Dev
+Protein description loader,CPB-773,CPB,hodayam,duduz,86400,3,54000,1.875,62%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+TANDA loader,CPB-772,CPB,hodayam,duduz,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+Busco Loader,CPB-771,CPB,hodayam,duduz,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+PointHit UI / Pharmacophore Calibration,CHEM-619,ChemPass,hodayam,hamutal.e,144000,5,133200,4.625,92%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Feb 23,Dev
+Plasmids loader,CPB-888,CPB,hodayam,duduz,115200,4,54000,1.875,46%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Feb 23,Dev
+Plasmids loader - Mar,CPB-924,CPB,hodayam,duduz,57600,2,28800,1,50%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Mar 23,Dev
+Load annotations support,CPB-925,CPB,hodayam,duduz,57600,2,63000,2.1875,109%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Mar 23,Dev
+PointHit config modifications after QA,CHEM-630,ChemPass,hodayam,alinsb,100800,3.5,106200,3.6875,105%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Mar 23,Dev
+Dev support and upkeep (Hodaya) - Mar,CPB-920,CPB,hodayam,duduz,57600,2,10800,0.375,18%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Mar 23,Dev
+Active search UI,CHEM-552,ChemPass,hodayam,duduz,288000,10,246600,8.5625,85%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Mar 23,Dev
+DeepDock UI for exsisting models,CHEM-550,ChemPass,hodayam,duduz,144000,5,54000,1.875,37%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Dev
+DeepDock UI for exsisting models - Apr,CHEM-637,ChemPass,hodayam,duduz,86400,3,115200,4,133%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Apr 23,Dev
+ActiveSearch- modifications after QA- Dev,CHEM-661,ChemPass,hodayam,hamutal.e,28800,1,37800,1.3125,131%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Apr 23,Dev
+ ActiveSearch- modifications after QA- Dev - May,CHEM-678,ChemPass,hodayam,hamutal.e,28800,1,28800,1,100%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Dev
+PointHit POC support-Dev-cloned,CHEM-673,ChemPass,hodayam,alinsb,28800,1,57600,2,200%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Dev
+Monitoring system-Dev,CHEM-644,ChemPass,hodayam,alinsb,86400,3,86400,3,100%,P264 - Product-CP (Chempass 2023),CHEM-687,,ChemPass,1 May 23,Dev
+Genome page main UI - Droplist cluster,MIC-753,MicroBoost,hodayam,larisar,86400,3,68400,2.375,79%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Apr 23,Dev
+Genome page main UI - Droplist Annotations: Pathway (currently KEGG),MIC-760,MicroBoost,hodayam,larisar,86400,3,86400,3,100%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+Genome page main UI - Droplist Annotations: TANDA-diamond,MIC-765,MicroBoost,hodayam,larisar,86400,3,28800,1,33%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+Genome page main UI - Droplist Annotations: Pathway (MetaCYC),MIC-855,MicroBoost,hodayam,larisar,57600,2,57600,2,100%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+Genome page main UI -  Droplist AntiSmash,MIC-759,MicroBoost,hodayam,larisar,288000,10,172800,6,60%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+Active Search - output modifications,CHEM-709,ChemPass,hodayam,hamutal.e,57600,2,32400,1.125,56%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 May 23,Dev
+Genome page main UI - Droplist Annotations: Interpro,MIC-764,MicroBoost,hodayam,larisar,57600,2,57600,2,100%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+Microboost UI modifications,CPB-989,CPB,hodayam,duduz,28800,1,28800,1,100%,P271 - CPB Upkeep Computational (2023),,,CPB,1 May 23,Dev
+Genome page main UI - Droplist Annotations: GO TERMS,MIC-784,MicroBoost,hodayam,larisar,57600,2,28800,1,50%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Dev
+De novo design - RA score prediction - UI (cloned),CHEM-695,ChemPass,hodayam,hamutal.e,86400,3,28800,1,33%,P264 - Product-CP (Chempass 2023),CHEM-633,,ChemPass,1 Jun 23,Dev
+t-SNE tool development - UI (cloned),CHEM-701,ChemPass,hodayam,hamutal.e,144000,5,183600,6.375,127%,P264 - Product-CP (Chempass 2023),CHEM-699,,ChemPass,1 Jun 23,Dev
+Modify ProductionQA script for batch and overall monitoring,CPB-974,CPB,hodayam,duduz,144000,5,266400,9.25,185%,P279 - CPB projects Computational (CPB 2023),CPB-996,,CPB,1 Jun 23,Dev
+Focused PointHit / Standalone mode - UI,CHEM-728,ChemPass,hodayam,hamutal.e,57600,2,32400,1.125,56%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 Jul 23,Dev
+RESEQ/SAUCE UI - Dev,MIC-913,MicroBoost,hodayam,elanitec,144000,5,72000,2.5,50%,P265 - Product- MB (Microboost 2023),MIC-909,,MicroBoost,1 Jul 23,Dev
+t-SNE tool - Corrections after QA,CHEM-726,ChemPass,hodayam,hamutal.e,57600,2,18000,0.625,31%,P264 - Product-CP (Chempass 2023),CHEM-699,,ChemPass,1 Jul 23,Dev
+Node18 and Oracle 19 QA - Chempass,CPB-1017,CPB,hodayam,duduz,28800,1,28800,1,100%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jul 23,Dev
+Modify ProductionQA script for batch and overall monitoring - Jul,CPB-1025,CPB,hodayam,duduz,86400,3,147600,5.125,170%,P279 - CPB projects Computational (CPB 2023),CPB-996,,CPB,1 Jul 23,Dev
+Strain name/production name conversion table accessed via Biomica's dashboard - UI,MIC-942,MicroBoost,hodayam,elanitec,57600,2,18000,0.625,31%,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 Jul 23,Dev
+Modifications in Active search UI (Fingerprints and similarity metric options) ,CHEM-749,ChemPass,hodayam,hamutal.e,28800,1,28800,1,100%,P264 - Product-CP (Chempass 2023),CHEM-708,,ChemPass,1 Jul 23,Dev
+EVX to SMILES and INCHIKEY,CHEM-553,ChemPass,nerias,duduz,288000,10,208800,7.25,72%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Dev
+Vendor Availability - new and upgraded app,CHEM-575,ChemPass,nerias,duduz,72000,2.5,50400,1.75,70%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Dev
+Clustering UI - DEV,CHEM-580,ChemPass,nerias,hamutal.e,288000,10,208800,7.25,72%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Dev
+Dedicated Environment for ChemPass - Feb,CHEM-606,ChemPass,nerias,duduz,576000,20,172800,6,30%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Feb 23,Dev
+Dedicated Environment for ChemPass,CHEM-551,ChemPass,nerias,duduz,576000,20,25200,0.875,4%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Jan 23,Dev
+IGV genome browser integration,CRIS-383,CrisprIL,nerias,erane,144000,5,126000,4.375,87%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Feb 23,Dev
+IGV genome browser integration - Mar,CRIS-407,CrisprIL,nerias,duduz,144000,5,36000,1.25,25%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Mar 23,Dev
+Pareto UI - DEV,CHEM-554,ChemPass,nerias,duduz,288000,10,115200,4,40%,P264 - CSO small molecules (CSO/Product),CHEM-595,,ChemPass,1 Mar 23,Dev
+Data integration UI- Dev,CHEM-601,ChemPass,nerias,alinsb,144000,5,201600,7,140%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Mar 23,Dev
+Pareto - modifications after QA-Dev,CHEM-666,ChemPass,nerias,hamutal.e,28800,1,28800,1,100%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Apr 23,Dev
+Data Integration UI & Clustering UI Modifications - Dev,CHEM-635,ChemPass,nerias,duduz,86400,3,115200,4,133%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 Apr 23,Dev
+Forester_tree,MIC-776,MicroBoost,nerias,anatol,201600,7,216000,7.5,107%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Apr 23,Dev
+Forester Interactive table ,MIC-833,MicroBoost,nerias,anatol,28800,1,27000,0.9375,93%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Apr 23,Dev
+Data Int- Modifications after QA- Dev,CHEM-675,ChemPass,nerias,alinsb,86400,3,90000,3.125,104%,P264 - Product-CP (Chempass 2023),CHEM-595,,ChemPass,1 May 23,Dev
+Forester - the option to select colors by user,MIC-851,MicroBoost,nerias,anatol,144000,5,151200,5.25,104%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 May 23,Dev
+Ag Models UI,CHEM-649,ChemPass,nerias,hamutal.e,144000,5,201600,7,140%,P264 - CSO small molecules (CSO/Product),CHEM-682,,ChemPass,1 May 23,Dev
+Genome page main UI - Droplist Sequences & IGV,MIC-755,MicroBoost,nerias,larisar,144000,5,129600,4.5,90%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Jun 23,Dev
+Finish new FUNDA version after QA,CPB-970,CPB,nerias,duduz,57600,2,57600,2,100%,P271 - CPB Upkeep Computational (2023),,,MicroBoost,1 Jun 23,Dev
+Neighborhood View - evaluation of relevant plugins,MIC-854,MicroBoost,nerias,anatol,144000,5,129600,4.5,90%,P265 - Product- MB (Microboost 2023),MIC-839,,MicroBoost,1 Jun 23,Dev
+Neighborhood view UI development,MIC-902,MicroBoost,nerias,drorf,432000,15,316800,11,73%,P265 - Product- MB (Microboost 2023),MIC-839,,MicroBoost,1 Jul 23,Dev
+Create production loader,CPB-838,CPB,noama,duduz,115200,4,108000,3.75,93%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Dev
+add off-target and primer information to the interface,CRIS-381,CrisprIL,noama,erane,288000,10,288000,10,100%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Dev
+Interpro loader,CPB-776,CPB,noama,duduz,230400,8,201600,7,87%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Jan 23,Dev
+Abundance tables from Metabacum UI are not received by email Feb2023,MIC-737,MicroBoost,noama,larisar,,0,7200,0.25,,P997-273 - Upkeep MicroBoost,,,MicroBoost,1 Feb 23,Dev
+ko2pathways loader,CPB-779,CPB,noama,duduz,86400,3,36000,1.25,41%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Feb 23,Dev
+BACUM loader,CPB-781,CPB,noama,duduz,288000,10,158400,5.5,55%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Feb 23,Dev
+Local GoGenome - Basic interface Feb23,CRIS-401,CrisprIL,noama,sharonl,115200,4,115200,4,100%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Feb 23,Dev
+Add GO annotations loading to Interpro loader,CPB-878,CPB,noama,duduz,115200,4,75600,2.625,65%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Feb 23,Dev
+metacyc2pathways loader,CPB-778,CPB,noama,duduz,57600,2,122400,4.25,212%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Feb 23,Dev
+metacyc2pathways loader - Mar,CPB-905,CPB,noama,duduz,57600,2,50460,1.752083333,87%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Mar 23,Dev
+BACUM loader - Mar,CPB-879,CPB,noama,duduz,144000,5,144000,5,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,MicroBoost,1 Mar 23,Dev
+Dev support and upkeep (Noam) - Mar,CPB-919,CPB,noama,duduz,57600,2,1800,0.0625,3%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Mar 23,Dev
+Add to the main search possibility to search production/GCF/AssemblyID,MIC-750,MicroBoost,noama,larisar,144000,5,140400,4.875,97%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Mar 23,Dev
+Local GoGenome - Basic interface MAR23-adjustment,CRIS-404,CrisprIL,noama,sharonl,57600,2,1800,0.0625,3%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 May 23,Dev
+Advanced search ,CPB-929,CPB,noama,Iliaz,288000,10,331200,11.5,115%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Apr 23,Dev
+API for getting taxonomy abundance,CPB-963,CPB,noama,michala,28800,1,18000,0.625,62%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 May 23,Dev
+Create layout for Genome Page ,MIC-751,MicroBoost,noama,larisar,144000,5,135000,4.6875,93%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Mar 23,Dev
+Automatic verification of uploaded data in?metaBacumLoader.py,CPB-955,CPB,noama,iliab,86400,3,79200,2.75,91%,P279 - CPB projects Computational (CPB 2023),MIC-828,,CPB,1 May 23,Dev
+Advanced search -May,CPB-951,CPB,noama,Iliaz,288000,10,280800,9.75,97%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 May 23,Dev
+Genome page main UI - Droplist Annotations: TANDA-fasta36 from cluster page,MIC-767,MicroBoost,noama,larisar,144000,5,144000,5,100%,P279 - CPB projects Computational (CPB 2023),MIC-720,,MicroBoost,1 May 23,Dev
+BACUM loader debugging,CPB-985,CPB,noama,iliab,86400,3,57600,2,66%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 May 23,Dev
+Prepare StrainDB data in DB,MIC-749,MicroBoost,noama,larisar,144000,5,14400,0.5,10%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Mar 23,Dev
+CLONED -F2O gives seemingly false warning and omits Group ID and Representative from the results,LAV-484,LavieBio,noama,larisar,28800,1,28800,1,100%,P271 - CPB Upkeep Computational (2023),,,MicroBoost,1 Jun 23,Architect
+CLONED - Bug in F2O output for Biomica users (nested tables),INTBIOM-6,Biomica Internal,noama,larisar,57600,2,39600,1.375,68%,P271 - CPB Upkeep Computational (2023),,,MicroBoost,1 Jun 23,Dev
+CLONE - Remove 'production list too long' limit in Corbac UI tool,LAV-463,LavieBio,noama,elanitec,14400,0.5,12600,0.4375,87%,P192 - Lavie programs (Lavie 2023),,,MicroBoost,1 Mar 23,Dev
+Genome page main UI - Droplist Genomes in Group,MIC-754,MicroBoost,noama,larisar,288000,10,180000,6.25,62%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Jun 23,Dev
+Genome page main UI - Droplist Annotations: Plasmid,MIC-763,MicroBoost,noama,larisar,86400,3,86400,3,100%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 Jun 23,Dev
+CLONE - Raw taxonomy matrices downloded from metabacum are presented as relatiVe abundance matrices,INTBIOM-8,Biomica Internal,noama,elanitec,,0,25200,0.875,,P271 - CPB Upkeep Computational (2023),,,MicroBoost,1 Jun 23,Bio-Info
+F2O bugs following Busco score updating and uploading,MIC-810,MicroBoost,noama,anatol,57600,2,39600,1.375,68%,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 Jun 23,Dev
+Dev support (Noam) - Jun,CPB-992,CPB,noama,duduz,57600,2,36000,1.25,62%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jun 23,Dev
+Dev support (Noam) - Jul,CPB-1024,CPB,noama,duduz,57600,2,25200,0.875,43%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jul 23,Dev
+Node18 and Oracle 19 QA - Microboost,CPB-1014,CPB,noama,drorf,57600,2,39600,1.375,68%,P271 - CPB Upkeep Computational (2023),,,CPB,1 Jul 23,Dev
+Advanced search changes,CPB-1000,CPB,noama,duduz,144000,5,115200,4,80%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jul 23,Dev
+metaBacumLoader.py modifications and support of CPB-1022,CPB-1026,CPB,noama,iliab,86400,3,82800,2.875,95%,P279 - CPB projects Computational (CPB 2023),MIC-828,,CPB,1 Jul 23,Dev
+add castorbean genome to UI,CPB-1033,CPB,noama,Iliaz,28800,1,25200,0.875,87%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jul 23,Dev
+Raw taxonomy matrices and relative abundance matrices download from metabacum is inconsistent ,INTBIOM-11,Biomica Internal,noama,elanitec,,0,28800,1,,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 Jul 23,Dev
+StrainDB: Add production name column to taxonomy abundance table (strain) from UI,MIC-919,MicroBoost,noama,larisar,57600,2,64800,2.25,112%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jul 23,Dev
+CLONE - Strain name/production name conversion table accessed via Biomica's dashboard - API,MIC-943,MicroBoost,noama,elanitec,57600,2,28800,1,50%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jul 23,Dev
+CLONE - CORBACs run failure - ALGO,CI-7,CPBC Internal,anatm,drorf,,0,14400,0.5,,P82 - ICL (Lavie 2023),,,MicroBoost,1 May 23,Bio-Info
+Evo's 185 - Production from Sequences  - OCT (372),LAV-413,LavieBio,gala,drorf,86400,3,72000,2.5,83%,P143 - BioPesticides Seedling internal (LavieBio),,,MicroBoost,1 Jan 23,Bio-Info
+design gRNAs for cpf1,CRIS-388,CrisprIL,gala,eladm,57600,2,28800,1,50%,P278 - CrisprIL_WP4 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Bio-Info
+CrisprIL data evaluation-add round-based option for data normalization ,CRIS-384,CrisprIL,gala,erane,86400,3,43200,1.5,50%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Bio-Info
+KO+ KEGG pathways- Code review,CPB-818,CPB,gala,gala,28800,1,10800,0.375,37%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Download of 10 samples of the IBS project,BIOM-239,Biomica,gala,SheerliK,28800,1,21600,0.75,75%,P255 - IBD (Biomica 2023),,,CPB,1 Feb 23,Bio-Info
+CrisprIL delivery Evo's_194 Data download,CRIS-374,CrisprIL,gala,noag,7200,0.25,7200,0.25,100%,P278 - CrisprIL_WP4 (CRISPR) (2023),CRIS-376,,AgSeed,1 Jan 23,Bio-Info
+Metacyc- Code review,CPB-799,CPB,gala,gala,28800,1,14400,0.5,50%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Feb 23,Bio-Info
+IGV genome browser - preparations,CRIS-382,CrisprIL,gala,erane,144000,5,129600,4.5,90%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Feb 23,Bio-Info
+ CrisprIL data evaluation - Feb 2023. Prepare M82 set which can be used for publications,CRIS-399,CrisprIL,gala,sharonl,57600,2,14400,0.5,25%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Feb 23,Bio-Info
+CLONE - ICL- Create productions from public genomes,LAV-448,LavieBio,gala,elanitec,144000,5,43200,1.5,30%,P19 - BioStimulants internal (LavieBio),,,MicroBoost,1 Feb 23,Bio-Info
+CrisprIL delivery Evo's_196 Data download,CRIS-403,CrisprIL,gala,noag,7200,0.25,3600,0.125,50%,P278 - CrisprIL_WP4 (CRISPR) (2023),CRIS-376,,AgSeed,1 Mar 23,Bio-Info
+cpf1 tabix index for human,CRIS-414,CrisprIL,gala,erane,,0,21600,0.75,,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Mar 23,Bio-Info
+CrisprIL delivery Evo's_195 Data download,CRIS-402,CrisprIL,gala,noag,7200,0.25,3600,0.125,50%,P278 - CrisprIL_WP4 (CRISPR) (2023),CRIS-376,,AgSeed,1 Feb 23,Bio-Info
+Knowledge transfer ,CRIS-411,CrisprIL,gala,nira,86400,3,86400,3,100%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Mar 23,Bio-Info
+CrisprIL delivery Evo's_197 Data download,CRIS-415,CrisprIL,gala,noag,7200,0.25,7200,0.25,100%,P278 - CrisprIL_WP4 (CRISPR) (2023),CRIS-376,,Generator,1 Apr 23,Bio-Info
+ ICL- Create productions from public genomes - MAR,LAV-455,LavieBio,gala,drorf,57600,2,100800,3.5,175%,P82 - ICL (Lavie 2023),,,MicroBoost,1 Mar 23,Bio-Info
+StrainDB - Build KRAKEN-BRACEN DB Jan 2023,MIC-704,MicroBoost,gala,drorf,57600,2,14400,0.5,25%,P997-273 - Upkeep MicroBoost,MIC-417,,MicroBoost,1 Jan 23,Bio-Info
+Assembly code review ,CPB-898,CPB,gala,gala,57600,2,14400,0.5,25%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+Tanda- Code review,CPB-870,CPB,gala,gala,28800,1,3600,0.125,12%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Stats- code revies,CPB-853,CPB,gala,gala,28800,1,7200,0.25,25%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Ilanit,CPB-918,CPB,gala,gala,115200,4,115200,4,100%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Feb 23,Bio-Info
+Biomica- abundance tables,CPB-835,CPB,gala,gala,115200,4,86400,3,75%,P997-271 - Upkeep Computational ,MIC-828,,MicroBoost,1 Jan 23,Bio-Info
+Meetings- Gal,CPB-834,CPB,gala,gala,,0,120600,4.1875,,P997-271 - Upkeep Computational ,,,CPB,1 Jan 23,Bio-Info
+statistics- Gal,MIC-706,MicroBoost,gala,gala,,0,86400,3,,P265 - CSO microbials (CSO/Product),,,MicroBoost,1 Jan 23,Bio-Info
+CLONE - Improvements to Rewrite GapSeq Jan2023,MIC-703,MicroBoost,iliab,nira,144000,5,115200,4,80%,P265 - CSO microbials (CSO/Product),MIC-378,,MicroBoost,1 Jan 23,Bio-Info
+Prodigal,CPB-792,CPB,iliab,gala,57600,2,108000,3.75,187%,P276 - CTO ?�� Architecture (CPB),CPB-762,,CPB,1 Jan 23,Bio-Info
+bed files,CPB-793,CPB,iliab,gala,57600,2,90000,3.125,156%,P276 - CTO ?�� Architecture (CPB),CPB-762,,CPB,1 Jan 23,Bio-Info
+Generate production,CPB-839,CPB,iliab,gala,57600,2,129600,4.5,225%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Metacyc- map prt to metacyc,CPB-795,CPB,iliab,gala,57600,2,57600,2,100%,P276 - CTO ?�� Architecture (CPB),CPB-762,,CPB,1 Jan 23,Bio-Info
+Metacyc- rxn to pathways,CPB-796,CPB,iliab,gala,86400,3,115200,4,133%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Feb 23,Bio-Info
+First DAG- genome to production- Feb,CPB-763,CPB,iliab,gala,86400,3,194400,6.75,225%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Feb 23,Bio-Info
+Metacyc- DB tables,CPB-877,CPB,iliab,gala,86400,3,79200,2.75,91%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Feb 23,Bio-Info
+Prodigal QA,CPB-794,CPB,iliab,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Run Fast Pathways on Septoria ,CHEM-667,ChemPass,iliab,nira,28800,1,28800,1,100%,P264 - Product-CP (Chempass 2023),CHEM-519,,ChemPass,1 Apr 23,Bio-Info
+CLONE - Metagenome mapping for regulatory approval,LAV-473,LavieBio,iliab,elanitec,57600,2,57600,2,100%,P192 - Lavie programs (Lavie 2023),,,MicroBoost,1 Apr 23,Bio-Info
+EvoCOG on the fly QA for ~8000 genomes,CPB-969,CPB,iliab,iliab,43200,1.5,43200,1.5,100%,P279 - CPB projects Computational (CPB 2023),MIC-23,,CPB,1 May 23,Bio-Info
+CLONE - Genome annotation files of Pseudomonas_ISID49762_20v1,CI-12,CPBC Internal,iliab,elanitec,28800,1,28800,1,100%,P192 - Lavie programs (Lavie 2023),,,CPB,1 May 23,Bio-Info
+CLONE - Pseudomonas Production Creation (LAV-311),LAV-481,LavieBio,iliab,elanitec,115200,4,43200,1.5,37%,P143 - Corteva (Lavie 2023),,,MicroBoost,1 May 23,Bio-Info
+CLONE - Strain Comparison Yersinia entomophaga,CI-10,CPBC Internal,iliab,elanitec,86400,3,86400,3,100%,P192 - Lavie programs (Lavie 2023),,,CPB,1 May 23,Bio-Info
+Isolate assembly DAG update,CPB-956,CPB,iliab,iliab,115200,4,115200,4,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Bio-Info
+Remove duplicate rows from acc2name with backup,CPB-953,CPB,iliab,iliab,43200,1.5,43200,1.5,100%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 May 23,Bio-Info
+Genome source ISID,CPB-938,CPB,iliab,gala,57600,2,50400,1.75,87%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+strainDB- update evocogs on the fly,MIC-805,MicroBoost,iliab,gala,86400,3,86400,3,100%,P273 - Product- Upkeep MB  (2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+DAG update,CPB-902,CPB,iliab,gala,86400,3,115200,4,133%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+DAG Isolate assembly,CPB-901,CPB,iliab,gala,86400,3,57600,2,66%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Assembly summary,CPB-897,CPB,iliab,gala,57600,2,14400,0.5,25%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+"create ""productions"" for metagenome- Mar",CPB-906,CPB,iliab,gala,86400,3,115200,4,133%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+strainDB- runannotation 2nd round,MIC-733,MicroBoost,iliab,gala,86400,3,86400,3,100%,P273 - Product- Upkeep MB  (2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+spades,CPB-895,CPB,iliab,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Generate assembly dir,CPB-892,CPB,iliab,gala,28800,1,32400,1.125,112%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Megahit,CPB-893,CPB,iliab,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+strainDB- load annotation 2nd round,MIC-734,MicroBoost,iliab,gala,28800,1,54000,1.875,187%,P273 - Product- Upkeep MB  (2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+Ilia Meetings,CPB-928,CPB,iliab,iliab,,0,54000,1.875,,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Mar 23,Bio-Info
+"create ""productions"" for metagenome- Feb",CPB-848,CPB,iliab,gala,57600,2,43200,1.5,75%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+First DAG- genome to production,CPB-836,CPB,iliab,gala,86400,3,28800,1,33%,P276 - CTO ?�� Architecture (CPB),CPB-762,,CPB,1 Jan 23,Bio-Info
+Support- Jan (Ilia),CPB-765,CPB,iliab,gala,57600,2,32400,1.125,56%,P997-271 - Upkeep Computational ,,,CPB,1 Jan 23,Bio-Info
+Download metagenomic data from Sheba + filtration and QA - Cont.,INTBIOM-7,Biomica Internal,iliab,elanitec,14400,0.5,14400,0.5,100%,P255 - IBD (Biomica 2023),,,MicroBoost,1 Jun 23,Bio-Info
+Genome page main UI -  Droplist VFDB BI support,MIC-756,MicroBoost,iliab,larisar,86400,3,57600,2,66%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Bio-Info
+Isolate assembly DAG update: plasmids,CPB-986,CPB,iliab,iliab,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Jun 23,Bio-Info
+Update of BACTANA 1,CPB-979,CPB,iliab,iliab,100800,3.5,86400,3,85%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Jun 23,Bio-Info
+CLONE - F2O bugs following Busco score updating and uploading,MIC-905,MicroBoost,iliab,elanitec,14400,0.5,14400,0.5,100%,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 Jun 23,Bio-Info
+MetaCyc- Database QA following bugs found during Septoria pathway analysis,MIC-822,MicroBoost,iliab,elanitec,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jun 23,Bio-Info
+Connection between Isolate assembly - BACUM and BACTANA 1 (QA and debug),CPB-1009,CPB,iliab,iliab,57600,2,28800,1,50%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Jul 23,Bio-Info
+Adapt and test make_production.py for PRISM (metagenomes),CPB-1016,CPB,iliab,iliab,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-976,,CPB,1 Jul 23,Bio-Info
+MetaCyc- Database QA following bugs found during Septoria pathway analysis,MIC-929,MicroBoost,iliab,nira,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jul 23,Bio-Info
+Metacyc Bug Cont.,CPB-1012,CPB,iliab,iliab,57600,2,180,0.00625,0%,P273 - Product- Upkeep MB  (2023),,,CPB,1 Jul 23,Bio-Info
+Regulation - LAV311 - Productions preparation,LBI-5,Lavie Bio Internal,iliab,elanitec,144000,5,129600,4.5,90%,P143 - Corteva (Lavie 2023),,,MicroBoost,1 Jul 23,Bio-Info
+uploading Brassica napus genome to Evogene's UCSC browser,AGIC-189,AgSeed/IC,Iliaz,eladm,,0,14400,0.5,,P300 - Horizon,,,AgSeed,1 Jun 23,Bio-Info
+Productions without a path or incorrect path to genome-Dec,CPB-769,CPB,itair,gala,115200,4,115200,4,100%,P997-271 - Upkeep Computational ,MIC-563,,MicroBoost,1 Dec 22,Bio-Info
+KEGG pathways- KEGG format,CPB-809,CPB,liorr,gala,86400,3,64800,2.25,75%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+KEGG pathways-map to KO,CPB-810,CPB,liorr,gala,57600,2,64800,2.25,112%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+KEGG pathways-KO count,CPB-811,CPB,liorr,gala,57600,2,43200,1.5,75%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+KEGG pathways-KO tests,CPB-812,CPB,liorr,gala,28800,1,43200,1.5,150%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+KEGG pathways- KO to PWY,CPB-814,CPB,liorr,gala,57600,2,72000,2.5,125%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+KEGG pathways- PWY file,CPB-815,CPB,liorr,gala,86400,3,43200,1.5,50%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+KEGG pathways- tests,CPB-816,CPB,liorr,gala,57600,2,28800,1,50%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Evocogs- code review,CPB-808,CPB,liorr,gala,28800,1,3600,0.125,12%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+DAG debug,CPB-791,CPB,liorr,gala,86400,3,115200,4,133%,P276 - CTO ?�� Architecture (CPB),CPB-762,,CPB,1 Feb 23,Bio-Info
+Rerun ko for 116 prods in biomica,CPB-894,CPB,liorr,Iliaz,86400,3,14400,0.5,16%,P271 - CPB Upkeep Computational (2023),,,CPB,,Bio-Info
+KEGG pathways-KO QA,CPB-813,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Update of the acc2name pipeline,CPB-968,CPB,liorr,iliab,86400,3,115200,4,133%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Bio-Info
+Genome page main UI -  Droplist AntiSmash BI support,MIC-758,MicroBoost,liorr,larisar,57600,2,7200,0.25,12%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Bio-Info
+CLONE - Creating a production for public genomes (ICL project),CI-11,CPBC Internal,liorr,elanitec,144000,5,144000,5,100%,P82 - ICL (Lavie 2023),,,MicroBoost,1 May 23,Bio-Info
+Genome page main UI - Droplist Annotations: TANDA-fasta36 BI support,MIC-766,MicroBoost,liorr,larisar,57600,2,28800,1,50%,P265 - Product- MB (Microboost 2023),MIC-720,,MicroBoost,1 May 23,Bio-Info
+"BACUM second DAG debugging (""bridge"" between BACTANA1 and BACUM)",CPB-954,CPB,liorr,iliab,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Bio-Info
+Update acc2names.py,CPB-977,CPB,liorr,iliab,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Bio-Info
+strainDB- statistics,MIC-806,MicroBoost,liorr,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+BACUM to prod dir,CPB-896,CPB,liorr,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+StrainDB - runannotation for 266 productions,MIC-820,MicroBoost,liorr,iliab,57600,2,43200,1.5,75%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+strainDB- runannotation,MIC-802,MicroBoost,liorr,gala,115200,4,115200,4,100%,P273 - Product- Upkeep MB  (2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+strainDB- runannotation load,MIC-804,MicroBoost,liorr,gala,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+BACUM- DAG- April,CPB-948,CPB,liorr,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+BACUM DAG (second part) - April,CPB-950,CPB,liorr,iliab,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Apr 23,Bio-Info
+BACUM- QA,CPB-915,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+strainDB- runannotation,MIC-800,MicroBoost,liorr,gala,115200,4,115200,4,100%,P273 - Product- Upkeep MB  (2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+BACUM- DAG,CPB-917,CPB,liorr,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+BACUM- re-writing,CPB-904,CPB,liorr,gala,57600,2,72000,2.5,125%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+strainDB- runannotation load,MIC-801,MicroBoost,liorr,gala,28800,1,36000,1.25,125%,P273 - Product- Upkeep MB  (2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+BACUM- tests,CPB-914,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+BACUM- planning,CPB-903,CPB,liorr,gala,57600,2,50400,1.75,87%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Antismash- run tool,CPB-860,CPB,liorr,gala,57600,2,43200,1.5,75%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+strainDB- runannotation 3rd round,MIC-735,MicroBoost,liorr,gala,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+Stats- collect stats per run,CPB-850,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+DAG update full annotation,CPB-871,CPB,liorr,gala,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+Antismash- QA,CPB-861,CPB,liorr,gala,28800,1,14400,0.5,50%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+Antismash- test,CPB-862,CPB,liorr,gala,28800,1,7200,0.25,25%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Mar 23,Bio-Info
+Plasmids- code review,CPB-884,CPB,liorr,gala,28800,1,7200,0.25,25%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+BI script update - RGB script-CPB,AG-1161,AgPlenus,liorr,nira,28800,1,28800,1,100%,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Feb 23,Bio-Info
+strainDB- runannotation,MIC-731,MicroBoost,liorr,gala,115200,4,172800,6,150%,P273 - Product- Upkeep MB  (2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+CLONE - Tanda- QA for cluster,CPB-868,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Tanda- Fasta 36,CPB-866,CPB,liorr,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Tanda- Diamond,CPB-864,CPB,liorr,gala,57600,2,72000,2.5,125%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Tanda- QA,CPB-865,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Tanda- tests,CPB-869,CPB,liorr,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Second DAG- runannotation,CPB-837,CPB,liorr,gala,57600,2,43200,1.5,75%,P276 - CTO ?�� Architecture (CPB),CPB-762,,CPB,1 Jan 23,Bio-Info
+CLONE - Kraken to AF,CPB-830,CPB,liorr,drorf,144000,5,144000,5,100%,P276 - CTO ?�� Architecture (CPB),,,CPB,1 Jan 23,Bio-Info
+Support- Jan (Lior),CPB-767,CPB,liorr,gala,57600,2,43200,1.5,75%,P997-271 - Upkeep Computational ,,,CPB,1 Jan 23,Bio-Info
+Post-annotation QA,CPB-978,CPB,liorr,iliab,115200,4,115200,4,100%,P279 - CPB projects Computational (CPB 2023),,,CPB,1 Jun 23,Bio-Info
+KRAKEN - StrainDB analysis on Sheba data,INTBIOM-4,Biomica Internal,liorr,elanitec,86400,3,86400,3,100%,P255 - IBD (Biomica 2023),,,MicroBoost,1 Jun 23,Bio-Info
+Managing DAGs related to PRISM,CPB-975,CPB,liorr,iliab,144000,5,144000,5,100%,P279 - CPB projects Computational (CPB 2023),CPB-976,,CPB,1 Jun 23,Bio-Info
+Managing DAGs related to PRISM (Clone),CPB-1008,CPB,liorr,iliab,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-976,,CPB,1 Jul 23,Bio-Info
+Metagenomic samples: KOs and EvoCOGs annotations - QA Jun-2023,CPB-998,CPB,liorr,larisar,86400,3,57600,2,66%,P271 - CPB Upkeep Computational (2023),CPB-762,,CPB,1 Jun 23,Bio-Info
+StrainDB: kraken-brakcen pipeline QA,MIC-858,MicroBoost,liorr,larisar,201600,7,201600,7,100%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jun 23,Bio-Info
+CLONE - download metagenomic data from Sheba + filtration and QA,BIOM-263,Biomica,liorr,drorf,115200,4,115200,4,100%,P255 - IBD (Biomica 2023),,,MicroBoost,1 May 23,Bio-Info
+Add gff2bed and make_production stages to PRISM (metagenomes),CPB-1015,CPB,liorr,iliab,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-976,,CPB,1 Jul 23,Bio-Info
+Copy plasmid pipeline output to the Bactana 1 directory.,CPB-1005,CPB,liorr,iliab,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Jul 23,Bio-Info
+CLONE - Calculation of raw pathway abundance in metagenomic assembly samples,MIC-846,MicroBoost,liorr,elanitec,144000,5,86400,3,60%,P265 - Product- MB (Microboost 2023),MIC-828,,MicroBoost,1 May 23,Bio-Info
+Implementation of new raw pathways analysis in assembly of metagenomes following new raw abundance calculation ,MIC-923,MicroBoost,liorr,elanitec,86400,3,86400,3,100%,P265 - Product- MB (Microboost 2023),MIC-828,,MicroBoost,1 Jul 23,Bio-Info
+SOURCE verification for 7173 public productions that have no GCF/GCA in genome file path,MIC-881,MicroBoost,liorr,larisar,72000,2.5,72000,2.5,100%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jul 23,Bio-Info
+CONFUTER update ,CPB-1003,CPB,liorr,iliab,230400,8,57600,2,25%,P279 - CPB projects Computational (CPB 2023),CPB-976,,CPB,1 Jul 23,Bio-Info
+StrainDB: kraken-brakcen pipeline QA - standby Jul-2023,MIC-917,MicroBoost,liorr,larisar,86400,3,86400,3,100%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jul 23,Bio-Info
+Metagenomic samples: KOs and EvoCOGs annotations - QA Jul-2023,CPB-1011,CPB,liorr,larisar,86400,3,86400,3,100%,P271 - CPB Upkeep Computational (2023),CPB-762,,CPB,1 Jul 23,Bio-Info
+KRAKEN all_reads fix in taxa_abundance_table.txt,CPB-1042,CPB,liorr,iliab,86400,3,72000,2.5,83%,P279 - CPB projects Computational (CPB 2023),MIC-828,,CPB,1 Jul 23,Bio-Info
+Production information updated file,LAV-406,LavieBio,markb,mariac,28800,1,18000,0.625,62%,P144 - Enabling Optim and F&F CPB (LavieBio),,,MicroBoost,1 Jan 23,Bio-Info
+CLONE - Target selection - Jan23,CHEM-558,ChemPass,markb,nira,86400,3,97200,3.375,112%,P264 - CSO small molecules (CSO/Product),CHEM-519,,ChemPass,1 Jan 23,Bio-Info
+CrisprIL data evaluation-human feature-based model for multiple cell lines,CRIS-385,CrisprIL,markb,erane,288000,10,335280,11.64166667,116%,P277 - CrisprIL_WP1 (CRISPR) (2023),CRIS-376,,Generator,1 Jan 23,Bio-Info
+Busco,CPB-800,CPB,markb,gala,57600,2,101100,3.510416667,175%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+"Documentation writing for 16S, busco and comparens",CPB-965,CPB,markb,iliab,43200,1.5,28800,1,66%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 May 23,Bio-Info
+StrainDB complete missed 262 productions,CPB-971,CPB,markb,larisar,172800,6,144000,5,83%,P271 - CPB Upkeep Computational (2023),MIC-742,,MicroBoost,1 May 23,Bio-Info
+ BI script - Crop concat,AG-1171,AgPlenus,markb,nira,86400,3,72000,2.5,83%,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Apr 23,Bio-Info
+comparens-April,CPB-944,CPB,markb,gala,86400,3,279000,9.6875,322%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+comparens,CPB-899,CPB,markb,gala,86400,3,235800,8.1875,272%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Classify 16S- find 16S sequence,CPB-886,CPB,markb,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Classify 16S- mothur,CPB-887,CPB,markb,gala,57600,2,235800,8.1875,409%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+BI script - Crop concat CPB,AG-1160,AgPlenus,markb,nira,360000,12.5,345600,12,96%,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Feb 23,Bio-Info
+Evocog on the fly 2 KO- code,CPB-872,CPB,markb,gala,86400,3,100800,3.5,116%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Evocog on the fly 2 KO- update,CPB-873,CPB,markb,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Support- Jan (Mark),CPB-764,CPB,markb,gala,57600,2,144000,5,250%,P997-271 - Upkeep Computational ,,,CPB,1 Jan 23,Bio-Info
+"CLONE - Evocog sequence extraction (Shelflife project, common evocogs)",CI-13,CPBC Internal,markb,elanitec,86400,3,84600,2.9375,97%,P192 - Lavie programs (Lavie 2023),,,CPB,1 Jun 23,Bio-Info
+Documentation writing for 16S and comparens,CPB-990,CPB,markb,iliab,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Jun 23,Bio-Info
+Debug of comparens pipeline in the isolate_assembly DAG,CPB-1021,CPB,markb,iliab,,0,18000,0.625,,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Jun 23,Bio-Info
+CLONE - Bi script - Image analysis,AG-1164,AgPlenus,markb,nira,201600,7,234000,8.125,116%,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Jun 23,Bio-Info
+Implementation of new abundance calculation method in assembly of metagenomes - planning,MIC-921,MicroBoost,markb,elanitec,57600,2,72000,2.5,125%,P265 - Product- MB (Microboost 2023),MIC-828,,MicroBoost,1 Jul 23,Bio-Info
+Bi script - Image analysis-cloned July,AG-1191,AgPlenus,markb,alinsb,57600,2,68400,2.375,118%,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Jul 23,Bio-Info
+Followup task on MIC-797 Normalization in assembly of metagenomic samples: KOs and EvoCOGs,MIC-863,MicroBoost,markb,larisar,144000,5,158400,5.5,110%,P265 - Product- MB (Microboost 2023),MIC-828,,MicroBoost,1 Jun 23,Bio-Info
+Normalization in assembly of metagenomic samples: KOs and EvoCOGs - Mar2023,MIC-797,MicroBoost,markb,larisar,288000,10,288000,10,100%,P265 - Product- MB (Microboost 2023),MIC-828,,MicroBoost,1 May 23,Bio-Info
+CLONE - Cropconcut script- request for information,AGPI-5,Ag Plenus Internal,markb,nira,86400,3,100800,3.5,116%,P23 - Herbicides (AgPlenus) (2023),,,ChemPass,1 Jul 23,Bio-Info
+Implementation of new abundance calculation method in assembly of metagenomes,MIC-922,MicroBoost,markb,elanitec,230400,8,316800,11,137%,P265 - Product- MB (Microboost 2023),MIC-828,,MicroBoost,1 Jul 23,Bio-Info
+Evocogs- update reps,CPB-805,CPB,michala,gala,86400,3,86400,3,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Evocogs- unmapped,CPB-804,CPB,michala,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Evocogs- mapping,CPB-803,CPB,michala,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Evocogs- tests,CPB-806,CPB,michala,gala,57600,2,86400,3,150%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Test diamond chunks,CPB-802,CPB,michala,gala,86400,3,115200,4,133%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Generate production- Code review,CPB-874,CPB,michala,gala,28800,1,14400,0.5,50%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Evocogs- QA,CPB-807,CPB,michala,gala,28800,1,86400,3,300%,P279 - CPB projects Computational (CPB 2023),CPB-762,,CPB,1 Jan 23,Bio-Info
+Confluence for QA and trimming of the raw reads for isolates,CPB-952,CPB,michala,iliab,28800,1,57600,2,200%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+Previous Biomica's datasets uploaded to metabacum: re-load correct data to DB (metabacum) May-2023,CPB-958,CPB,michala,larisar,201600,7,144000,5,71%,P271 - CPB Upkeep Computational (2023),MIC-828,,MicroBoost,1 May 23,Bio-Info
+CORBACs run failure - BI,CI-8,CPBC Internal,michala,michalsho,115200,4,115200,4,100%,P82 - ICL (Lavie 2023),,,MicroBoost,1 May 23,Bio-Info
+Verification of filtration dimensions in frame of functional abundance tables generation,MIC-866,MicroBoost,michala,larisar,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),MIC-828,,MicroBoost,1 May 23,Bio-Info
+Test completness of previous Biomica's datasets uploaded to metabacum  -Apr2023,MIC-812,MicroBoost,michala,larisar,86400,3,187200,6.5,216%,P265 - CSO microbials (CSO/Product),MIC-828,,MicroBoost,1 Apr 23,Bio-Info
+Test completness of previous Biomica's datasets uploaded to metabacum  -Mar2023,MIC-700,MicroBoost,michala,larisar,144000,5,144000,5,100%,P265 - CSO microbials (CSO/Product),MIC-828,,MicroBoost,1 Mar 23,Bio-Info
+StrainDB update for Confuter and F2O,MIC-825,MicroBoost,michala,elanitec,144000,5,158400,5.5,110%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 May 23,Bio-Info
+Metagenomic samples: KOs and EvoCOGs annotations - QA ,CPB-964,CPB,michala,larisar,115200,4,144000,5,125%,P271 - CPB Upkeep Computational (2023),CPB-762,,CPB,1 May 23,Bio-Info
+strainDB- statistics,MIC-803,MicroBoost,michala,gala,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+comparens code review,CPB-900,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Apr 23,Bio-Info
+Plasmids- run annotation,CPB-882,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+remove phix from reads,CPB-891,CPB,michala,gala,86400,3,100800,3.5,116%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Trimomatic,CPB-890,CPB,michala,gala,57600,2,144000,5,250%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Fastq-QC,CPB-889,CPB,michala,gala,57600,2,72000,2.5,125%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Plasmids- tests,CPB-883,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Mar 23,Bio-Info
+Stats- collect stats per production,CPB-849,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Stats- QA,CPB-851,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Identify Plasmids,CPB-881,CPB,michala,gala,57600,2,144000,5,250%,P279 - CPB projects Computational (CPB 2023),CPB-880,,CPB,1 Feb 23,Bio-Info
+Protein description- check code,CPB-857,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Interpro7- check code,CPB-854,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Protein description- QA,CPB-859,CPB,michala,gala,28800,1,86400,3,300%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Interpro7- QA,CPB-856,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Interpro7- code adaptetion,CPB-855,CPB,michala,gala,28800,1,28800,1,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Protein description- code adaptation,CPB-858,CPB,michala,gala,57600,2,57600,2,100%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Stats- tests,CPB-852,CPB,michala,gala,28800,1,43200,1.5,150%,P279 - CPB projects Computational (CPB 2023),CPB-841,,CPB,1 Feb 23,Bio-Info
+Support- Jan (Michal),CPB-766,CPB,michala,gala,57600,2,100800,3.5,175%,P997-271 - Upkeep Computational ,,,CPB,1 Jan 23,Bio-Info
+statistics- Michal,MIC-705,MicroBoost,michala,gala,,0,57600,2,,P265 - CSO microbials (CSO/Product),,,CPB,1 Jan 23,Bio-Info
+Verification of filtration dimensions in frame of functional abundance tables generation - Jun-2023 backup,MIC-869,MicroBoost,michala,larisar,28800,1,28800,1,100%,P273 - Product- Upkeep MB  (2023),MIC-828,,MicroBoost,1 Jun 23,Bio-Info
+CLONE - Refunder analysis on Sheba data,INTBIOM-5,Biomica Internal,michala,elanitec,86400,3,86400,3,100%,P255 - IBD (Biomica 2023),,,MicroBoost,1 Jun 23,Bio-Info
+Previous Biomica's datasets uploaded to metabacum: re-load correct data to DB (metabacum) Jun-2023,CPB-982,CPB,michala,larisar,144000,5,57600,2,40%,P271 - CPB Upkeep Computational (2023),MIC-828,,MicroBoost,1 Jun 23,Bio-Info
+StrainDB complete missed 4 productions,CPB-991,CPB,michala,larisar,57600,2,57600,2,100%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jun 23,Bio-Info
+CLONE - StrainDB update for Confuter and F2O,MIC-868,MicroBoost,michala,elanitec,86400,3,87360,3.033333333,101%,P273 - Product- Upkeep MB  (2023),MIC-742,,MicroBoost,1 Jun 23,Bio-Info
+Previous Biomica's datasets uploaded to metabacum: re-load correct data to DB (metabacum) Jul-2023,CPB-1022,CPB,michala,iliab,86400,3,86400,3,100%,P271 - CPB Upkeep Computational (2023),MIC-828,,MicroBoost,1 Jul 23,Bio-Info
+Refunder analysis on Sheba data - JUL,INTBIOM-9,Biomica Internal,michala,drorf,115200,4,86400,3,75%,P255 - IBD (Biomica 2023),,,MicroBoost,1 Jul 23,Bio-Info
+Previous Biomica's datasets uploaded to metabacum: check loaded data,CPB-1031,CPB,michala,iliab,115200,4,57600,2,50%,P279 - CPB projects Computational (CPB 2023),MIC-828,,CPB,1 Jul 23,Bio-Info
+"Refunder: EvoCOGs, KOs and Pathways annotations - QA",CPB-981,CPB,michala,larisar,144000,5,230400,8,160%,P271 - CPB Upkeep Computational (2023),CPB-762,,MicroBoost,1 Jun 23,Bio-Info
+production report of all productions,LAV-407,LavieBio,robertoo,mariac,115200,4,43200,1.5,37%,P144 - Enabling Optim and F&F CPB (LavieBio),,,MicroBoost,1 Jan 23,Bio-Info
+CLONE - smile correction in DB,AGPI-4,Ag Plenus Internal,robertoo,hamutal.e,,0,10800,0.375,,P23 - Herbicides (AgPlenus) (2023),AG-163,,CPB,1 Jun 23,Bio-Info
+Forester - Full tree including the GTDB genomes,MIC-727,MicroBoost,anatm,anatol,28800,1,57600,2,200%,P265 - Product- MB (Microboost 2023),MIC-715,,MicroBoost,1 Apr 23,Architect
