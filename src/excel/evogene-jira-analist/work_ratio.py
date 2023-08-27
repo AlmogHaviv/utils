@@ -17,6 +17,7 @@ column1_name = 'Assignee'
 column2_name = 'Work Ratio'
 column3_name = 'Custom field (Product)'
 save_path1 = '/graphs'
+sprint_name = "July"
 
 ### parsers ###
 def setup_arg_parser():
@@ -24,11 +25,12 @@ def setup_arg_parser():
     Set up the argument parser.
     """
     parser = argparse.ArgumentParser(description='parse for type of report')
-    parser.add_argument('m' '--monthly', type=str, required=False, help='If entered, return the last month report')
-    parser.add_argument('y' '--yearly', type=str, required=False, help='If entered, return the last year report')
-    parser.add_argument('p' '--product', type=str, required=False, help='If entered, return the product report')
-    parser.add_argument('s' '--sprint', type=str, required=False, help='If entered, return the last month sprint report')
-    parser.add_argument('t' '--team', type=str, required=False, help='If entered, return the teams report')
+    parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS, help='Show this help message and exit.')
+    parser.add_argument('-m', '--monthly', action='store_true', help='If entered, return the last month report')
+    parser.add_argument('-y', '--yearly', action='store_true', help='If entered, return the last year report')
+    parser.add_argument('-p', '--product', action='store_true', help='If entered, return the product report')
+    parser.add_argument('-s', '--sprint', action='store_true', help='If entered, return the last month sprint report')
+    parser.add_argument('-t', '--team', action='store_true', help='If entered, return the teams report')
     return parser
 
 def main():
@@ -43,22 +45,29 @@ def main():
     # Check which report type was selected and perform corresponding action
     if args.monthly:
         print("Generating the last month report...")
-        # Your code to generate the last month report
-    if args.yearly:
+        parsing_report(args, True)
+        
+    elif args.yearly:
         print("Generating the last year report...")
-        # Your code to generate the last year report
+        parsing_report(args, False)
+    else:
+        print("please specify the type of report: monthly or yearly")
 
+    
+def parsing_report(args, bol):
     if args.product:
         print("Generating the product report...")
-        # Your code to generate the product report
+        pie_chart_by_product(column1_name, column2_name, column3_name, file_name, bol)
 
-    if args.sprint:
-        print("Generating the last month sprint report...")
-        # Your code to generate the last month sprint report
+    elif args.sprint:
+            print("Generating the last month sprint report...")
+            pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, bol)
 
-    if args.team:
+    elif args.team:
         print("Generating the teams report...")
-        # Your code to generate the teams report
+        pie_chart_by_team(column1_name, column2_name, file_name, bol)
+    else:
+        print("please specify which report you want: product, team or sprint")
 
 
 ### data reciving from csv ### 
