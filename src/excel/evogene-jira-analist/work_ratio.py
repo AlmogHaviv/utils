@@ -25,7 +25,6 @@ def setup_arg_parser():
     Set up the argument parser.
     """
     parser = argparse.ArgumentParser(description='parse for type of report')
-    parser.add_argument('-h', '--help', action='help', default=argparse.SUPPRESS, help='Show this help message and exit.')
     parser.add_argument('-m', '--monthly', action='store_true', help='If entered, return the last month report')
     parser.add_argument('-y', '--yearly', action='store_true', help='If entered, return the last year report')
     parser.add_argument('-p', '--product', action='store_true', help='If entered, return the product report')
@@ -266,7 +265,8 @@ def pie_chart_data(title, labels, sizes):
                          marker=dict(line=dict(color='#000000', width=2)))
 
     # Display the pie chart
-    figure.show()
+    print(f'{title}')
+    figure.write_html(f'{title}.html')
 
 
 # creates the pie chart by worker name 
@@ -295,7 +295,6 @@ def pie_chart_by_team(column1_name, column2_name, file_name, monthly=True):
         dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
         for i, team in enumerate(teams):
             full_data_for_team = data_for_team_visualizion(dict_for_ratio, team)
-            print(f'{teams1[i]} sprint ratio', full_data_for_team[1], full_data_for_team[2])
             pie_chart_data(f'{teams1[i]} sprint ratio', full_data_for_team[1], full_data_for_team[2])
 
 
