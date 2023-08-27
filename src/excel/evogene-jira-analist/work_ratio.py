@@ -10,14 +10,18 @@ from datetime import datetime, timedelta
 
 import argparse
 
+import calendar
+
 
 ### global variabels ###
 file_name = "v1-yearly.csv"
 column1_name = 'Assignee'
 column2_name = 'Work Ratio'
 column3_name = 'Custom field (Product)'
-save_path1 = '/graphs'
-sprint_name = "July"
+now = pd.to_datetime('today')
+sprint_name = now.strftime('%B')
+worker_file = "worker-names.csv"
+
 
 ### parsers ###
 def setup_arg_parser():
@@ -31,6 +35,7 @@ def setup_arg_parser():
     parser.add_argument('-s', '--sprint', action='store_true', help='If entered, return the last month sprint report')
     parser.add_argument('-t', '--team', action='store_true', help='If entered, return the teams report')
     return parser
+
 
 def main():
     """
@@ -56,25 +61,31 @@ def main():
 def parsing_report(args, bol):
     if args.product:
         print("Generating the product report...")
-        pie_chart_by_product(column1_name, column2_name, column3_name, file_name, bol)
+        pie_chart_by_product(column1_name, column2_name, column3_name, file_name, worker_file, bol)
 
     elif args.sprint:
             print("Generating the last month sprint report...")
-            pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, bol)
+            pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, worker_file, bol)
 
     elif args.team:
         print("Generating the teams report...")
-        pie_chart_by_team(column1_name, column2_name, file_name, bol)
+        pie_chart_by_team(column1_name, column2_name, file_name, worker_file, bol)
     else:
         print("please specify which report you want: product, team or sprint")
 
 
 ### data reciving from csv ### 
+def worker_teams(worker_path, column_name):
+    df = pd.read_csv(worker_path)
+    column_names = df.columns
+    print(column_names)
+    return df[column_name].tolist()
+
 # reading csv file and returning the data of the two columns by thier name
-def getting_2_columns_from_csv_file(file_path, column1_name, column2_name, monthly=True):
+def getting_2_columns_from_csv_file(file_path, worker_path, column1_name, column2_name, monthly=True):
     # teams that are in the data and we do not want to pay attention to
-    dev_team = ['TALN', 'liavs', 'maorw', 'morank', 'vladz']
-    product_team = ['nira', 'hamutal.e', 'boazm', 'larisar', "elanitec", 'anatol', 'drorf']
+    dev_team = worker_teams(worker_path, "Devops")
+    product_team =  worker_teams(worker_path, "Product")
     # the sprint we want to check on from jira
     df = pd.read_csv(file_path)
     
@@ -122,10 +133,10 @@ def getting_2_columns_from_csv_file(file_path, column1_name, column2_name, month
 
 
 # reciving three columns for data integration
-def getting_3_columns_from_csv_file(file_path, column1_name, column2_name, column3_name, monthly=True):
+def getting_3_columns_from_csv_file(file_path, worker_path, column1_name, column2_name, column3_name, monthly=True):
     # teams that are in the data and we do not want to pay attention to
-    dev_team = ['TALN', 'liavs', 'maorw', 'morank', 'vladz', 'gala']
-    product_team = ['nira', 'hamutal.e', 'boazm', 'larisar', "elanitec", 'anatol', 'drorf']
+    dev_team = worker_teams(worker_path, "Devops")
+    product_team =  worker_teams(worker_path, "Product")
     # the sprint we want to check on from jira
     df = pd.read_csv(file_path)
     
@@ -266,12 +277,12 @@ def pie_chart_data(title, labels, sizes):
 
     # Display the pie chart
     print(f'{title}')
-    figure.write_html(f'{title}.html')
+    figure.write_html( f"{title}.html")
 
 
 # creates the pie chart by worker name 
-def worker_by_name_pie(file_name, column1_name, column2_name, monthly=True):
-    a = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
+def worker_by_name_pie(file_name,worker_path, column1_name, column2_name, monthly=True):
+    a = getting_2_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, monthly)
     for key in a:
         worker = data_for_worker_visualition(a, key)
         print(worker)
@@ -279,28 +290,28 @@ def worker_by_name_pie(file_name, column1_name, column2_name, monthly=True):
 
 
 #  creates pie chart for  full sprint
-def pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, monthly=True):
-        dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
+def pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, worker_path, monthly=True):
+        dict_for_ratio = getting_2_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, monthly)
         full_data_for_sprint = data_for_sprint_visualition(dict_for_ratio, sprint_name)
         pie_chart_data(full_data_for_sprint[0], full_data_for_sprint[1], full_data_for_sprint[2])
 
 
 #creates the pie chart for team
-def pie_chart_by_team(column1_name, column2_name, file_name, monthly=True):
-        bi = ['markb', 'iliab', 'michala', 'liorr']
-        algo = [ 'robertoo', 'itair', 'renanam', 'anatm']
-        dev = ['duduz', 'nerias', 'noama', 'hodayam']
+def pie_chart_by_team(column1_name, column2_name, file_name, worker_path, monthly=True):
+        bi = worker_teams(worker_path, "Bi")
+        algo = worker_teams(worker_path, "Algo")
+        dev = worker_teams(worker_path, "Dev")
         teams = [bi, algo, dev]
         teams1 = ['bi', 'algo', 'dev']
-        dict_for_ratio = getting_2_columns_from_csv_file(file_name, column1_name, column2_name, monthly)
+        dict_for_ratio = getting_2_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, monthly)
         for i, team in enumerate(teams):
             full_data_for_team = data_for_team_visualizion(dict_for_ratio, team)
             pie_chart_data(f'{teams1[i]} sprint ratio', full_data_for_team[1], full_data_for_team[2])
 
 
 #creates the pie chart for product
-def pie_chart_by_product(column1_name, column2_name, column3_name, file_name, monthly=True):
-        dict_for_ratio = getting_3_columns_from_csv_file(file_name, column1_name, column2_name, column3_name, monthly)
+def pie_chart_by_product(column1_name, column2_name, column3_name, file_name, worker_path, monthly=True):
+        dict_for_ratio = getting_3_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, column3_name, monthly)
         for key in dict_for_ratio:
             full_data_for_team = data_for_team_visualizion(dict_for_ratio, [key])
             pie_chart_data(f'{key} sprint ratio', full_data_for_team[1], full_data_for_team[2])
