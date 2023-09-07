@@ -74,7 +74,8 @@ def parsing_report(args, bol):
         print("please specify which report you want: product, team or sprint")
 
 
-### data reciving from csv ### 
+### data reciving from csv ###
+# reciving the names of the workers by demand.
 def worker_teams(worker_path, column_name):
     df = pd.read_csv(worker_path)
     column_names = df.columns
