@@ -99,24 +99,33 @@ def creating_company_column(budget_column):
     budget_names = df["budget"]
     company_names = df["company name"]
 
+    # creating a dict
+    company_codes_dict = {}
+
+    for index, name in enumerate(budget_names):
+        company_codes_dict[name] = company_names[index]
+
     # Desired new list for dataframe
     res = []
 
     # conditioning
-    for val in budget_column:
-        code = val[:4]
-        if code[-1] == " ":
-            code = code[:3]
-        print(code)
-        counter = 0
-        while budget_names[counter] != code and len(budget_names) > counter:
-            counter += 1
-        print(counter)
+    for item in budget_column:
+        # Split the string by '-' and strip any whitespace
+        parts = item.split('-')
+        code = parts[0].strip()
+
+        # Check if the code exists in the comparison list
+        if code in company_codes_dict:
+            res.append(company_codes_dict[code])
+        else:
+            # If not found, you can handle this case as needed
+            res.append(-1)  # Or another suitable value
+
     return res
 
 
 
 ### excecution###
 if __name__ == "__main__":
-    read_excel_file('jira-missions-yearly2023.xlsx')
+    main()
     
