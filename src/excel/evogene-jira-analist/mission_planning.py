@@ -1,16 +1,27 @@
 import pandas as pd
 
+import calendar
+
 
 def main():
     filename = 'jira-missions-yearly2023.xlsx'
     df = read_excel_file(filename)
     grouped_data_by_months = divide_by_months(df)
-    january_data = dividing_by_team(grouped_data_by_months, 1)
-    for group_name, data in january_data.items():
-        print(f"January Data for Group '{group_name}':")
-        print(data)
+    yearly_data = []
+    last_month = grouped_data_by_months[1] + 1
+    for num in range(1,last_month):
+        yearly_data.append(actual_effort_utilization_monthly(grouped_data_by_months[0], num))
+    
+    full_data = fully_time_spent_dataframe(yearly_data)
+
+    print(full_data)
+    
+   
+    
+    
 
 
+# creates the datafram from the jira excel, also creating the company name column using the creating_company_column func and the team column using creating_team_column
 def read_excel_file(filename):
     try:
         # Attempt to read the Excel file into a DataFrame
@@ -26,14 +37,16 @@ def read_excel_file(filename):
         assignee = df['Assignee']
         budget  = df['Custom field (Budget)']
         company_name = creating_company_column(budget)
-       
+        team_name = creating_team_column(assignee)
+
         # Return the extracted data
         new_df = pd.DataFrame({
             'Time Spent (Days)': time_spent,
             'Sprint': sprint,
             'Assignee': assignee,
             'Custom field (Budget)': budget,
-            'company name' : company_name,
+            'Company Name' : company_name,
+            'Team Name' : team_name,
         })
         return new_df
 
@@ -42,6 +55,7 @@ def read_excel_file(filename):
         return None
     
 
+# adds to the dataframe the monthly column
 def divide_by_months(df):
     # Convert the 'Date' column to datetime
     df['Date'] = pd.to_datetime(df['Sprint'])
@@ -51,9 +65,12 @@ def divide_by_months(df):
     df.loc[((df['Month'] == 12) & (df['Date'].dt.year == 2022)) | ((df['Month'] == 11) & (df['Date'].dt.year == 2022)), 'Month'] = 1  # Change November & December 2022 to January 2023
     # Group the data by 'Month'
     grouped_data = dict(tuple(df.groupby('Month')))    # Perform aggregation or analysis on the grouped data, for example, calculate the mean
-    return grouped_data
+     # Find the number of the last month
+    last_month = df['Month'].max()
+    return grouped_data, last_month
 
 
+# divides the dataframe to dev, algo and bi
 def dividing_by_team(grouped_data, month_number):
     if month_number in grouped_data:
         # Filter data for the specified month
@@ -91,6 +108,35 @@ def dividing_by_team(grouped_data, month_number):
         return None
 
 
+# the func using in read_excel_file to creates the coulmn of team name
+def creating_team_column(assignee_column):
+    # creating company column
+    df = pd.read_csv("worker-names.csv")
+
+    # Extract the desired columns by their names
+    dev_names = df["Dev"]
+    algo_names = df["Algo"]
+    bi_names = df["Bi"]
+
+    # creating a list
+    res = []
+
+
+    for name in assignee_column:
+        # Remove leading and trailing whitespace from the name
+        name = name.strip()
+        if name in list(dev_names):
+            res.append("Dev") 
+        elif name in list(algo_names):
+            res.append("Algo")
+        elif name in list(bi_names):
+            res.append("Bi")
+        else:
+            res.append("Irrelevant")
+    return res
+
+
+# the func using in read_excel_file to creates the company of team name
 def creating_company_column(budget_column):
     # creating company column
     df = pd.read_excel("budget-naming.xlsx")
@@ -122,6 +168,88 @@ def creating_company_column(budget_column):
             res.append(-1)  # Or another suitable value
 
     return res
+
+
+def actual_effort_utilization_monthly(grouped_data, month_number):
+    # Extract the DataFrame for the specified month from the grouped data
+    df = grouped_data[month_number]
+    
+    # Group the DataFrame by 'Company Name' and 'Team Name', and calculate the sum of 'Time Spent (Days)'
+    result = df.groupby(['Company Name', 'Team Name'])['Time Spent (Days)'].sum().reset_index()
+    
+    # Pivot the DataFrame with 'Company Name' as the index, 'Team Name' as columns, and 'Time Spent (Days)' as values
+    result_pivot = result.pivot(index='Company Name', columns='Team Name', values='Time Spent (Days)').fillna(0)
+    
+    # Reset the index to bring 'Company Name' back as a column
+    result_pivot.reset_index(inplace=True)
+    
+    # Melt the DataFrame to reshape it for the desired output
+    result_melted = pd.melt(result_pivot, id_vars=['Company Name'], var_name='Team Name', value_name='Time Spent (Days)')
+    
+    # Sort the DataFrame by 'Company Name' and 'Team Name'
+    result_melted.sort_values(by=['Company Name', 'Team Name'], inplace=True)
+    
+    # Reset the index
+    result_melted.reset_index(drop=True, inplace=True)
+
+    month_name = calendar.month_name[month_number]
+
+    result_melted.rename(columns={'Time Spent (Days)': f'{month_name} Time Spent'}, inplace=True)
+    
+    return (result_melted, f'{month_name} Time Spent')
+
+
+# Creates he final dataframe for the  excel sheet
+def merge_dataframes(df1, df2, column_names1, column_names2):
+    # Merge the two DataFrames using an outer join on the specified key columns
+    merged_df = pd.merge(df1, df2, on=['Company Name', 'Team Name'], how='outer')
+
+    # Fill NaN values with 0 for the specified columns
+    for col in column_names1:
+        merged_df[col].fillna(0, inplace=True)
+    for col in column_names2:
+        merged_df[col].fillna(0, inplace=True)
+
+    return merged_df
+
+
+# Function to create a full dataframe of all the months of time spent
+def fully_time_spent_dataframe(list_of_months_data):
+    # Initialize the full dataframe with the data from the first month
+    full_data = list_of_months_data[0][0]
+
+    # Initialize a list to store the names of the months
+    list_of_month_names = [list_of_months_data[0][1]]
+
+    # Iterate through the remaining months' data
+    for data, month in list_of_months_data:
+        # Check if the month is not January (to avoid merging with itself)
+        if "January" not in month:
+            # Separate the full data and the current month's data
+            df1 = full_data
+            df2 = data
+
+            # Merge the dataframes and update the full data
+            full_data = merge_dataframes(df1, df2, list_of_month_names, [month])
+
+            # Append the current month's name to the list
+            list_of_month_names.append(month)
+
+    # Return the full dataframe containing data for all months
+    return full_data
+
+
+
+
+
+# extract time planed for a given month and company from the yearly excel
+def exctract_planned_from_excel(filename):
+    # Attempt to read the Excel file into a DataFrame
+    df = pd.read_excel(filename)
+    total_bi = df.iloc[:, 1]
+    total_dev = df.iloc[:, 1]
+    print(total_bi)
+
 
 
 
