@@ -1,37 +1,42 @@
 import pandas as pd
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
 
-import mission_planning
+# Sample DataFrame
+data = {
+    'Company Name': ['AgPlenus', 'AgPlenus', 'AgPlenus', 'AgSeed', 'AgSeed', 'AgSeed'],
+    'Team Name': ['Algo', 'Bi', 'Dev', 'Algo', 'Bi', 'Dev'],
+    'January Planned': [2.541667, 2.083333, 0.25, 0.083333, 1.0, 0.0],
+    'January Time Spent': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    'June Difference': [-8.083333, -6.041667, 0.25, 0.083333, 0.5, 0.0],
+    'July Planned': [2.541667, 2.083333, 0.25, 0.083333, 1.0, 0.0],
+    'July Time Spent': [20.0, 5.875, 0.0, 0.0, 0.0, 0.0],
+    'July Difference': [-17.458333, -3.791667, 0.25, 0.083333, 1.0, 0.0],
+}
 
-def export_dataframe_to_excel(df, output_filename, company_column_name):
-    # Create a Pandas Excel writer using XlsxWriter as the engine.
-    writer = pd.ExcelWriter(output_filename, engine='xlsxwriter')
+df = pd.DataFrame(data)
 
-    # Convert the dataframe to an XlsxWriter Excel object.
-    df.to_excel(writer, sheet_name='Sheet1', index=False)
+# Create a new Excel writer object
+writer = pd.ExcelWriter('output.xlsx', engine='openpyxl')
+df.to_excel(writer, index=False, sheet_name='Sheet1')
 
-    # Get the xlsxwriter workbook and worksheet objects.
-    workbook  = writer.book
-    worksheet = writer.sheets['Sheet1']
+# Access the Excel workbook and worksheet
+workbook = writer.book
+worksheet = writer.sheets['Sheet1']
 
-    # Initialize some formats to use later.
-    merge_format = workbook.add_format({'align': 'center', 'valign': 'vcenter'})
+# Iterate through the 'Company Name' column and merge cells
+previous_company = None
+merge_start_row = 2  # Start from row 2
+for row, company in enumerate(df['Company Name'], start=2):
+    if company != previous_company:
+        if previous_company is not None:
+            worksheet.merge_cells(f'A{merge_start_row}:A{row-1}')
+        merge_start_row = row
+    previous_company = company
 
-    # Iterate through unique Company Names and merge cells.
-    unique_companies = df[company_column_name].unique()
-    for company in unique_companies:
-        start_row = df[df[company_column_name] == company].index[0]
-        end_row = df[df[company_column_name] == company].index[-1]
-        if start_row != end_row:
-            worksheet.merge_range(f'A{start_row+2}:A{end_row+2}', company, merge_format)
+# Merge the last group
+if previous_company is not None:
+    worksheet.merge_cells(f'A{merge_start_row}:A{row}')
 
-    # Close the Pandas Excel writer and output the Excel file.
-    writer.close()
-
-df = mission_planning.main()
-print(df)
-export_dataframe_to_excel(df, 'output.xlsx', 'Company Name')
-
-
-
-
-
+# Save the Excel file
+writer.close()
