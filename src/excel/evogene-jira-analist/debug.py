@@ -1,33 +1,37 @@
 import pandas as pd
 
-def merge_dataframes(df1, df2):
-    # Merge the two DataFrames using an outer join to keep all companies
-    merged_df = pd.merge(df1, df2, on=['Company Name', 'Team Name'], how='outer', suffixes=('_df1', '_df2'))
+import mission_planning
 
-    # Fill NaN values with 0 for the 'Time Spent (Days)' columns
-    merged_df['Time Spent (Days)_df1'].fillna(0, inplace=True)
-    merged_df['Time Spent (Days)_df2'].fillna(0, inplace=True)
+def export_dataframe_to_excel(df, output_filename, company_column_name):
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    writer = pd.ExcelWriter(output_filename, engine='xlsxwriter')
 
-    return merged_df
+    # Convert the dataframe to an XlsxWriter Excel object.
+    df.to_excel(writer, sheet_name='Sheet1', index=False)
 
-# Sample DataFrames
-data1 = {
-    'Company Name': ['AgPlenus', 'AgPlenus', 'AgPlenus', 'AgPlenus', 'Biomica'],
-    'Team Name': ['Algo', 'Bi', 'Dev', 'Irrelevant', 'Algo'],
-    'Time Spent (Days)_df1': [0.0, 6.0625, 0.0, 0.0, 7.75]
-}
+    # Get the xlsxwriter workbook and worksheet objects.
+    workbook  = writer.book
+    worksheet = writer.sheets['Sheet1']
 
-data2 = {
-    'Company Name': ['AgPlenus', 'AgPlenus', 'AgPlenus', 'AgPlenus', 'AgSeed'],
-    'Team Name': ['Algo', 'Bi', 'Dev', 'Irrelevant', 'Algo'],
-    'Time Spent (Days)_df2': [10.625, 8.125, 0.0, 0.0, 0.5]
-}
+    # Initialize some formats to use later.
+    merge_format = workbook.add_format({'align': 'center', 'valign': 'vcenter'})
 
-df1 = pd.DataFrame(data1)
-df2 = pd.DataFrame(data2)
+    # Iterate through unique Company Names and merge cells.
+    unique_companies = df[company_column_name].unique()
+    for company in unique_companies:
+        start_row = df[df[company_column_name] == company].index[0]
+        end_row = df[df[company_column_name] == company].index[-1]
+        if start_row != end_row:
+            worksheet.merge_range(f'A{start_row+2}:A{end_row+2}', company, merge_format)
 
-# Call the merge_dataframes function
-merged_df = merge_dataframes(df1, df2)
+    # Close the Pandas Excel writer and output the Excel file.
+    writer.close()
 
-# Print the merged DataFrame
-print(merged_df)
+df = mission_planning.main()
+print(df)
+export_dataframe_to_excel(df, 'output.xlsx', 'Company Name')
+
+
+
+
+

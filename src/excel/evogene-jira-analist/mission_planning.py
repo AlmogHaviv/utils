@@ -5,6 +5,8 @@ import calendar
 
 def main():
     filename = 'jira-missions-yearly2023.xlsx'
+    excel_filename_for_export = 'yearly-planning.xlsx'
+    company_column_name = 'Company Name'
     df = read_excel_file(filename)
     grouped_data_by_months = divide_by_months(df)
     yearly_data = []
@@ -13,8 +15,10 @@ def main():
         yearly_data.append(actual_effort_utilization_monthly(grouped_data_by_months[0], num))
     
     full_data = fully_time_spent_dataframe(yearly_data)
-
     print(full_data)
+
+    export_dataframe_to_excel(full_data, excel_filename_for_export, company_column_name)
+
     
    
     
@@ -117,6 +121,7 @@ def creating_team_column(assignee_column):
     dev_names = df["Dev"]
     algo_names = df["Algo"]
     bi_names = df["Bi"]
+    devops_name = df["Devops"]
 
     # creating a list
     res = []
@@ -131,6 +136,8 @@ def creating_team_column(assignee_column):
             res.append("Algo")
         elif name in list(bi_names):
             res.append("Bi")
+        elif name in list(devops_name):
+            res.append("Devops")
         else:
             res.append("Irrelevant")
     return res
@@ -239,6 +246,31 @@ def fully_time_spent_dataframe(list_of_months_data):
     return full_data
 
 
+
+def export_dataframe_to_excel(df, output_filename, company_column_name):
+    # Create a Pandas Excel writer using XlsxWriter as the engine.
+    writer = pd.ExcelWriter(output_filename, engine='xlsxwriter')
+
+    # Convert the dataframe to an XlsxWriter Excel object.
+    df.to_excel(writer, sheet_name='Sheet1', index=False)
+
+    # Get the xlsxwriter workbook and worksheet objects.
+    workbook  = writer.book
+    worksheet = writer.sheets['Sheet1']
+
+    # Initialize some formats to use later.
+    merge_format = workbook.add_format({'align': 'center', 'valign': 'vcenter'})
+
+    # Iterate through unique Company Names and merge cells.
+    unique_companies = df[company_column_name].unique()
+    for company in unique_companies:
+        start_row = df[df[company_column_name] == company].index[0]
+        end_row = df[df[company_column_name] == company].index[-1]
+        if start_row != end_row:
+            worksheet.merge_range(f'A{start_row+2}:A{end_row+2}', company, merge_format)
+
+    # Close the Pandas Excel writer and output the Excel file.
+    writer.close()
 
 
 
