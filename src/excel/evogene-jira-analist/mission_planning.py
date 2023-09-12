@@ -4,7 +4,7 @@ import calendar
 
 from openpyxl import load_workbook
 
-from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.styles import Alignment, Border, Side, Font, PatternFill
 
 
 def main():
@@ -41,6 +41,11 @@ def main():
 
     # Export the full data to an Excel file with merged 'Company Name' cells
     export_dataframe_to_excel_with_merged(full_data, output_filename)
+
+    # Styling the excel file
+    change_excel_font(output_filename, font_name='David', font_size=12, italic=False, color='000000')
+    style_excel_file(output_filename)
+    color_excel_difference(output_filename) 
 
 
 # creates the datafram from the jira excel, also creating the company name column using the creating_company_column func and the team column using creating_team_column
@@ -269,6 +274,22 @@ def fully_time_spent_dataframe(list_of_months_data):
     # Return the full dataframe containing data for all months
     filtered_df = full_data[full_data['Team Name'] != 'Irrelevant']
 
+    # Calculate the sum of planned columns for each row
+    planned_columns = filtered_df.columns[filtered_df.columns.str.contains(' Planned')]
+    filtered_df['Total Planned'] = filtered_df[planned_columns].sum(axis=1)
+
+    # Calculate the sum of time spent columns for each row
+    time_spent_columns = filtered_df.columns[filtered_df.columns.str.contains(' Time Spent')]
+    filtered_df['Total Time Spent'] = filtered_df[time_spent_columns].sum(axis=1)
+
+    # Calculate the sum of difference columns for each row
+    difference_columns = filtered_df.columns[filtered_df.columns.str.contains(' Difference')]
+    filtered_df['Total Difference'] = filtered_df[difference_columns].sum(axis=1)
+
+    # Round up all the numbers
+    numeric_columns = filtered_df.select_dtypes(include=[float])
+    filtered_df[numeric_columns.columns] = numeric_columns.round(2)
+
     return filtered_df
 
 
@@ -347,6 +368,118 @@ def export_dataframe_to_excel_with_merged(df, output_filename):
 
     print(f'Excel file "{output_filename}" created with merged cells.')
 
+
+def style_excel_file(filename):
+    try:
+        # Load the Excel file using openpyxl
+        workbook = load_workbook(filename)
+
+        # Select the active sheet (replace 'Sheet1' with the actual sheet name if different)
+        sheet = workbook.active
+
+        # Create a Format object for centering text
+        centered_text_format = Alignment(horizontal='center', vertical='center')
+
+        # Apply center alignment to all cells in the sheet
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.alignment = centered_text_format
+
+        # Create a Format object for bold font
+        bold_font_format = Font(bold=True)
+
+        # Apply bold font to the 'Company Name' column
+        for cell in sheet['A']:
+            cell.font = bold_font_format
+
+        # Create a Format object for a bold border
+        bold_border_format = Border(
+            left=Side(style='thin', color='000000'),
+            right=Side(style='thin', color='000000'),
+            top=Side(style='thin', color='000000'),
+            bottom=Side(style='thin', color='000000')
+        )
+
+        # Apply bold border to all cells
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.border = bold_border_format
+
+        # Save the modified Excel file
+        workbook.save(filename)
+        
+        print(f'Styling applied successfully to {filename}')
+    except Exception as e:
+        print(f'Error: {e}')
+
+
+def color_excel_difference(filename):
+    # Load the Excel file
+    excel_file = pd.ExcelFile(filename)
+    
+    # Read the DataFrame from the Excel file
+    df = excel_file.parse(excel_file.sheet_names[0])
+
+    # Get the xlsxwriter workbook and worksheet objects.
+    workbook = load_workbook(filename)
+    worksheet = workbook.active
+
+    # Define the cell fill colors
+    positive_color = PatternFill(start_color='D8FFD8', end_color='D8FFD8', fill_type='solid')  # Soft green
+    negative_color = PatternFill(start_color='FFD8D8', end_color='FFD8D8', fill_type='solid')  # Soft red
+    planned_color = PatternFill(start_color='D8E4FF', end_color='D8E4FF', fill_type='solid')  # Soft blue
+
+
+    # Loop through the columns and apply cell styles
+    for col in df.columns:
+        if 'Difference' in col:
+            for idx, value in enumerate(df[col], start=2):  # Start from the second row (header is in the first row)
+                cell = worksheet.cell(row=idx, column=df.columns.get_loc(col) + 1)  # +1 because Excel is 1-based
+                if value > 0:
+                    cell.fill = positive_color
+                elif value < 0:
+                    cell.fill = negative_color
+        elif 'Planned' in col:
+            for idx, value in enumerate(df[col], start=2):  # Start from the second row (header is in the first row)
+                cell = worksheet.cell(row=idx, column=df.columns.get_loc(col) + 1)  # +1 because Excel is 1-based
+                cell.fill = planned_color
+
+    # Save the modified Excel file
+    workbook.save(filename)
+
+
+def change_excel_font(filename, font_name='David', font_size=12, italic=False, color='000000'):
+    """
+    Change the font for the entire Excel file.
+
+    Args:
+        filename (str): The name of the Excel file.
+        font_name (str, optional): The font name. Default is 'Arial'.
+        font_size (int, optional): The font size. Default is 12.
+        bold (bool, optional): Whether the font should be bold. Default is False.
+        italic (bool, optional): Whether the font should be italic. Default is False.
+        color (str, optional): The font color in RGB format. Default is '000000' (black).
+
+    Returns:
+        None
+    """
+    # Load the existing Excel workbook
+    workbook = load_workbook(filename)
+
+    # Define font settings
+    font = Font(name=font_name, size=font_size, italic=italic, color=color)
+
+    # Iterate through all worksheets in the workbook
+    for sheetname in workbook.sheetnames:
+        sheet = workbook[sheetname]
+
+        # Iterate through all cells in the worksheet
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.font = font
+
+    # Save the modified workbook
+    workbook.save(filename)
 
 ### excecution###
 if __name__ == "__main__":

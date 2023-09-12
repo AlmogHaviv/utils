@@ -1,42 +1,38 @@
-import pandas as pd
-from openpyxl import Workbook
-from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 
-# Sample DataFrame
-data = {
-    'Company Name': ['AgPlenus', 'AgPlenus', 'AgPlenus', 'AgSeed', 'AgSeed', 'AgSeed'],
-    'Team Name': ['Algo', 'Bi', 'Dev', 'Algo', 'Bi', 'Dev'],
-    'January Planned': [2.541667, 2.083333, 0.25, 0.083333, 1.0, 0.0],
-    'January Time Spent': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-    'June Difference': [-8.083333, -6.041667, 0.25, 0.083333, 0.5, 0.0],
-    'July Planned': [2.541667, 2.083333, 0.25, 0.083333, 1.0, 0.0],
-    'July Time Spent': [20.0, 5.875, 0.0, 0.0, 0.0, 0.0],
-    'July Difference': [-17.458333, -3.791667, 0.25, 0.083333, 1.0, 0.0],
-}
+def change_excel_font(filename, font_name='David', font_size=12, italic=False, color='000000'):
+    """
+    Change the font for the entire Excel file.
 
-df = pd.DataFrame(data)
+    Args:
+        filename (str): The name of the Excel file.
+        font_name (str, optional): The font name. Default is 'Arial'.
+        font_size (int, optional): The font size. Default is 12.
+        bold (bool, optional): Whether the font should be bold. Default is False.
+        italic (bool, optional): Whether the font should be italic. Default is False.
+        color (str, optional): The font color in RGB format. Default is '000000' (black).
 
-# Create a new Excel writer object
-writer = pd.ExcelWriter('output.xlsx', engine='openpyxl')
-df.to_excel(writer, index=False, sheet_name='Sheet1')
+    Returns:
+        None
+    """
+    # Load the existing Excel workbook
+    workbook = load_workbook(filename)
 
-# Access the Excel workbook and worksheet
-workbook = writer.book
-worksheet = writer.sheets['Sheet1']
+    # Define font settings
+    font = Font(name=font_name, size=font_size, italic=italic, color=color)
 
-# Iterate through the 'Company Name' column and merge cells
-previous_company = None
-merge_start_row = 2  # Start from row 2
-for row, company in enumerate(df['Company Name'], start=2):
-    if company != previous_company:
-        if previous_company is not None:
-            worksheet.merge_cells(f'A{merge_start_row}:A{row-1}')
-        merge_start_row = row
-    previous_company = company
+    # Iterate through all worksheets in the workbook
+    for sheetname in workbook.sheetnames:
+        sheet = workbook[sheetname]
 
-# Merge the last group
-if previous_company is not None:
-    worksheet.merge_cells(f'A{merge_start_row}:A{row}')
+        # Iterate through all cells in the worksheet
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.font = font
 
-# Save the Excel file
-writer.close()
+    # Save the modified workbook
+    workbook.save(filename)
+
+# Usage example:
+change_excel_font('yearly-planning.xlsx', font_name='Verdana', color='000000')
