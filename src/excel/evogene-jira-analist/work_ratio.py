@@ -6,22 +6,16 @@ import plotly.express as px
 
 import numpy as np
 
-from datetime import datetime, timedelta
-
 import argparse
+
+import datetime
 
 import calendar
 
+## global variabels ###
 
-### global variabels ###
 file_name = "v1-yearly.csv"
-column1_name = 'Assignee'
-column2_name = 'Work Ratio'
-column3_name = 'Custom field (Product)'
-now = pd.to_datetime('today')
-sprint_name = now.strftime('%B')
 worker_file = "worker-names.csv"
-
 
 ### parsers ###
 def setup_arg_parser():
@@ -41,6 +35,7 @@ def main():
     """
     Main logic of the script using parsed arguments.
     """
+
     parser = setup_arg_parser()
 
     # Parse the arguments
@@ -61,15 +56,15 @@ def main():
 def parsing_report(args, bol):
     if args.product:
         print("Generating the product report...")
-        pie_chart_by_product(column1_name, column2_name, column3_name, file_name, worker_file, bol)
+        pie_chart_by_product(file_name, worker_file, bol)
 
     elif args.sprint:
-            print("Generating the last month sprint report...")
-            pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, worker_file, bol)
+        print("Generating the last month sprint report...")
+        pie_chart_by_sprint(file_name, worker_file, bol)
 
     elif args.team:
         print("Generating the teams report...")
-        pie_chart_by_team(column1_name, column2_name, file_name, worker_file, bol)
+        pie_chart_by_team(file_name, worker_file, bol)
     else:
         print("please specify which report you want: product, team or sprint")
 
@@ -78,179 +73,80 @@ def parsing_report(args, bol):
 # reciving the names of the workers by demand.
 def worker_teams(worker_path, column_name):
     df = pd.read_csv(worker_path)
-    column_names = df.columns
-    print(column_names)
     return df[column_name].tolist()
 
-# reading csv file and returning the data of the two columns by thier name
-def getting_2_columns_from_csv_file(file_path, worker_path, column1_name, column2_name, monthly=True):
-    # teams that are in the data and we do not want to pay attention to
-    dev_team = worker_teams(worker_path, "Devops")
-    product_team =  worker_teams(worker_path, "Product")
-    # the sprint we want to check on from jira
-    df = pd.read_csv(file_path)
-    
-    column1_data = df[column1_name].tolist()
-    column2_data = df[column2_name].tolist()
 
-    # works only if the monthly report is asked
+def creating_dataframe(csv_file_path, worker_path, monthly):
+    # List of columns you want to select from the CSV file
+    columns_to_select = ['Assignee', 'Work Ratio', 'Custom field (Product)', 'Issue key', 'Sprint', 'Issue id']
+    # Read the CSV file and select specific columns
+    df = pd.read_csv(csv_file_path, usecols=columns_to_select)
+    # List of names to remove
+    names_to_remove = worker_teams(worker_path, "Devops") + worker_teams(worker_path, "Product")
+    # Filter the DataFrame to exclude rows with names in the 'names_to_remove' list
+    df_filtered = df[~df['Assignee'].isin(names_to_remove)]
+    # Convert 'Work Ratio' from percentage strings to float values
+    df_filtered['Work Ratio'] = df_filtered['Work Ratio'].str.rstrip('%').astype(float) / 100
+    # Create a new column 'Number for Ratio' based on 'Work Ratio' values
+    conditions = [
+        (df_filtered['Work Ratio'].isna()),  # Condition for empty cells
+        (df_filtered['Work Ratio'] < 0.75),
+        ((df_filtered['Work Ratio'] >= 0.75) & (df_filtered['Work Ratio'] <= 1.20)),
+        (df_filtered['Work Ratio'] > 1.20)
+    ]
+    choices = [0, 1, 2, 3]
+
+    df_filtered['Number for Ratio'] = np.select(conditions, choices, default=-1)
+
     if monthly:
-        current_date_time = datetime.now()
-        first_day_of_current_month = current_date_time.replace(day=1)
-        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
-        last_month_name = last_day_of_previous_month.strftime("%b")
-        if last_day_of_previous_month.year < first_day_of_current_month.year:
-            last_year = last_day_of_previous_month.year
-        else:
-            last_year = first_day_of_current_month.year
-        last_year = str(last_day_of_previous_month.year)[2:]
-        df["Sprint"] = pd.to_datetime(df["Sprint"], format="%d %b %y")
-        months_list = df["Sprint"].dt.strftime("%b").tolist()
-        years_list = df["Sprint"].dt.strftime("%y").tolist()
-        full_lst =[]
-        for i in range(len(column1_data)):
-            obj = [[months_list[i],years_list[i]], column1_data[i], column2_data[i]]
-            full_lst.append(obj)
-        column1_data = []
-        column2_data = []
-        for lst in full_lst:
-            if lst[0][0] == last_month_name and lst[0][1] == last_year:
-                column1_data.append(lst[1])
-                column2_data.append(lst[2])
-        
+        current_year = datetime.datetime.now().year
+        last_year = current_year - 1       
+        df_filtered['Date'] = pd.to_datetime(df_filtered['Sprint'])
+        # Create a new column 'Month' to store the month from the 'Date' column
+        df_filtered['Month'] = df_filtered['Date'].dt.month
+        # Assign a custom month value to records from December 2022
+        df_filtered.loc[((df_filtered['Month'] == 12) & (df_filtered['Date'].dt.year == last_year)) | ((df_filtered['Month'] == 11) & (df_filtered['Date'].dt.year == last_year)), 'Month'] = 1  # Change November & December 2022 to January 2023
+        # Group the data by 'Month'
+        grouped_data = dict(tuple(df_filtered.groupby('Month')))    # Perform aggregation or analysis on the grouped data, for example, calculate the mean
+        # Find the number of the last month
+        last_month = df_filtered['Month'].max()
+        df_filtered = grouped_data[last_month]
 
-    integrated_dict = {} # create dictionery to calculate the values
-    for i, name  in enumerate(column1_data):
-        if (name in dev_team) or (name in product_team): # loose redundent names
-            pass
-        else:
-            if name in integrated_dict:
-                integrated_dict[name].append(column2_data[i])
-            else:
-                integrated_dict[name] = [column2_data[i]]
-    
-    return integrated_dict
-
-
-
-# reciving three columns for data integration
-def getting_3_columns_from_csv_file(file_path, worker_path, column1_name, column2_name, column3_name, monthly=True):
-    # teams that are in the data and we do not want to pay attention to
-    dev_team = worker_teams(worker_path, "Devops")
-    product_team =  worker_teams(worker_path, "Product")
-    # the sprint we want to check on from jira
-    df = pd.read_csv(file_path)
-    
-    column1_data = df[column1_name].tolist()
-    column2_data = df[column2_name].tolist()
-    column3_data = df[column3_name].tolist()
-
-    
-    # works only if the monthly report is asked
-    if monthly:
-        current_date_time = datetime.now()
-        first_day_of_current_month = current_date_time.replace(day=1)
-        last_day_of_previous_month = first_day_of_current_month - timedelta(days=1)
-        last_month_name = last_day_of_previous_month.strftime("%b")
-        if last_day_of_previous_month.year < first_day_of_current_month.year:
-            last_year = last_day_of_previous_month.year
-        else:
-            last_year = first_day_of_current_month.year
-        last_year = str(last_day_of_previous_month.year)[2:]
-        df["Sprint"] = pd.to_datetime(df["Sprint"], format="%d %b %y")
-        months_list = df["Sprint"].dt.strftime("%b").tolist()
-        years_list = df["Sprint"].dt.strftime("%y").tolist()
-        full_lst =[]
-        for i in range(len(column1_data)):
-            obj = [[months_list[i],years_list[i]], column1_data[i], column2_data[i], column3_data[i]]
-            full_lst.append(obj)
-        column1_data = []
-        column2_data = []
-        column3_data = []
-        for lst in full_lst:
-            if lst[0][0] == last_month_name and lst[0][1] == last_year:
-                column1_data.append(lst[1])
-                column2_data.append(lst[2])
-                column3_data.append(lst[3])
-
-    integrated_dict = {} # create dictionery to calculate the values
-    for i, name  in enumerate(column1_data):
-        if (name in dev_team) or (name in product_team): # loose redundent names - usage of column 1
-            pass
-        else:
-            if column3_data[i] in integrated_dict: # creating the dict that has the  column 3 as a key
-                integrated_dict[column3_data[i]].append(column2_data[i])
-            else:
-                integrated_dict[column3_data[i]] = [column2_data[i]]
-    
-    return integrated_dict
+    return df_filtered
 
 
 ### cleaning data and prepring it for pie charts ###
-# taking a value from the dictionery and fix it for use in pie chart - suited for the asignee column
-def data_for_worker_visualition(dict, name):
-    labels = ['over 120%', "120 % - 75 %", "uder 75%", "no time has been logged"]
-    sizes = [0, 0, 0, 0]
-    for num in dict[name]:
-        if type(num) is float: #dealing with NaN
-            sizes[3] += 1
-        else:
-            if int(num[:-1]) > 120 :
-                sizes[0] += 1
-            elif (int(num[:-1]) <= 120) and (int(num[:-1]) >= 76):
-                sizes[1] += 1
-            else:
-                sizes[2] +=1
-    final_sizes = []
+def data_for_sprint_visualition(df, monthly):
+    labels = ['no time has been logged' ,'uder 75%', '75 % - 120 %','over 120%']
+    grouped = df.groupby('Number for Ratio').size().reset_index(name='Count')
+    grouped = grouped.sort_values(by='Number for Ratio')
+    sizes = grouped['Count'].tolist()
+    number_for_ratio = grouped['Number for Ratio'].tolist()
     final_lables = []
-    for i,num in enumerate(sizes):
-        if num != 0:
-            final_sizes.append(num)
-            final_lables.append(labels[i])        
-    return (name, final_lables, final_sizes)
+    for num in range(0,4):
+         if num in number_for_ratio:
+            final_lables.append(labels[num])
 
-
-# organizing the data for a full sprint pie chart
-def data_for_sprint_visualition(dict, sprint_month):
-    labels = ['over 120%', "120 % - 75 %", "uder 75%", "no time has been logged"]
-    sizes = [0, 0, 0, 0]
-    for key in dict: # taking the given information on every worker and adding it up 
-        worker_data = data_for_worker_visualition(dict, key)
-        for i, name in enumerate(worker_data[1]):
-            if name == 'over 120%':
-                sizes[0] += worker_data[2][i]
-            elif name == '120 % - 75 %':
-                sizes[1] += worker_data[2][i]
-            elif name == 'uder 75%':
-                sizes[2] += worker_data[2][i]
-            else:
-                sizes[3] += worker_data[2][i]
-    return (f'{sprint_month} Sprint Ratio', labels, sizes)
+    if monthly:
+        name_at_row = df["Month"].tolist()
+        sprint_month =  calendar.month_name[name_at_row[0]]
+        return (f'{sprint_month} Sprint Ratio', final_lables, sizes)
+    
+    return ('yearly Sprint Ratio', final_lables, sizes)
 
 
 # organizing the data for visualizion by team or product
-def data_for_team_visualizion(dict, team):
-    labels = ['over 120%', "120 % - 75 %", "uder 75%", "no time has been logged"]
-    sizes = [0, 0, 0, 0]
-    for key in dict: # taking the given information on every worker and adding it up
-        if key in team: 
-            worker_data = data_for_worker_visualition(dict, key)
-            for i, name in enumerate(worker_data[1]):
-                if name == 'over 120%':
-                    sizes[0] += worker_data[2][i]
-                elif name == '120 % - 75 %':
-                    sizes[1] += worker_data[2][i]
-                elif name == 'uder 75%':
-                    sizes[2] += worker_data[2][i]
-                else:
-                    sizes[3] += worker_data[2][i]
-    final_sizes = []
+def data_for_team_visualizion(df, team):
+    labels = ['no time has been logged' ,'uder 75%', '75 % - 120 %','over 120%']
+    grouped = df.groupby('Number for Ratio').size().reset_index(name='Count')
+    grouped = grouped.sort_values(by='Number for Ratio')
+    sizes = grouped['Count'].tolist()
+    number_for_ratio = grouped['Number for Ratio'].tolist()
     final_lables = []
-    for i,num in enumerate(sizes):
-        if num != 0:
-            final_sizes.append(num)
-            final_lables.append(labels[i])
-    return ('team', final_lables, final_sizes)
+    for num in range(0,4):
+         if num in number_for_ratio:
+            final_lables.append(labels[num])
+    return (f'{team} Sprint Ratio', final_lables, sizes)
 
 
 ### pie charts cretors ###
@@ -277,47 +173,44 @@ def pie_chart_data(title, labels, sizes):
                          marker=dict(line=dict(color='#000000', width=2)))
 
     # Display the pie chart
-    print(f'{title}')
     figure.write_html( f"{title}.html")
 
 
-# creates the pie chart by worker name 
-def worker_by_name_pie(file_name,worker_path, column1_name, column2_name, monthly=True):
-    a = getting_2_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, monthly)
-    for key in a:
-        worker = data_for_worker_visualition(a, key)
-        print(worker)
-        pie_chart_data(worker[0], worker[1], worker[2])
-
-
 #  creates pie chart for  full sprint
-def pie_chart_by_sprint(sprint_name, column1_name, column2_name, file_name, worker_path, monthly=True):
-        dict_for_ratio = getting_2_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, monthly)
-        full_data_for_sprint = data_for_sprint_visualition(dict_for_ratio, sprint_name)
-        pie_chart_data(full_data_for_sprint[0], full_data_for_sprint[1], full_data_for_sprint[2])
+def pie_chart_by_sprint(file_name, worker_path, monthly):
+    df = creating_dataframe(file_name, worker_path, monthly)
+    full_data_for_sprint = data_for_sprint_visualition(df, monthly)
+    df.to_excel(f'{full_data_for_sprint[0]}.xlsx', index=False)
+    print(f'excel file: {full_data_for_sprint[0]}.xlsx was created')
+    pie_chart_data(full_data_for_sprint[0], full_data_for_sprint[1], full_data_for_sprint[2])
 
 
 #creates the pie chart for team
-def pie_chart_by_team(column1_name, column2_name, file_name, worker_path, monthly=True):
-        bi = worker_teams(worker_path, "Bi")
-        algo = worker_teams(worker_path, "Algo")
-        dev = worker_teams(worker_path, "Dev")
-        teams = [bi, algo, dev]
-        teams1 = ['bi', 'algo', 'dev']
-        dict_for_ratio = getting_2_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, monthly)
-        for i, team in enumerate(teams):
-            full_data_for_team = data_for_team_visualizion(dict_for_ratio, team)
-            pie_chart_data(f'{teams1[i]} sprint ratio', full_data_for_team[1], full_data_for_team[2])
+def pie_chart_by_team(file_name, worker_path, monthly):
+    df = creating_dataframe(file_name, worker_path, monthly)
+    teams = [("Bi", worker_teams(worker_path, "Bi")), ("Algo", worker_teams(worker_path, "Algo")), ("Dev", worker_teams(worker_path, "Dev"))]
+    for team_name, team_list in teams:
+        filtered_df = df[df['Assignee'].isin(team_list)]
+        data_list_for_chart = data_for_team_visualizion(filtered_df, team_name)
+        pie_chart_data(data_list_for_chart[0], data_list_for_chart[1], data_list_for_chart[2])
+        df.to_excel(f'{data_list_for_chart[0]}.xlsx', index=False)
+        print(f'excel file: {data_list_for_chart[0]}.xlsx was created')
+
 
 
 #creates the pie chart for product
-def pie_chart_by_product(column1_name, column2_name, column3_name, file_name, worker_path, monthly=True):
-        dict_for_ratio = getting_3_columns_from_csv_file(file_name, worker_path, column1_name, column2_name, column3_name, monthly)
-        for key in dict_for_ratio:
-            full_data_for_team = data_for_team_visualizion(dict_for_ratio, [key])
-            pie_chart_data(f'{key} sprint ratio', full_data_for_team[1], full_data_for_team[2])
+def pie_chart_by_product(file_name, worker_path, monthly):
+    df = creating_dataframe(file_name, worker_path, monthly)
+    grouped = df.groupby("Custom field (Product)")
+    for product, group_df in grouped:
+        data_for_chart = data_for_team_visualizion(group_df, product)
+        pie_chart_data(data_for_chart[0], data_for_chart[1], data_for_chart[2])
+        df.to_excel(f'{data_for_chart[0]}.xlsx', index=False)
+        print(f'excel file: {data_for_chart[0]}.xlsx was created')
+
+             
 
 
 ### excecution###
 if __name__ == "__main__":
-    main()
+   main()
