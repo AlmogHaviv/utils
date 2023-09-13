@@ -1,13 +1,74 @@
 # utils
-this repo will hold veriaty of scripts that will hold useful scripts and more that will provide help for my academic work and job
-This repo works with python venv, needs to be activate.
 
-In order to enter the venv:
-1. in order to activete the venv entr the terminal and activate it using: myenv\Scripts\activate (in windows)
-2. in order to have all the packeges that are needed to run this script write in the terminal : pip install -r requirements.txt
-3. in order to leave the venv, enter the terminal and deactivate it using: deactivate
+This repository contains a variety of scripts designed to provide assistance for academic work and job-related tasks. These scripts are intended to be used with a Python virtual environment (venv).
 
-Current scripts:
-1. work_ratio.py - reads the excel file extracted from jira and returnts pie charts in html of the work ratio divided by companies, teams and products
-2. mission_planning.py - reads the excel file extracted from jira and returnts an excel file that contains all the data about the expected work donr by each company and how much work was dine in reality.
-3. scraping_txt.py - reads a pdf and with regex it returnts the book names, its code and its description in threee excel columns.
+## Getting Started
+
+To use the scripts in this repository, follow these steps:
+
+1. Activate the virtual environment in your terminal using the command (for Windows):
+   myenv\Scripts\activate
+2. Install the required packages by running the following command:
+   pip install -r requirements.txt
+3. To deactivate the virtual environment, use the following command:
+   deactivate
+
+
+## Project Overview
+
+This project includes multiple Python scripts, each serving a specific purpose. Below, you'll find an overview of these scripts and their functionalities.
+
+### 1. Script 1: work_ratio.py
+
+- **Description**: Generates pie charts illustrating work ratios based on various parsers. Outputs an Excel file containing the data used for the charts.
+
+- **Dependencies**:
+- `worker-names.csv` (static CSV file, updated only when team member names change).
+- `v1-yearly-jira.csv` (dynamic CSV file, updated for each run with yearly work ratio data from Jira).
+
+### 2. Script 2: another_script.py
+
+- **Description**: Generates an Excel file displaying monthly planned, actual, and usage differences for BI, Algo, and Dev teams. Also includes yearly totals.
+
+- **Dependencies**: 
+- `worker-names.csv` (static CSV file, updated only when team member names change).
+- `budget-naming.xlsx` (static Excel file, updated when budget names change).
+- `yearly-company-budget.xlsx` (static Excel file, updated when yearly budgets change).
+- `jira-missions-yearly2023.csv` (dynamic CSV file, updated for each run with yearly data from Jira).
+
+## Usage
+
+Provide detailed instructions on how to run each script, including command-line arguments and configuration settings. Include example commands where applicable.
+
+## Installation
+
+To set up the environment for these scripts, follow these steps:
+
+1. Create and activate a virtual environment (e.g., myenv).
+2. Install the required libraries using `pip` or another package manager. Here's a list of required libraries:
+- python>=3.10.7
+- pandas
+- calendar
+- openpyxl
+- openpyxl.styles
+- matplotlib.pyplot
+- plotly.express
+- numpy
+- argparse
+- datetime
+
+## Configuration
+
+Before running the scripts, ensure the following:
+
+- There are no Hebrew words in any of the Excel or CSV files, as pandas uses UTF-8 encoding.
+
+## License
+
+This project is licensed under the [License Name]. For details, see the [LICENSE](LICENSE) file.
+
+
+
+
+
+
