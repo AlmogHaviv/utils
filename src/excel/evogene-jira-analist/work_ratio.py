@@ -14,7 +14,7 @@ import calendar
 
 ## global variabels ###
 
-file_name = "v1-yearly.csv"
+file_name = "v1-yearly-jira.csv"
 worker_file = "worker-names.csv"
 
 ### parsers ###

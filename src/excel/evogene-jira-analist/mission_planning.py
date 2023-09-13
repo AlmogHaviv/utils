@@ -285,6 +285,12 @@ def fully_time_spent_dataframe(list_of_months_data):
     # Calculate the sum of difference columns for each row
     difference_columns = filtered_df.columns[filtered_df.columns.str.contains(' Difference')]
     filtered_df['Total Difference'] = filtered_df[difference_columns].sum(axis=1)
+    
+
+    # Create the new columns for yearly
+    filtered_df['Total Planned - Yearly'] = filtered_df['January Planned'] * 12
+    filtered_df['Total Time Spent - Yearly'] = filtered_df['Total Time Spent']
+    filtered_df['Total Difference - Yearly'] = filtered_df['Total Planned - Yearly'] - filtered_df['Total Time Spent - Yearly']
 
     # Round up all the numbers
     numeric_columns = filtered_df.select_dtypes(include=[float])
