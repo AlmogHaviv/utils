@@ -63,12 +63,4 @@ Before running the scripts, ensure the following:
 
 - There are no Hebrew words in any of the Excel or CSV files, as pandas uses UTF-8 encoding.
 
-## License
-
-This project is licensed under the [License Name]. For details, see the [LICENSE](LICENSE) file.
-
-
-
-
-
 
