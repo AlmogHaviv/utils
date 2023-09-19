@@ -65,7 +65,9 @@ Example command to generate a full yearly report:
 ```bash
 python mission_planning.py -f
 ```
+
 Example command to generate a report for a specific company (e.g., AgPlenus):
+
 ```bash
 python mission_planning.py -c AgPlenus
 ```
