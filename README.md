@@ -56,7 +56,7 @@ To use Script 1 (`mission_planning.py`), you can specify the type of report you 
 
 Example command to generate a monthly report:
 ```bash
-python work_ratio.py -m
+python work_ratio.py -m'''
 
 To use Script 2 (`mission_planning.py`), you can specify the type of report you want to generate and, if needed, a specific company name using command-line arguments. Here are the available options:
 
@@ -67,10 +67,10 @@ To use Script 2 (`mission_planning.py`), you can specify the type of report you 
 
 Example command to generate a full yearly report:
 ```bash
-python mission_planning.py -f
+python mission_planning.py -f'''
 Example command to generate a report for a specific company (e.g., AgPlenus):
 ```bash
-python mission_planning.py -c AgPlenus
+python mission_planning.py -c AgPlenus'''
 
 ## Installation
 
