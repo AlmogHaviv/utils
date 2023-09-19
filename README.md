@@ -26,6 +26,12 @@ This project includes multiple Python scripts, each serving a specific purpose. 
 - `worker-names.csv` (static CSV file, updated only when team member names change).
 - `v1-yearly-jira.csv` (dynamic CSV file, updated for each run with yearly work ratio data from Jira)
 - To generate v1-yearly-jira.csv, you need to export yearly mission data from Jira. It's crucial to note that all the data should be in English. While exporting, please ensure that the following essential columns are included: 'Assignee', 'Work Ratio', 'Custom field (Product)', 'Issue key', 'Sprint', 'Issue id'. Please be aware that sometimes the 'Sprint' column may display dates in Hebrew.
+- **Usage**
+  Command-line Arguments
+ -f, --full_report: Generates the full yearly report.
+ -y, --yearly_report: Generates the yearly summary report.
+  -m, --monthly_report: Generates the up-to-this-month summary report.
+  -c, --company [COMPANY_NAME]: Generates a report for a specific company, where [COMPANY_NAME] should be replaced with the desired company name.
   
 ### 2. Script 2: mission_planning.py
 
@@ -40,7 +46,31 @@ This project includes multiple Python scripts, each serving a specific purpose. 
 
 ## Usage
 
-Provide detailed instructions on how to run each script, including command-line arguments and configuration settings. Include example commands where applicable.
+To use Script 1 (`mission_planning.py`), you can specify the type of report you want to generate using command-line arguments. Here are the available options:
+
+- `-m` or `--monthly`: If entered, it will return the last month report.
+- `-y` or `--yearly`: If entered, it will return the last year report.
+- `-p` or `--product`: If entered, it will return the product report.
+- `-s` or `--sprint`: If entered, it will return the last month sprint report.
+- `-t` or `--team`: If entered, it will return the teams report.
+
+Example command to generate a monthly report:
+```bash
+python work_ratio.py -m
+
+To use Script 2 (`mission_planning.py`), you can specify the type of report you want to generate and, if needed, a specific company name using command-line arguments. Here are the available options:
+
+- `-f` or `--full_report`: Generates the full yearly report.
+- `-y` or `--yearly_report`: Generates the yearly summary report.
+- `-m` or `--monthly_report`: Generates the up-to-this-month summary report.
+- `-c` or `--company [COMPANY_NAME]`: Generates a report for a specific company. Replace `[COMPANY_NAME]` with the desired company name.
+
+Example command to generate a full yearly report:
+```bash
+python mission_planning.py -f
+Example command to generate a report for a specific company (e.g., AgPlenus):
+```bash
+python mission_planning.py -c AgPlenus
 
 ## Installation
 
