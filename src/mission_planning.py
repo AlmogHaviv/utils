@@ -8,14 +8,117 @@ from openpyxl.styles import Alignment, Border, Side, Font, PatternFill
 
 import os
 
+import argparse
+
+
+### parsers ###
+def setup_arg_parser():
+    """
+    Set up the argument parser.
+    """
+    parser = argparse.ArgumentParser(description='parse for type of report')
+    parser.add_argument('-f', '--full_report', action='store_true', help='If entered, return the full year report')
+    parser.add_argument('-y', '--yearly_report', action='store_true', help='If entered, return the  yearly summery report')
+    parser.add_argument('-m', '--monthly_report', action='store_true', help='If entered, return the yearly summery until the current month report')
+    parser.add_argument('-c', '--company', type=str, help='If entered, specify the company name for the report')
+    return parser
 
 
 def main():
-    # Input and output file names
+    """
+    Main logic of the script using parsed arguments.
+    """
+    # Input file names
     jira_data_filename = 'jira-missions-yearly2023.xlsx'
     planning_data_filename = 'yearly-company-budget.xlsx'
-    output_filename = 'yearly-planning.xlsx'
+
+    parser = setup_arg_parser()
+
+    # Parse the arguments
+    args = parser.parse_args()
+
+    df = full_dataframe(jira_data_filename, planning_data_filename)
+
+    # Check which report type was selected and perform corresponding action
+    if args.full_report:
+        print("Generating the full yearly report...")
+        # Output file name for the full yearly report
+        output_filename = 'yearly-planning.xlsx'
+        full_report(df, output_filename)
+        
+    elif args.yearly_report:
+        print("Generating the yearly summert report...")
+        selcted_columns = ['Total Planned - Yearly', 'Total Time Spent - Yearly', 'Total Difference - Yearly']
+        output_filename = 'yearly-data-planning-summery.xlsx'
+        col_needed = extract_columns(df, selcted_columns)
+        full_report(col_needed, output_filename)
+    elif args.monthly_report:
+        print("Generating the up to this month summery report...")
+        selcted_columns = ['Total Planned', 'Total Time Spent', 'Total Difference']
+        output_filename = 'monthly-data-planning-summery.xlsx'
+        col_needed = extract_columns(df, selcted_columns)
+        full_report(col_needed, output_filename)
+    elif args.company:
+        print("Generating a report for company:", args.company)
+        output_filename = f'yearly-data-planning-{args.company}.xlsx'
+        row_needed = filter_by_company_name(df, args.company)
+        full_report(row_needed, output_filename)
+    else:
+        print("please specify the type of report, use -h to know which types there are")
+
+
+def filter_by_company_name(df, company_name):
+    try:
+        # Strip any leading or trailing spaces from the provided company name
+        company_name = company_name.strip()
+        
+        # Create a list of valid company names
+        valid_names = [
+            "AgPlenus",
+            "AgSeed",
+            "BMB",
+            "Biomica",
+            "CPB",
+            "Canonic",
+            "Castera",
+            "Chempass",
+            "Crispril",
+            "LavieBio",
+            "MicroBoost",
+            "Upkeep",
+        ]
+        
+        # Check if the provided company_name is valid
+        if company_name not in valid_names:
+            raise ValueError("Please write the name of the company as follows:\n" + "\n".join(valid_names))
+
+        # Filter the DataFrame by the specified company_name
+        filtered_df = df[df['Company Name'] == company_name]
+        
+        return filtered_df
+    except Exception as e:
+        print("An error occurred:", str(e))
+        return None
+
+
+def extract_columns(df, list_of_columns):
+    # Assuming df is your DataFrame
+    selected_columns = df.iloc[:, :2]  # Extract the first two columns
+    selected_columns = selected_columns.join(df[list_of_columns])
+    return selected_columns
+
+
+def full_report(df, output_filename):
+    # Export the full data to an Excel file with merged 'Company Name' cells
+    export_dataframe_to_excel_with_merged(df, output_filename)
     
+    # Styling the Excel file
+    change_excel_font(output_filename, font_name='David', font_size=12, italic=False, color='000000')
+    style_excel_file(output_filename)
+    color_excel_difference(output_filename)
+
+
+def full_dataframe(jira_data_filename, planning_data_filename):
     # Name of the 'Company Name' column in your data
     company_column_name = 'Company Name'
     column_of_planned_name = 'Monthly Planned'
@@ -40,15 +143,7 @@ def main():
     # Combine the monthly data into a full yearly DataFrame
     full_data = fully_time_spent_dataframe(yearly_data)
     
-    print (full_data)
-
-    # Export the full data to an Excel file with merged 'Company Name' cells
-    export_dataframe_to_excel_with_merged(full_data, output_filename)
-
-    # Styling the excel file
-    change_excel_font(output_filename, font_name='David', font_size=12, italic=False, color='000000')
-    style_excel_file(output_filename)
-    color_excel_difference(output_filename) 
+    return full_data
 
 
 # creates the datafram from the jira excel, also creating the company name column using the creating_company_column func and the team column using creating_team_column
