@@ -7,11 +7,16 @@ import mission_planning
 def main():
     # Input and output file names
     jira_data_filename = 'jira-missions-yearly2023.xlsx'
-    budget_file = 'budget-and-connections.xlsx'
+    planning_data_filename = 'yearly-company-budget.xlsx'
     output_filename = 'budget-and-time-spent-report.xlsx'
-    df = create_dataframe(jira_data_filename, budget_file)
-    yearly_df = creating_yearly_summary(df)
-    print(yearly_df)
+    monthly_dict = process_jira_data(jira_data_filename)
+    planned_df = mission_planning.transform_yearly_to_monthly_and_divide_by_12(planning_data_filename)
+    for month, df in monthly_dict.items():
+        new_df = merge_company_and_team_inplace(df)
+        monthly_dict[month] = new_df
+        print(f'this the data frame of: {month}')
+        print(new_df)
+    print(planned_df)
 
 
 # Function to navigate to the right directory
@@ -86,10 +91,44 @@ def process_jira_data(data_file):
     # Return the final 'summed_data' dictionary
     return summed_data
 
+def merge_company_and_team_inplace(df):
+    """
+    Merge 'Company Name' and 'Team Name' columns into a single column and sort the DataFrame in place.
+
+    Args:
+    df (pd.DataFrame): The input DataFrame with 'Company Name' and 'Team Name' columns.
+
+    Returns:
+    resulted_df: the data frame with the new totals rows.
+    """
+    # Merge 'Company Name' and 'Team Name' columns with a hyphen in between
+    df['Company Name'] = df['Company Name'] + ' - ' + df['Team Name']
+
+    # Drop the 'Team Name' column if it's no longer needed
+    df.drop(columns=['Team Name'], inplace=True)
+
+    # Sort the DataFrame based on the merged 'Company Name' column
+    df.sort_values(by=['Company Name'], inplace=True)
+    
+    # Group the DataFrame by 'Company Name' and sum the 'Total Time Spent' column
+    sum_df = df.groupby('Company Name')['Total Time Spent'].sum().reset_index()
+
+    # Add a new column 'Custom field (Budget)' with 'totals'
+    sum_df['Custom field (Budget)'] = 'A - Totals'
+
+    # Concatenate the original DataFrame and the summed DataFrame
+    result_df = pd.concat([df, sum_df], ignore_index=True)
+
+
+    # Sort the DataFrame by 'Company Name'
+    result_df.sort_values(by=['Company Name', 'Custom field (Budget)'], inplace=True)
+
+    return result_df
+
+
+
+
 
 ### excecution###
 if __name__ == "__main__":
-    jira_data_filename = 'jira-missions-yearly2023.xlsx'
-    output_filename = 'budget-and-time-spent-report.xlsx'
-    df = process_jira_data(jira_data_filename)
-    print(df)
+    main()
