@@ -14,6 +14,9 @@ import calendar
 
 import os
 
+import traceback
+
+
 ## global variabels ###
 
 file_name = "v1-yearly-jira.csv"
@@ -34,27 +37,60 @@ def setup_arg_parser():
 
 
 def main():
-    """
-    Main logic of the script using parsed arguments.
-    """
+    try:
+        """
+        Main logic of the script using parsed arguments.
+        """
 
-    parser = setup_arg_parser()
+        parser = setup_arg_parser()
 
-    # Parse the arguments
-    args = parser.parse_args()
+        # Parse the arguments
+        args = parser.parse_args()
 
-    # Check which report type was selected and perform corresponding action
-    if args.monthly:
-        print("Generating the last month report...")
-        parsing_report(args, True)
-        
-    elif args.yearly:
-        print("Generating the last year report...")
-        parsing_report(args, False)
-    else:
-        print("please specify the type of report: monthly or yearly")
-
+        # Check which report type was selected and perform corresponding action
+        if args.monthly:
+            print("Generating the last month report...")
+            parsing_report(args, True)
+            
+        elif args.yearly:
+            print("Generating the last year report...")
+            parsing_report(args, False)
+        else:
+            print("Please specify the type of report: monthly or yearly")
+            getting_to_the_right_dir("reports")
+            filename = "exception_report.txt"
+            with open(filename, "a") as file:
+                file.write("Exception occurred in work_ratio.py:\n")
+                file.write("Please specify which report you want: monthly (-m) or yearly (-y)\n")
+                file.write("Thank You\n")
     
+    except UnicodeDecodeError as e:
+        print("An exception occurred:", str(e))
+        getting_to_the_right_dir("reports")
+        filename = "exception_report.txt"
+        with open(filename, "a") as file:
+            file.write("Exception occurred in work_ratio.py:\n")
+            file.write("You have letters that are not in english in the excel file you have inputed in one of the following columns:\n")
+            file.write("Assignee, Work Ratio, Custom field (Product), Issue key, Sprint, Issue id\n")
+            file.write("It is probably on Sprint column, please check that the dates are formated like this: 01/01/2023\n")
+            file.write("For the developer this is the exception:\n")
+            file.write("Thank You\n")
+        
+        print(f"An exception occurred. Details saved in {filename}")
+
+
+    except Exception as e:
+        # Handle other exceptions here
+        filename = "exception_report.txt"
+        with open(filename, "a") as file:
+            file.write("Exception occurred in main() function:\n")
+            file.write(str(e) + "\n")
+            file.write("Stack Trace:\n")
+            file.write(traceback.format_exc() + "\n")
+        
+        print(f"An exception occurred. Details saved in {filename}")
+
+
 def parsing_report(args, bol):
     if args.product:
         print("Generating the product report...")
@@ -68,7 +104,13 @@ def parsing_report(args, bol):
         print("Generating the teams report...")
         pie_chart_by_team(file_name, worker_file, bol)
     else:
-        print("please specify which report you want: product, team or sprint")
+        print("Please specify which report you want: product, team, or sprint")
+        getting_to_the_right_dir("reports")
+        filename = "exception_report.txt"
+        with open(filename, "a") as file:
+            file.write("Exception occurred in work_ratio.py:\n")
+            file.write("Please specify which report you want: product (-p), team (-t), or sprint (-s)\n")
+            file.write("Thank You\n")
 
 
 ### data reciving from csv ###
@@ -224,7 +266,7 @@ def pie_chart_by_sprint(file_name, worker_path, monthly):
     full_data_for_sprint = data_for_sprint_visualition(df, monthly)
     file_path = pie_chart_data(full_data_for_sprint[0], full_data_for_sprint[1], full_data_for_sprint[2], monthly)
     output_file_path = os.path.join(file_path, f'{full_data_for_sprint[0]}.xlsx')
-    df.to_excel(output_file_path, index=False)
+    filter_and_export_work_ratio(df, output_file_path)
     print(f'excel file: {full_data_for_sprint[0]}.xlsx was created')
 
 
@@ -237,7 +279,7 @@ def pie_chart_by_team(file_name, worker_path, monthly):
         data_list_for_chart = data_for_team_visualizion(filtered_df, team_name)
         file_path = pie_chart_data(data_list_for_chart[0], data_list_for_chart[1], data_list_for_chart[2], monthly)
         output_file_path = os.path.join(file_path, f'{data_list_for_chart[0]}.xlsx')
-        df.to_excel(output_file_path, index=False)
+        filter_and_export_work_ratio(filtered_df, output_file_path)
         print(f'excel file: {data_list_for_chart[0]}.xlsx was created')
 
 
@@ -250,11 +292,24 @@ def pie_chart_by_product(file_name, worker_path, monthly):
         data_for_chart = data_for_team_visualizion(group_df, product)
         file_path = pie_chart_data(data_for_chart[0], data_for_chart[1], data_for_chart[2], monthly)
         output_file_path = os.path.join(file_path, f'{data_for_chart[0]}.xlsx')
-        df.to_excel(output_file_path, index=False)
+        filter_and_export_work_ratio(group_df, output_file_path)
         print(f'excel file: {data_for_chart[0]}.xlsx was created')
 
-             
+            
+## excel creator ##
+def filter_and_export_work_ratio(dataframe, name):
+    # Create a new Excel writer object
+    excel_writer = pd.ExcelWriter(f'{name}', engine='openpyxl')
 
+    # Filter the DataFrame based on Work Ratio and export to separate sheets
+    dataframe[dataframe['Work Ratio'] < 0.75].to_excel(excel_writer, sheet_name='under 75%', index=False)
+    dataframe[(dataframe['Work Ratio'] >= 0.75) & (dataframe['Work Ratio'] <= 1.20)].to_excel(excel_writer, sheet_name='between 75% to 120%', index=False)
+    dataframe[dataframe['Work Ratio'] > 1.20].to_excel(excel_writer, sheet_name='above 120%', index=False)
+    # Filter and export rows with empty Work Ratio cells
+    dataframe[dataframe['Work Ratio'].isna()].to_excel(excel_writer, sheet_name='no time was logged', index=False)
+
+    # Save the Excel file
+    excel_writer.close()
 
 ### excecution###
 if __name__ == "__main__":
