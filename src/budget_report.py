@@ -4,19 +4,19 @@ import pandas as pd
 
 import mission_planning
 
+
 def main():
     # Input and output file names
     jira_data_filename = 'jira-missions-yearly2023.xlsx'
     planning_data_filename = 'yearly-company-budget.xlsx'
     output_filename = 'budget-and-time-spent-report.xlsx'
     monthly_dict = process_jira_data(jira_data_filename)
-    planned_df = mission_planning.transform_yearly_to_monthly_and_divide_by_12(planning_data_filename)
+    planned_df =create_palanned_df(planning_data_filename)
     for month, df in monthly_dict.items():
         new_df = merge_company_and_team_inplace(df)
         monthly_dict[month] = new_df
         print(f'this the data frame of: {month}')
-        print(new_df)
-    print(planned_df)
+        merge_planned_and_actual(planned_df, new_df)
 
 
 # Function to navigate to the right directory
@@ -91,6 +91,7 @@ def process_jira_data(data_file):
     # Return the final 'summed_data' dictionary
     return summed_data
 
+
 def merge_company_and_team_inplace(df):
     """
     Merge 'Company Name' and 'Team Name' columns into a single column and sort the DataFrame in place.
@@ -125,6 +126,37 @@ def merge_company_and_team_inplace(df):
 
     return result_df
 
+
+def create_palanned_df(filename):
+    # Transform the yearly data to monthly and divide by 12
+    planned_df = mission_planning.transform_yearly_to_monthly_and_divide_by_12(filename)
+    
+    # Merge 'Company Name' and 'Team Name' columns with a hyphen in between
+    planned_df['Company Name'] = planned_df['Company Name'] + ' - ' + planned_df['Team Name']
+
+    # Drop the 'Team Name' column if it's no longer needed
+    planned_df.drop(columns=['Team Name'], inplace=True)
+
+    # Sort the DataFrame based on the merged 'Company Name' column
+    planned_df.sort_values(by=['Company Name'], inplace=True)
+
+    return planned_df
+
+
+def merge_planned_and_actual(planned_df, acutal_df):
+    # Merge the dataframes on 'Company Name'
+    merged_df = pd.merge(acutal_df, planned_df, on='Company Name', how='left')
+
+    # Replace missing 'Monthly Planned' values with 0
+    merged_df['Monthly Planned'].fillna(0, inplace=True)
+
+    merged_df = merged_df[['Company Name', 'Custom field (Budget)', 'Monthly Planned', 'Total Time Spent']]
+
+    merged_df.loc[merged_df['Custom field (Budget)'] != 'A - Totals', 'Monthly Planned'] = 0
+
+    merged_df['Budget Left'] = merged_df.apply(lambda row: row['Monthly Planned'] - row['Total Time Spent'] if row['Custom field (Budget)'] == 'A - Totals' else 0, axis=1)
+
+    print(merged_df)
 
 
 
