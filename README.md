@@ -48,11 +48,11 @@ To use Script 1 (`mission_planning.py`), you can specify the type of report you 
 - `-s` or `--sprint`: If entered, it will return the last month sprint report.
 - `-t` or `--team`: If entered, it will return the teams report.
 
-Example command to generate a monthly report:
+Example command to generate a monthly report for product team:
 ```bash
-python work_ratio.py -m
+python work_ratio.py -m -p
 ```
-
+As you can see it takes first the flag of the year or month and then the flag of the team, sprint or product
 
 To use Script 2 (`mission_planning.py`), you can specify the type of report you want to generate and, if needed, a specific company name using command-line arguments. Here are the available options:
 
