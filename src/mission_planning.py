@@ -10,6 +10,8 @@ import os
 
 import argparse
 
+import traceback
+
 
 ### parsers ###
 def setup_arg_parser():
@@ -25,46 +27,98 @@ def setup_arg_parser():
 
 
 def main():
-    """
-    Main logic of the script using parsed arguments.
-    """
-    # Input file names
-    jira_data_filename = 'jira-missions-yearly.xlsx'
-    planning_data_filename = 'yearly-company-budget.xlsx'
+    try:
+        """
+        Main logic of the script using parsed arguments.
+        """
+        # Input file names
+        jira_data_filename = 'jira-missions-yearly.xlsx'
+        planning_data_filename = 'yearly-company-budget.xlsx'
 
-    parser = setup_arg_parser()
+        parser = setup_arg_parser()
 
-    # Parse the arguments
-    args = parser.parse_args()
+        # Parse the arguments
+        args = parser.parse_args()
 
-    df = full_dataframe(jira_data_filename, planning_data_filename)
+        df = full_dataframe(jira_data_filename, planning_data_filename)
 
-    # Check which report type was selected and perform corresponding action
-    if args.full_report:
-        print("Generating the full yearly report...")
-        # Output file name for the full yearly report
-        output_filename = 'yearly-planning.xlsx'
-        full_report(df, output_filename)
+        # Check which report type was selected and perform corresponding action
+        if args.full_report:
+            print("Generating the full yearly report...")
+            # Output file name for the full yearly report
+            output_filename = 'yearly-planning.xlsx'
+            full_report(df, output_filename)
+            adding_months_to_output(output_filename, jira_data_filename, None)
+            
+        elif args.yearly_report:
+            print("Generating the yearly summert report...")
+            selcted_columns = ['Total Planned - Yearly', 'Total Time Spent - Yearly', 'Total Difference - Yearly']
+            output_filename = 'yearly-data-planning-summery.xlsx'
+            col_needed = extract_columns(df, selcted_columns)
+            full_report(col_needed, output_filename)
+
+        elif args.monthly_report:
+            print("Generating the up to this month summery report...")
+            selcted_columns = ['Total Planned', 'Total Time Spent', 'Total Difference']
+            output_filename = 'monthly-data-planning-summery.xlsx'
+            col_needed = extract_columns(df, selcted_columns)
+            full_report(col_needed, output_filename)
+
+        elif args.company:
+            print("Generating a report for company:", args.company)
+            output_filename = f'yearly-data-planning-{args.company}.xlsx'
+            row_needed = filter_by_company_name(df, args.company)
+            full_report(row_needed, output_filename)
+            adding_months_to_output(output_filename, jira_data_filename, str(args.company))
+
+        else:
+            print("please specify the type of report, use -h to know which types there are")
+            getting_to_the_right_dir("reports")
+            filename = "exception_report.txt"
+            with open(filename, "a") as file:
+                file.write("Exception occurred in work_ratio.py:\n")
+                file.write("Please specify the type of report, use -h to know which types there are\n")
+                file.write("Thank You\n")
+    
+    except UnicodeDecodeError as e:
+        print("An exception occurred:", str(e))
+        getting_to_the_right_dir("reports")
+        filename = "exception_report.txt"
+        with open(filename, "a") as file:
+            file.write("Exception occurred in work_ratio.py:\n")
+            file.write("You have letters that are not in english in the excel file you have inputed in one of the following columns:\n")
+            file.write("Assignee,  Custom field (Budget), Issue key, Sprint, Time Spent (Days), Issue id\n")
+            file.write("It is probably on Sprint column, please check that the dates are formated like this: 01/01/2023\n")
+            file.write("For the developer this is the exception:\n")
+            file.write("Thank You\n")
+
+        print(f"An exception occurred. Details saved in {filename}")
+
+
+    except Exception as e:
+        # Handle other exceptions here
+        filename = "exception_report.txt"
+        getting_to_the_right_dir("reports")
+        with open(filename, "a") as file:
+            file.write("Exception occurred in main() function:\n")
+            file.write(str(e) + "\n")
+            file.write("Stack Trace:\n")
+            file.write(traceback.format_exc() + "\n")
         
-    elif args.yearly_report:
-        print("Generating the yearly summert report...")
-        selcted_columns = ['Total Planned - Yearly', 'Total Time Spent - Yearly', 'Total Difference - Yearly']
-        output_filename = 'yearly-data-planning-summery.xlsx'
-        col_needed = extract_columns(df, selcted_columns)
-        full_report(col_needed, output_filename)
-    elif args.monthly_report:
-        print("Generating the up to this month summery report...")
-        selcted_columns = ['Total Planned', 'Total Time Spent', 'Total Difference']
-        output_filename = 'monthly-data-planning-summery.xlsx'
-        col_needed = extract_columns(df, selcted_columns)
-        full_report(col_needed, output_filename)
-    elif args.company:
-        print("Generating a report for company:", args.company)
-        output_filename = f'yearly-data-planning-{args.company}.xlsx'
-        row_needed = filter_by_company_name(df, args.company)
-        full_report(row_needed, output_filename)
-    else:
-        print("please specify the type of report, use -h to know which types there are")
+        print(f"An exception occurred. Details saved in {filename}")
+
+
+def getting_to_the_right_dir(dir_name):
+    # gives the path of demo.py
+    path = os.path.realpath(__file__)
+    # gives the directory where the data exists
+    dir = os.path.dirname(path)
+  
+     #replaces folder names 
+    dir = dir.replace('src', dir_name)
+  
+    # changes the current directory to data 
+    os.chdir(dir)
 
 
 def filter_by_company_name(df, company_name):
@@ -175,6 +229,8 @@ def read_excel_file(filename):
         budget  = df['Custom field (Budget)']
         company_name = creating_company_column(budget)
         team_name = creating_team_column(assignee)
+        issue_key = df['Issue key']
+        issue_id = df['Issue id']
 
         # Return the extracted data
         new_df = pd.DataFrame({
@@ -184,6 +240,8 @@ def read_excel_file(filename):
             'Custom field (Budget)': budget,
             'Company Name' : company_name,
             'Team Name' : team_name,
+            'Issue id' : issue_id,
+            'Issue_key' : issue_key,
         })
         return new_df
 
@@ -509,7 +567,7 @@ def export_dataframe_to_excel_with_merged(df, output_filename):
     main_folder = os.getcwd()
 
     # Define the name of the subfolder you want to enter
-    subfolder_name = "yearly report - excel"
+    subfolder_name = "yearly-report-excel"
 
     # Create the path to the subfolder
     subfolder_path = os.path.join(main_folder, subfolder_name)
@@ -555,7 +613,7 @@ def style_excel_file(filename):
         main_folder = os.getcwd()
 
         # Define the name of the subfolder you want to enter
-        subfolder_name = "yearly report - excel"
+        subfolder_name = "yearly-report-excel"
 
         # Create the path to the subfolder
         subfolder_path = os.path.join(main_folder, subfolder_name)
@@ -610,7 +668,7 @@ def color_excel_difference(filename):
     main_folder = os.getcwd()
 
     # Define the name of the subfolder you want to enter
-    subfolder_name = "yearly report - excel"
+    subfolder_name = "yearly-report-excel"
 
     # Create the path to the subfolder
     subfolder_path = os.path.join(main_folder, subfolder_name)
@@ -672,7 +730,7 @@ def change_excel_font(filename, font_name='David', font_size=12, italic=False, c
     main_folder = os.getcwd()
 
     # Define the name of the subfolder you want to enter
-    subfolder_name = "yearly report - excel"
+    subfolder_name = "yearly-report-excel"
 
     # Create the path to the subfolder
     subfolder_path = os.path.join(main_folder, subfolder_name)
@@ -694,8 +752,52 @@ def change_excel_font(filename, font_name='David', font_size=12, italic=False, c
             for cell in row:
                 cell.font = font
 
-    # Save the modified workbook
+    # Save the modified workbookoutput_file_path
     workbook.save(output_file_path)
+
+
+def adding_months_to_output(excel_output_filename, jira_filename, company_name):
+    getting_to_the_right_dir("src")
+    # Read the Excel file into a DataFrame
+    df = read_excel_file(jira_filename)
+        
+    # Group the data by months
+    grouped_data_by_months = divide_by_months(df)[0]
+
+    getting_to_the_right_dir("reports")
+
+    # Construct the path to the subfolder
+    subfolder_path = os.path.join(os.getcwd(), "yearly-report-excel")
+
+    # Change the current working directory to the subfolder
+    os.chdir(subfolder_path)
+
+    # Open the existing Excel file and load the workbook
+    book = load_workbook(excel_output_filename)
+
+    # Create a Pandas Excel writer object
+    writer = pd.ExcelWriter(excel_output_filename, engine='openpyxl', mode='a') 
+
+
+    for month in grouped_data_by_months:
+        grouped_data_by_months[month] = grouped_data_by_months[month][grouped_data_by_months[month]['Team Name'] != 'Irrelevant']
+        grouped_data_by_months[month] = grouped_data_by_months[month][['Issue id', 'Issue_key', 'Company Name', 'Team Name', 'Assignee', 'Time Spent (Days)', 'Sprint', 'Custom field (Budget)', 'Date', 'Month']]
+        df = grouped_data_by_months[month]
+        month_name = calendar.month_name[month]
+
+        if company_name != None:
+            filtered_df = df[df['Company Name'].str.contains(company_name)]
+
+            # Add the DataFrame to a new sheet in the Excel file
+            filtered_df.to_excel(writer, sheet_name=f'{month_name}', index=False)
+        else:
+            # Add the DataFrame to a new sheet in the Excel file
+            df.to_excel(writer, sheet_name=f'{month_name}', index=False)
+
+    writer.close()
+
+
+
 
 ### excecution###
 if __name__ == "__main__":
