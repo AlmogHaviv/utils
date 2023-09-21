@@ -29,7 +29,7 @@ def main():
     Main logic of the script using parsed arguments.
     """
     # Input file names
-    jira_data_filename = 'jira-missions-yearly2023.xlsx'
+    jira_data_filename = 'jira-missions-yearly.xlsx'
     planning_data_filename = 'yearly-company-budget.xlsx'
 
     parser = setup_arg_parser()

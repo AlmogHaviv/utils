@@ -16,6 +16,7 @@ import os
 
 import traceback
 
+import zipfile
 
 ## global variabels ###
 
@@ -51,10 +52,16 @@ def main():
         if args.monthly:
             print("Generating the last month report...")
             parsing_report(args, True)
+            zip_filename = 'monthly-report-work-ratio.zip'
+            folder_to_zip = '\monthly-report-work-ratio'
+            
             
         elif args.yearly:
             print("Generating the last year report...")
             parsing_report(args, False)
+            zip_filename = 'yearly-report-work-ratio.zip'
+            folder_to_zip = '\yearly-report-work-ratio'
+
         else:
             print("Please specify the type of report: monthly or yearly")
             getting_to_the_right_dir("reports")
@@ -63,6 +70,12 @@ def main():
                 file.write("Exception occurred in work_ratio.py:\n")
                 file.write("Please specify which report you want: monthly (-m) or yearly (-y)\n")
                 file.write("Thank You\n")
+
+            zip_filename = 'exception_report.zip'
+            folder_to_zip = ""
+        
+        zipping_files(zip_filename, folder_to_zip)
+
     
     except UnicodeDecodeError as e:
         print("An exception occurred:", str(e))
@@ -75,7 +88,11 @@ def main():
             file.write("It is probably on Sprint column, please check that the dates are formated like this: 01/01/2023\n")
             file.write("For the developer this is the exception:\n")
             file.write("Thank You\n")
-        
+
+        zip_filename = 'exception_report.zip'
+        folder_to_zip = ""
+        zipping_files(zip_filename, folder_to_zip)
+
         print(f"An exception occurred. Details saved in {filename}")
 
 
@@ -87,6 +104,10 @@ def main():
             file.write(str(e) + "\n")
             file.write("Stack Trace:\n")
             file.write(traceback.format_exc() + "\n")
+        
+        zip_filename = 'exception_report.zip'
+        folder_to_zip = ""
+        zipping_files(zip_filename, folder_to_zip)
         
         print(f"An exception occurred. Details saved in {filename}")
 
@@ -111,6 +132,35 @@ def parsing_report(args, bol):
             file.write("Exception occurred in work_ratio.py:\n")
             file.write("Please specify which report you want: product (-p), team (-t), or sprint (-s)\n")
             file.write("Thank You\n")
+
+
+def zipping_files(zip_filename, folder_to_zip):
+    # Create a zip file and add all the files and subfolders from the current directory
+    getting_to_the_right_dir("reports")
+
+    # Get the current directory
+    current_directory = os.getcwd()
+
+    # Define the name of the zip file you want to create
+    zip_filename = f'{zip_filename}.zip'
+
+    # which folder to zip
+    dit_to_zip = current_directory + f'{folder_to_zip}'
+
+
+    # Create a zip file and add all the files and subfolders from the current directory
+    with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for foldername, subfoldername, filenames in os.walk(dit_to_zip):
+            for filename in filenames:
+                # Calculate the file's full path
+                file_path = os.path.join(foldername, filename)
+                print(file_path)
+                # Calculate the path to store the file inside the zip file
+                zip_path = os.path.relpath(file_path, dit_to_zip)
+                # Add the file to the zip file
+                zipf.write(file_path, zip_path)
+
+    print(f'Successfully created {zip_filename}')
 
 
 ### data reciving from csv ###
@@ -242,9 +292,9 @@ def pie_chart_data(title, labels, sizes, monthly):
 
     if monthly:
         # Define the name of the subfolder you want to enter
-        subfolder_name = "monthly report - work ratio"
+        subfolder_name = "monthly-report-work-ratio"
     else:
-        subfolder_name = "yearly report - work ratio"
+        subfolder_name = "yearly-report-work-ratio"
 
     # Create the path to the subfolder
     subfolder_path = os.path.join(main_folder, subfolder_name)
