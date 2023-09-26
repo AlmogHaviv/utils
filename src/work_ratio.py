@@ -34,6 +34,7 @@ def setup_arg_parser():
     parser.add_argument('-p', '--product', action='store_true', help='If entered, return the product report')
     parser.add_argument('-s', '--sprint', action='store_true', help='If entered, return the last month sprint report')
     parser.add_argument('-t', '--team', action='store_true', help='If entered, return the teams report')
+    parser.add_argument('-a', '--all', action='store_true', help='If entered, return all the report')
     return parser
 
 
@@ -122,6 +123,14 @@ def parsing_report(args, bol):
         pie_chart_by_sprint(file_name, worker_file, bol)
 
     elif args.team:
+        print("Generating the teams report...")
+        pie_chart_by_team(file_name, worker_file, bol)
+
+    elif args.all:
+        print("Generating the product report...")
+        pie_chart_by_product(file_name, worker_file, bol)
+        print("Generating the last month sprint report...")
+        pie_chart_by_sprint(file_name, worker_file, bol)
         print("Generating the teams report...")
         pie_chart_by_team(file_name, worker_file, bol)
     else:

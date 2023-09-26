@@ -1,16 +1,29 @@
 import pandas as pd
+import openpyxl
+from openpyxl.styles import PatternFill
 
-import mission_planning
+# Your DataFrame
+data = {
+    'Issue id': [49404, 50600, 48700, 48407, 49705, 46303],
+    'Issue_key': ['LBI-3', 'INTBIOM-7', 'CPB-986', 'CPB-979', 'MIC-905', 'MIC-822'],
+    'Company Name': ['CPB', 'Biomica', 'CPB', 'CPB', 'CPB', 'MicroBoost'],
+    'Team Name': ['Dev', 'Bi', 'Bi', 'Bi', 'Bi', 'Bi'],
+    'Assignee': ['nerias', 'iliab', 'iliab', 'iliab', 'iliab', 'iliab'],
+    'Time Spent (Days)': [0.5, 0.5, 3.0, 3.0, 0.5, 2.0],
+    'Sprint': ['2023-06-01', '2023-06-01', '2023-06-01', '2023-06-01', '2023-06-01', '2023-06-01'],
+    'Custom field (Budget)': [
+        'P271 - CPB Upkeep Computational (2023)',
+        'P255 - IBD (Biomica 2023)',
+        'P279 - CPB projects Computational (CPB 2023)',
+        'P279 - CPB projects Computational (CPB 2023)',
+        'P271 - CPB Upkeep Computational (2023)',
+        'P273 - Product- Upkeep MB  (2023)'
+    ],
+}
 
-jira_data_filename = 'jira-missions-yearly.xlsx'
+df = pd.DataFrame(data)
 
-# Read the Excel file into a DataFrame
-df = mission_planning.read_excel_file(jira_data_filename)
-    
-# Group the data by months
-grouped_data_by_months = mission_planning.divide_by_months(df)[0]
+# Step 1: Sort the DataFrame by 'Custom field (Budget)' and 'Team Name'
+df = df.sort_values(by=['Custom field (Budget)', 'Team Name'])
 
-
-for month in grouped_data_by_months:
-    grouped_data_by_months[month] = grouped_data_by_months[month][grouped_data_by_months[month]['Team Name'] != 'Irrelevant']
-
+print(df)
