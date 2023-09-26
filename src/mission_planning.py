@@ -787,12 +787,17 @@ def adding_months_to_output(excel_output_filename, jira_filename, company_name):
 
         if company_name != None:
             filtered_df = df[df['Company Name'].str.contains(company_name)]
+            filtered_df = filtered_df.sort_values(by=['Custom field (Budget)', 'Team Name'])
+
 
             # Add the DataFrame to a new sheet in the Excel file
             filtered_df.to_excel(writer, sheet_name=f'{month_name}', index=False)
         else:
             # Add the DataFrame to a new sheet in the Excel file
+            df = df.sort_values(by=['Custom field (Budget)', 'Team Name'])
             df.to_excel(writer, sheet_name=f'{month_name}', index=False)
+            
+            print(df)
 
     writer.close()
 
