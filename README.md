@@ -47,6 +47,7 @@ To use Script 1 (`mission_planning.py`), you can specify the type of report you 
 - `-p` or `--product`: If entered, it will return the product report.
 - `-s` or `--sprint`: If entered, it will return the last month sprint report.
 - `-t` or `--team`: If entered, it will return the teams report.
+- '-a' or '--all': If entered, it will return all the monthly\yearly reports.
 
 Example command to generate a monthly report for product team:
 ```bash
