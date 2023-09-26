@@ -2,6 +2,8 @@ import pandas as pd
 
 import calendar
 
+import openpyxl
+
 from openpyxl import load_workbook
 
 from openpyxl.styles import Alignment, Border, Side, Font, PatternFill
@@ -762,7 +764,9 @@ def adding_months_to_output(excel_output_filename, jira_filename, company_name):
     df = read_excel_file(jira_filename)
         
     # Group the data by months
-    grouped_data_by_months = divide_by_months(df)[0]
+    a = divide_by_months(df)
+    month_num = a[1]
+    grouped_data_by_months = a[0]
 
     getting_to_the_right_dir("reports")
 
@@ -776,35 +780,107 @@ def adding_months_to_output(excel_output_filename, jira_filename, company_name):
     book = load_workbook(excel_output_filename)
 
     # Create a Pandas Excel writer object
-    writer = pd.ExcelWriter(excel_output_filename, engine='openpyxl', mode='a') 
-
+    writer = pd.ExcelWriter(excel_output_filename, engine='openpyxl', mode='a')
 
     for month in grouped_data_by_months:
         grouped_data_by_months[month] = grouped_data_by_months[month][grouped_data_by_months[month]['Team Name'] != 'Irrelevant']
-        grouped_data_by_months[month] = grouped_data_by_months[month][['Issue id', 'Issue_key', 'Company Name', 'Team Name', 'Assignee', 'Time Spent (Days)', 'Sprint', 'Custom field (Budget)', 'Date', 'Month']]
+        grouped_data_by_months[month] = grouped_data_by_months[month][['Custom field (Budget)', 'Issue id', 'Issue_key', 'Company Name', 'Team Name', 'Assignee', 'Time Spent (Days)', 'Sprint', 'Date', 'Month']]
         df = grouped_data_by_months[month]
         month_name = calendar.month_name[month]
 
         if company_name != None:
             filtered_df = df[df['Company Name'].str.contains(company_name)]
-            filtered_df = filtered_df.sort_values(by=['Custom field (Budget)', 'Team Name'])
-
-
+            filtered_df = filtered_df.sort_values(['Custom field (Budget)', 'Team Name'], ascending = [True, True])
             # Add the DataFrame to a new sheet in the Excel file
             filtered_df.to_excel(writer, sheet_name=f'{month_name}', index=False)
         else:
             # Add the DataFrame to a new sheet in the Excel file
-            df = df.sort_values(by=['Custom field (Budget)', 'Team Name'])
+            df = df.sort_values(['Custom field (Budget)', 'Team Name'], ascending = [True, True])
             df.to_excel(writer, sheet_name=f'{month_name}', index=False)
-            
             print(df)
 
     writer.close()
 
+    style_sub_sheets(excel_output_filename, month_num)
 
+
+
+def style_sub_sheets(excel_output_filename, month_num):
+    getting_to_the_right_dir("reports")
+    # Construct the path to the subfolder
+    subfolder_path = os.path.join(os.getcwd(), "yearly-report-excel")
+
+    # Change the current working directory to the subfolder
+    os.chdir(subfolder_path)
+
+    wb = openpyxl.load_workbook(excel_output_filename)
+
+    # Define the border style (thick)
+    thick_border = Border(
+            top=Side(style='thick', color='000000'),
+            left=Side(style='thin', color='000000'),
+            right=Side(style='thin', color='000000'),
+            bottom=Side(style='thin', color='000000')
+            )
+    thin_border_format = Border(
+            left=Side(style='thin', color='000000'),
+            right=Side(style='thin', color='000000'),
+            top=Side(style='thin', color='000000'),
+            bottom=Side(style='thin', color='000000')
+        )
+
+    
+    # Define the fill color for the header row (e.g., light gray)
+    header_fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type="solid")
+    centered_text_format = Alignment(horizontal='center', vertical='center')
+
+    # Iterate through the rows and add borders between different budget sections
+    for num in range(1, month_num+1):
+        month_name = calendar.month_name[num]
+        sheet = wb[f'{month_name}']
+
+        # Apply bold border to all cells
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.border = thin_border_format
+                cell.alignment = centered_text_format
+        # Iterate through the rows and add borders between different budget sections
+        previous_budget = None
+        for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=0, max_col=sheet.max_column):
+            current_budget = row[0].value
+            if current_budget != previous_budget:
+                for cell in row:
+                    cell.border = thick_border
+                previous_budget = current_budget
+        
+        # Apply thin borders to the entire header row (row 1)
+        for cell in sheet[1]:
+            cell.border = thin_border_format
+            cell.fill = header_fill
+        
+
+    # Define the border style (thick)
+    thick_border = Border(top=Side(style='thick'))
+
+            # Save the modified workbook
+    wb.save(excel_output_filename)
 
 
 ### excecution###
 if __name__ == "__main__":
     main()
     
+'''
+# Access the desired sheet by name
+    for num in range(month_num):
+        month_name = calendar.month_name[num]
+        sheet = wb[f'{month_name}']
+        # Iterate through the rows and add borders between different budget sections
+        previous_budget = None
+        for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=3, max_col=3):
+            current_budget = row[0].value
+            if current_budget != previous_budget:
+                for cell in row:
+                    cell.border = thick_border
+                previous_budget = current_budget
+'''
