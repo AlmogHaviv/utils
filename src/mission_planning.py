@@ -54,16 +54,16 @@ def main():
             
         elif args.yearly_report:
             print("Generating the yearly summert report...")
-            selcted_columns = ['Total Planned - Yearly', 'Total Time Spent - Yearly', 'Total Difference - Yearly']
+            selected_columns = ['Total Planned - Yearly', 'Total Time Spent - Yearly', 'Total Difference - Yearly']
             output_filename = 'yearly-data-planning-summery.xlsx'
-            col_needed = extract_columns(df, selcted_columns)
+            col_needed = extract_columns(df, selected_columns)
             full_report(col_needed, output_filename)
 
         elif args.monthly_report:
             print("Generating the up to this month summery report...")
-            selcted_columns = ['Total Planned', 'Total Time Spent', 'Total Difference']
+            selected_columns = ['Total Planned', 'Total Time Spent', 'Total Difference']
             output_filename = 'monthly-data-planning-summery.xlsx'
-            col_needed = extract_columns(df, selcted_columns)
+            col_needed = extract_columns(df, selected_columns)
             full_report(col_needed, output_filename)
 
         elif args.company:
@@ -870,17 +870,3 @@ def style_sub_sheets(excel_output_filename, month_num):
 if __name__ == "__main__":
     main()
     
-'''
-# Access the desired sheet by name
-    for num in range(month_num):
-        month_name = calendar.month_name[num]
-        sheet = wb[f'{month_name}']
-        # Iterate through the rows and add borders between different budget sections
-        previous_budget = None
-        for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=3, max_col=3):
-            current_budget = row[0].value
-            if current_budget != previous_budget:
-                for cell in row:
-                    cell.border = thick_border
-                previous_budget = current_budget
-'''

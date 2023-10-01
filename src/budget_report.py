@@ -7,16 +7,23 @@ import mission_planning
 
 def main():
     # Input and output file names
-    jira_data_filename = 'jira-missions-yearly2023.xlsx'
-    planning_data_filename = 'yearly-company-budget.xlsx'
+    jira_data_filename = 'jira-missions-yearly.xlsx'
+    planning_budget_filename = 'CPBC.xlsx'
     output_filename = 'budget-and-time-spent-report.xlsx'
+    
+    # Process Jira data and store it in a dictionary
     monthly_dict = process_jira_data(jira_data_filename)
-    planned_df =create_palanned_df(planning_data_filename)
-    for month, df in monthly_dict.items():
-        new_df = merge_company_and_team_inplace(df)
-        monthly_dict[month] = new_df
-        print(f'this the data frame of: {month}')
-        merge_planned_and_actual(planned_df, new_df)
+    
+    # Create a 'planned' DataFrame from the budget data
+    planned = create_planned_column(planning_budget_filename)
+    
+    # Reformat the names and merge the data
+    integrated_dict_by_month = merged_and_yearly_dict(monthly_dict, planned)
+    
+    # Iterate through the resulting DataFrames and print them rounded to 2 decimal places
+    # for key, df in integrated_dict_by_month.items():
+        # print(df.round(2))
+    print(integrated_dict_by_month['Total - Yearly'])
 
 
 # Function to navigate to the right directory
@@ -92,75 +99,146 @@ def process_jira_data(data_file):
     return summed_data
 
 
-def merge_company_and_team_inplace(df):
-    """
-    Merge 'Company Name' and 'Team Name' columns into a single column and sort the DataFrame in place.
+def create_planned_column(file_path):
 
-    Args:
-    df (pd.DataFrame): The input DataFrame with 'Company Name' and 'Team Name' columns.
+    getting_to_the_right_dir('config')
 
-    Returns:
-    resulted_df: the data frame with the new totals rows.
-    """
-    # Merge 'Company Name' and 'Team Name' columns with a hyphen in between
-    df['Company Name'] = df['Company Name'] + ' - ' + df['Team Name']
+    # Create an empty DataFrame to store the combined data
+    combined_df = pd.DataFrame()
 
-    # Drop the 'Team Name' column if it's no longer needed
-    df.drop(columns=['Team Name'], inplace=True)
-
-    # Sort the DataFrame based on the merged 'Company Name' column
-    df.sort_values(by=['Company Name'], inplace=True)
+    # Read the Excel file sheet by sheet
+    xls = pd.ExcelFile(file_path)
     
-    # Group the DataFrame by 'Company Name' and sum the 'Total Time Spent' column
-    sum_df = df.groupby('Company Name')['Total Time Spent'].sum().reset_index()
+    # Loop through each sheet in the Excel file
+    for sheet_name in xls.sheet_names:
+        # Read the current sheet into a DataFrame
+        df = pd.read_excel(xls, sheet_name=sheet_name)
+        # Define the starting row (assuming headers are in the first row)
+        start_row = 1
+        
+        # Find the row where "Task Units" and "Project Code" are located
+        for index, row in df.iterrows():
+            if row[4] == "Task Units" and row[20] == "Project Code":
+                start_row = index + 1
+                break
+        
+        
+        # Select columns by index (E and U) and rows starting from 'start_row'
+        df = df.iloc[start_row:, [4, 8, 20]]
+        # Set the first row as column names
+        df.columns = df.iloc[0]
 
-    # Add a new column 'Custom field (Budget)' with 'totals'
-    sum_df['Custom field (Budget)'] = 'A - Totals'
+        # Remove the first row (since it's now the column names)
+        df = df.iloc[1:]
 
-    # Concatenate the original DataFrame and the summed DataFrame
-    result_df = pd.concat([df, sum_df], ignore_index=True)
-
-
-    # Sort the DataFrame by 'Company Name'
-    result_df.sort_values(by=['Company Name', 'Custom field (Budget)'], inplace=True)
-
-    return result_df
-
-
-def create_palanned_df(filename):
-    # Transform the yearly data to monthly and divide by 12
-    planned_df = mission_planning.transform_yearly_to_monthly_and_divide_by_12(filename)
+        # Remove rows where "Project Code" is NaN
+        df = df.dropna(subset=["Project Code"])
+        
+        # Replace NaN values with zero
+        df.fillna(0, inplace=True)
+        
+        # Append the current sheet's data to the combined DataFrame
+        combined_df = pd.concat([df, combined_df], ignore_index=True)
     
-    # Merge 'Company Name' and 'Team Name' columns with a hyphen in between
-    planned_df['Company Name'] = planned_df['Company Name'] + ' - ' + planned_df['Team Name']
+    combined_df = combined_df[combined_df['Department'] != 'Product Management']
 
-    # Drop the 'Team Name' column if it's no longer needed
-    planned_df.drop(columns=['Team Name'], inplace=True)
+    combined_df['Department'].replace({
+    'Bioinformatics': 'Bi',
+    'Algorithm': 'Algo',
+    'Software Development': 'Dev'
+    }, inplace=True)
 
-    # Sort the DataFrame based on the merged 'Company Name' column
-    planned_df.sort_values(by=['Company Name'], inplace=True)
+    combined_df.rename(columns={'Project Code': 'Budget', 'Department': 'Team Name', 'Task Units': 'Time planned'}, inplace=True)
 
-    return planned_df
+    combined_df['Time planned'] = combined_df['Time planned'] / 12
 
-
-def merge_planned_and_actual(planned_df, acutal_df):
-    # Merge the dataframes on 'Company Name'
-    merged_df = pd.merge(acutal_df, planned_df, on='Company Name', how='left')
-
-    # Replace missing 'Monthly Planned' values with 0
-    merged_df['Monthly Planned'].fillna(0, inplace=True)
-
-    merged_df = merged_df[['Company Name', 'Custom field (Budget)', 'Monthly Planned', 'Total Time Spent']]
-
-    merged_df.loc[merged_df['Custom field (Budget)'] != 'A - Totals', 'Monthly Planned'] = 0
-
-    merged_df['Budget Left'] = merged_df.apply(lambda row: row['Monthly Planned'] - row['Total Time Spent'] if row['Custom field (Budget)'] == 'A - Totals' else 0, axis=1)
-
-    print(merged_df)
+    return combined_df
 
 
+def reformat_string(input_string):
+    parts = input_string.split('-')
+    if len(parts) >= 2:
+        return f'P{parts[-2].strip()} - {"".join(parts[-1:]).strip()}'
+    return input_string
 
 
-### excecution###
-if __name__ == "__main__":
+def merged_and_yearly_dict(dict_of_dfs, planned):
+    new_dict = {}
+    max_key = max(dict_of_dfs.keys())
+    for key, df in dict_of_dfs.items():
+        for index, row in df.iterrows():
+            budget = row['Custom field (Budget)']
+            
+            # Check if the budget column starts with 'P997'
+            if budget.startswith('P997'):
+                # Reformat the budget column using the reformat_string function
+                df.at[index, 'Custom field (Budget)'] = reformat_string(budget)
+        
+        # Extract the 'Budget' column from 'Custom field (Budget)'
+        df['Budget'] = df['Custom field (Budget)'].str.extract(r'(\w+)')[0]
+
+        # Merge the dataframes based on 'Budget' and 'Team Name'
+        merged_df = pd.merge(planned, df, on=['Budget', 'Team Name'], how='left')
+        
+        # Fill NaN values in 'Total Time Spent' with 0
+        merged_df['Total Time Spent'].fillna(0, inplace=True)
+        
+        ##############################
+        # Drop rows where 'Company Name' is NaN
+        merged_df = merged_df.dropna(subset=['Company Name'])
+        ###############################3
+        # Drop the 'Custom field (Budget)' column
+        merged_df = merged_df.drop(['Custom field (Budget)'], axis=1)
+        
+        # Sort the dataframe
+        merged_df.sort_values(by=['Company Name', 'Team Name'], inplace=True)
+
+        # Group by 'Budget' and 'Team Name', then sum the columns
+        summed_df = merged_df.groupby(['Budget', 'Team Name'], as_index=False).agg({
+            'Company Name': 'first',
+            'Time planned': 'sum',
+            'Total Time Spent': 'sum'
+        })
+
+        # Rearrange the columns
+        summed_df = summed_df[['Budget', 'Company Name', 'Team Name', 'Time planned', 'Total Time Spent']]
+
+        # Calculate 'Delta'
+        summed_df['Delta'] = summed_df['Time planned'] - summed_df['Total Time Spent']
+
+
+        new_dict[key] = summed_df 
+    # Create a list of DataFrames from the values in the dictionary
+    dfs_list = list(new_dict.values())
+
+   # Concatenate the DataFrames along the rows (axis=0)
+    combined_df = pd.concat(dfs_list, axis=0)
+
+    # Group by 'Budget' and 'Team Name' and sum the other columns
+    sum_df = combined_df.groupby(['Budget', 'Team Name', 'Company Name']).sum().reset_index()
+
+    # Sort the dataframe
+    sum_df.sort_values(by=['Company Name', 'Team Name'], inplace=True)
+
+    # Add the sum DataFrame 
+    new_dict['Total - by Month'] = sum_df
+
+    # Group by 'Budget' and 'Team Name' and sum the other columns
+    sum_df_all = sum_df
+    print(max_key)
+    print(new_dict['Total - by Month']['Time planned'])
+    print(new_dict['Total - by Month']['Time planned'] / max_key)
+    print((new_dict['Total - by Month']['Time planned'] / max_key) * 12)
+
+
+    sum_df_all['Time planned'] = (new_dict['Total - by Month']['Time planned'] / max_key) * 12
+
+    # Add the sum DataFrame 
+    new_dict['Total - Yearly'] = sum_df_all
+
+    return new_dict
+
+
+# Call the main function when the script is executed
+if __name__ == '__main__':
     main()
