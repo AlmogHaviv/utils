@@ -210,11 +210,12 @@ def creating_dataframe(csv_file_path, worker_path, monthly):
     # Create a new column 'Number for Ratio' based on 'Work Ratio' values
     conditions = [
         (df_filtered['Work Ratio'].isna()),  # Condition for empty cells
-        (df_filtered['Work Ratio'] < 0.75),
+        (df_filtered['Work Ratio'] == 0),  # Condition for Work Ratio equal to 0
+        ((df_filtered['Work Ratio'] > 0) & (df_filtered['Work Ratio'] < 0.75)),
         ((df_filtered['Work Ratio'] >= 0.75) & (df_filtered['Work Ratio'] <= 1.20)),
         (df_filtered['Work Ratio'] > 1.20)
     ]
-    choices = [0, 1, 2, 3]
+    choices = [0, 0, 1, 2, 3]
 
     df_filtered['Number for Ratio'] = np.select(conditions, choices, default=-1)
 
@@ -361,11 +362,11 @@ def filter_and_export_work_ratio(dataframe, name):
     excel_writer = pd.ExcelWriter(f'{name}', engine='openpyxl')
 
     # Filter the DataFrame based on Work Ratio and export to separate sheets
-    dataframe[dataframe['Work Ratio'] < 0.75].to_excel(excel_writer, sheet_name='under 75%', index=False)
+    dataframe[(dataframe['Work Ratio'] < 0.75) & (dataframe['Work Ratio'] != 0)].to_excel(excel_writer, sheet_name='under 75%', index=False)
     dataframe[(dataframe['Work Ratio'] >= 0.75) & (dataframe['Work Ratio'] <= 1.20)].to_excel(excel_writer, sheet_name='between 75% to 120%', index=False)
     dataframe[dataframe['Work Ratio'] > 1.20].to_excel(excel_writer, sheet_name='above 120%', index=False)
     # Filter and export rows with empty Work Ratio cells
-    dataframe[dataframe['Work Ratio'].isna()].to_excel(excel_writer, sheet_name='no time was logged', index=False)
+    dataframe[(dataframe['Work Ratio'].isna()) | (dataframe['Work Ratio'] == 0)].to_excel(excel_writer, sheet_name='no time was logged', index=False)
 
     # Save the Excel file
     excel_writer.close()

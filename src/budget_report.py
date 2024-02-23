@@ -4,6 +4,15 @@ import pandas as pd
 
 import mission_planning
 
+import calendar
+
+import openpyxl
+
+from openpyxl import load_workbook
+
+from openpyxl.styles import Alignment, Border, Side, Font, PatternFill
+
+
 
 def main():
     # Input and output file names
@@ -19,11 +28,19 @@ def main():
     
     # Reformat the names and merge the data
     integrated_dict_by_month = merged_and_yearly_dict(monthly_dict, planned)
-    
-    # Iterate through the resulting DataFrames and print them rounded to 2 decimal places
-    # for key, df in integrated_dict_by_month.items():
-        # print(df.round(2))
-    print(integrated_dict_by_month['Total - Yearly'])
+
+    sum_dict_by_month = adding_sum(integrated_dict_by_month)
+
+    save_dict_of_dataframes_to_excel(sum_dict_by_month, output_filename)
+
+    style_sub_sheets(output_filename)
+
+    # for key, value in integrated_dict_by_month.items():
+        # print('------------------------')
+        # print(f"sheet name: {key}")
+        # print(value)
+        # print(planned)
+
 
 
 # Function to navigate to the right directory
@@ -36,8 +53,8 @@ def getting_to_the_right_dir(dir_name):
     dir = dir.replace('src', dir_name)  # Adjust 'src' to the actual folder structure
     # Change the current directory to the specified folder
     os.chdir(dir)
-
-
+    
+    
 # Function to create and process a DataFrame
 def process_jira_data(data_file):
     getting_to_the_right_dir('data')
@@ -99,6 +116,7 @@ def process_jira_data(data_file):
     return summed_data
 
 
+# Reaching the config in order to take all the data about the planned part
 def create_planned_column(file_path):
 
     getting_to_the_right_dir('config')
@@ -137,10 +155,19 @@ def create_planned_column(file_path):
         # Replace NaN values with zero
         df.fillna(0, inplace=True)
         
+        df["Company Name"] = sheet_name[4:]
+
+        for index, row in df.iterrows():
+            if row['Project Code'] == 'P999':
+                 df.at[index, 'Project Code'] = f'P999 - {sheet_name[4:]}'
+                
+
+
         # Append the current sheet's data to the combined DataFrame
         combined_df = pd.concat([df, combined_df], ignore_index=True)
     
     combined_df = combined_df[combined_df['Department'] != 'Product Management']
+    combined_df = combined_df[combined_df['Department'] != 'CPB Directors']
 
     combined_df['Department'].replace({
     'Bioinformatics': 'Bi',
@@ -155,6 +182,7 @@ def create_planned_column(file_path):
     return combined_df
 
 
+# Dealing with the budget name P997-
 def reformat_string(input_string):
     parts = input_string.split('-')
     if len(parts) >= 2:
@@ -162,33 +190,40 @@ def reformat_string(input_string):
     return input_string
 
 
+# Creatung monthly dict of all the needed data with two yearly dfs - one unitl the last month and one summed yearly plan
 def merged_and_yearly_dict(dict_of_dfs, planned):
     new_dict = {}
-    max_key = max(dict_of_dfs.keys())
     for key, df in dict_of_dfs.items():
         for index, row in df.iterrows():
-            budget = row['Custom field (Budget)']
+          budget = row['Custom field (Budget)']
+
+          # Check if the budget column starts with 'P997'
+          if budget.startswith('P997'):
             
-            # Check if the budget column starts with 'P997'
-            if budget.startswith('P997'):
-                # Reformat the budget column using the reformat_string function
-                df.at[index, 'Custom field (Budget)'] = reformat_string(budget)
+            # Reformat the budget column using the reformat_string function
+            df.at[index, 'Custom field (Budget)'] = reformat_string(budget)
         
         # Extract the 'Budget' column from 'Custom field (Budget)'
         df['Budget'] = df['Custom field (Budget)'].str.extract(r'(\w+)')[0]
 
         # Merge the dataframes based on 'Budget' and 'Team Name'
-        merged_df = pd.merge(planned, df, on=['Budget', 'Team Name'], how='left')
+        merged_df = pd.merge(planned, df, on=['Budget', 'Team Name'], how='outer')
         
         # Fill NaN values in 'Total Time Spent' with 0
         merged_df['Total Time Spent'].fillna(0, inplace=True)
         
-        ##############################
-        # Drop rows where 'Company Name' is NaN
-        merged_df = merged_df.dropna(subset=['Company Name'])
-        ###############################3
+        # Load the Excel data into a DataFrame
+        getting_to_the_right_dir('config')
+        excel_data = pd.read_excel('budget-naming.xlsx')
+
+        # Create a mapping dictionary from 'Budget' to 'Company Name'
+        mapping_dict = dict(zip(excel_data['budget'], excel_data['company name']))
+
+        # Replace 'Budget' values in your DataFrame with 'Company Name'
+        merged_df['Company Name'] = merged_df['Budget'].map(mapping_dict)
+
         # Drop the 'Custom field (Budget)' column
-        merged_df = merged_df.drop(['Custom field (Budget)'], axis=1)
+        # merged_df = merged_df.drop(['Custom field (Budget)'], axis=1)
         
         # Sort the dataframe
         merged_df.sort_values(by=['Company Name', 'Team Name'], inplace=True)
@@ -206,8 +241,8 @@ def merged_and_yearly_dict(dict_of_dfs, planned):
         # Calculate 'Delta'
         summed_df['Delta'] = summed_df['Time planned'] - summed_df['Total Time Spent']
 
-
         new_dict[key] = summed_df 
+    
     # Create a list of DataFrames from the values in the dictionary
     dfs_list = list(new_dict.values())
 
@@ -215,28 +250,152 @@ def merged_and_yearly_dict(dict_of_dfs, planned):
     combined_df = pd.concat(dfs_list, axis=0)
 
     # Group by 'Budget' and 'Team Name' and sum the other columns
-    sum_df = combined_df.groupby(['Budget', 'Team Name', 'Company Name']).sum().reset_index()
+    sum_monthly_df = combined_df.groupby(['Budget', 'Team Name', 'Company Name']).sum().reset_index()
 
     # Sort the dataframe
-    sum_df.sort_values(by=['Company Name', 'Team Name'], inplace=True)
+    sum_monthly_df.sort_values(by=['Company Name', 'Team Name'], inplace=True)
+
+    # Calculate 'Delta'
+    sum_monthly_df['Delta'] = sum_monthly_df['Time planned'] - sum_monthly_df['Total Time Spent']
+
 
     # Add the sum DataFrame 
-    new_dict['Total - by Month'] = sum_df
+    new_dict['Total - by Month'] = sum_monthly_df
 
-    # Group by 'Budget' and 'Team Name' and sum the other columns
-    sum_df_all = sum_df
-    print(max_key)
-    print(new_dict['Total - by Month']['Time planned'])
-    print(new_dict['Total - by Month']['Time planned'] / max_key)
-    print((new_dict['Total - by Month']['Time planned'] / max_key) * 12)
+    sum_yearly_df = sum_monthly_df.copy()
+    sum_yearly_df['Time planned'] = new_dict[1]['Time planned'] * 12
 
+    # Calculate 'Delta'
+    sum_yearly_df['Delta'] = sum_yearly_df['Time planned'] - sum_yearly_df['Total Time Spent']
 
-    sum_df_all['Time planned'] = (new_dict['Total - by Month']['Time planned'] / max_key) * 12
+     # Add the sum DataFrame 
+    new_dict['Total - by Year'] = sum_yearly_df
 
-    # Add the sum DataFrame 
-    new_dict['Total - Yearly'] = sum_df_all
 
     return new_dict
+
+
+def adding_sum(dict_of_dfs):
+    new_dict = {}
+    for key, df in dict_of_dfs.items():
+        # Group by 'Company Name' and then by 'Team Name'
+        grouped = df.groupby(['Company Name', 'Team Name'])
+        # Calculate the sum for each group
+        summed_data = grouped[['Time planned', 'Total Time Spent', 'Delta']].sum()
+        df2 = pd.DataFrame(summed_data)
+        df2['Budget'] = 'A'
+
+        # Merge the summed DataFrame with the original DataFrame
+        merged_df = pd.concat([df, df2.reset_index()], ignore_index=True)
+
+        # Sort the merged DataFrame by 'Company Name,' 'Team Name,' and 'Budget'
+        sorted_df = merged_df.sort_values(by=['Company Name', 'Team Name', 'Budget'], ascending=[True, True, True])
+
+        if type(key) == int:
+            new_key = calendar.month_name[key]
+        else:
+            new_key = key
+
+        new_dict[new_key] = sorted_df
+        
+
+    return new_dict
+    
+
+def save_dict_of_dataframes_to_excel(dict_of_dfs, excel_file_name):
+    """
+    Save a dictionary of DataFrames to an Excel file.
+
+    Parameters:
+    - dict_of_dfs: Dictionary where keys are sheet names and values are DataFrames.
+    - excel_file_name: Name of the Excel file (e.g., 'output.xlsx').
+
+    Example usage:
+    save_dict_of_dataframes_to_excel({'Sheet1': df1, 'Sheet2': df2}, 'output.xlsx')
+    """
+    # Define the new order of columns
+    new_order = ['Company Name', 'Budget', 'Team Name', 'Time planned', 'Total Time Spent', 'Delta']
+    for key, df in dict_of_dfs.items():
+        # Reorder the columns in the DataFrame
+        df = df[new_order]
+    getting_to_the_right_dir("reports")
+
+    sheet_order = ['Total - by Year', 'Total - by Month']
+
+    writer = pd.ExcelWriter(excel_file_name, engine='xlsxwriter')
+
+    for sheet_name in sheet_order:
+        if sheet_name in dict_of_dfs:
+            dict_of_dfs[sheet_name].to_excel(writer, sheet_name=sheet_name, index=False)
+    
+    for sheet_name, df in dict_of_dfs.items():
+        if sheet_name in dict_of_dfs:
+            pass
+        df.to_excel(writer, sheet_name=sheet_name, index=False)
+    
+
+    writer.close()
+
+
+def style_sub_sheets(excel_output_filename):
+    getting_to_the_right_dir("reports")
+    # Construct the path to the subfolder
+
+    wb = openpyxl.load_workbook(excel_output_filename)
+
+    # Define the border style (thick)
+    thick_border = Border(
+            top=Side(style='thick', color='000000'),
+            left=Side(style='thin', color='000000'),
+            right=Side(style='thin', color='000000'),
+            bottom=Side(style='thin', color='000000')
+            )
+    thin_border_format = Border(
+            left=Side(style='thin', color='000000'),
+            right=Side(style='thin', color='000000'),
+            top=Side(style='thin', color='000000'),
+            bottom=Side(style='thin', color='000000')
+        )
+
+    
+    # Define the fill color for the header row (e.g., light gray)
+    header_fill = PatternFill(start_color="D3D3D3", end_color="D3D3D3", fill_type="solid")
+    centered_text_format = Alignment(horizontal='center', vertical='center')
+
+    # Get a list of all sheet names in the workbook
+    sheet_names = wb.sheetnames
+
+    # Iterate through all the sheets
+    for sheet_name in sheet_names:
+        sheet = wb[f'{sheet_name}']
+
+        # Apply bold border to all cells
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.border = thin_border_format
+                cell.alignment = centered_text_format
+
+        # Iterate through the rows and add borders between different Team sections
+        previous_team = None
+        for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=2, max_col=sheet.max_column):
+            current_team = row[0].value
+            if current_team != previous_team:
+                for cell in row:
+                    cell.border = thick_border
+                previous_team = current_team
+        
+        # Apply thin borders to the entire header row (row 1)
+        for cell in sheet[1]:
+            cell.border = thin_border_format
+            cell.fill = header_fill
+        
+
+    # Define the border style (thick)
+    thick_border = Border(top=Side(style='thick'))
+
+            # Save the modified workbook
+    wb.save(excel_output_filename)
+    print("Sub sheets styls applied")
 
 
 # Call the main function when the script is executed
