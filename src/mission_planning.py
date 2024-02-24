@@ -34,7 +34,7 @@ def main():
         Main logic of the script using parsed arguments.
         """
         # Input file names
-        jira_data_filename = 'jira-missions-yearly.xlsx'
+        jira_data_filename = 'jira-missions-yearly1.xlsx'
         planning_data_filename = 'yearly-company-budget.xlsx'
 
         parser = setup_arg_parser()
@@ -389,7 +389,7 @@ def creating_company_column(budget_column):
             res.append(company_codes_dict[code])
         else:
             # If not found, you can handle this case as needed
-            res.append(-1)  # Or another suitable value
+            res.append("-1")  # Or another suitable value
 
     return res
 
@@ -797,7 +797,6 @@ def adding_months_to_output(excel_output_filename, jira_filename, company_name):
             # Add the DataFrame to a new sheet in the Excel file
             df = df.sort_values(['Custom field (Budget)', 'Team Name'], ascending = [True, True])
             df.to_excel(writer, sheet_name=f'{month_name}', index=False)
-            print(df)
 
     writer.close()
 
@@ -864,6 +863,7 @@ def style_sub_sheets(excel_output_filename, month_num):
 
             # Save the modified workbook
     wb.save(excel_output_filename)
+    print("Sub sheets styls applied")
 
 
 ### excecution###
