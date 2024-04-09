@@ -34,7 +34,7 @@ def main():
         Main logic of the script using parsed arguments.
         """
         # Input file names
-        jira_data_filename = 'jira-missions-yearly1.xlsx'
+        jira_data_filename = 'v1-yearly-jira2.csv'
         planning_data_filename = 'yearly-company-budget.xlsx'
 
         parser = setup_arg_parser()
@@ -43,6 +43,7 @@ def main():
         args = parser.parse_args()
 
         df = full_dataframe(jira_data_filename, planning_data_filename)
+        print(df)
 
         # Check which report type was selected and perform corresponding action
         if args.full_report:
@@ -97,17 +98,17 @@ def main():
         print(f"An exception occurred. Details saved in {filename}")
 
 
-    except Exception as e:
-        # Handle other exceptions here
-        filename = "exception_report.txt"
-        getting_to_the_right_dir("reports")
-        with open(filename, "a") as file:
-            file.write("Exception occurred in main() function:\n")
-            file.write(str(e) + "\n")
-            file.write("Stack Trace:\n")
-            file.write(traceback.format_exc() + "\n")
+    # except Exception as e:
+    #     # Handle other exceptions here
+    #     filename = "exception_report.txt"
+    #     getting_to_the_right_dir("reports")
+    #     with open(filename, "a") as file:
+    #         file.write("Exception occurred in main() function:\n")
+    #         file.write(str(e) + "\n")
+    #         file.write("Stack Trace:\n")
+    #         file.write(traceback.format_exc() + "\n")
         
-        print(f"An exception occurred. Details saved in {filename}")
+    #     print(f"An exception occurred. Details saved in {filename}")
 
 
 def getting_to_the_right_dir(dir_name):
@@ -182,14 +183,16 @@ def full_dataframe(jira_data_filename, planning_data_filename):
     # Read the Excel file into a DataFrame
     df = read_excel_file(jira_data_filename)
     
+    
     # Group the data by months
     grouped_data_by_months = divide_by_months(df)
+    print(grouped_data_by_months)
     
     # Initialize a list to store monthly data
     yearly_data = []
     
     # Get the number of months and iterate through them
-    last_month = grouped_data_by_months[1] + 1
+    last_month = grouped_data_by_months[1]
     for num in range(1, last_month):
         # Get the monthly data and append it to the yearly_data list
         df2 = actual_effort_utilization_monthly(grouped_data_by_months[0], num)
@@ -218,17 +221,16 @@ def read_excel_file(filename):
         os.chdir(dir)
 
         # Attempt to read the Excel file into a DataFrame
-        df = pd.read_excel(filename)
+        df = pd.read_csv(filename)
 
         # Convert 'Time Spent' from seconds to days
         df['Time Spent (Days)'] = df['Time Spent'] / 3600 / 8  # Convert seconds to days (8-hour workdays)
 
         # Extract the desired columns by their names
-        # Assuming that the Excel file contains columns named 'Time Spent,' 'Sprint,' and 'Assignee'
         time_spent = df['Time Spent (Days)']    
         sprint = df['Sprint']         
         assignee = df['Assignee']
-        budget  = df['Custom field (Budget)']
+        budget  = df['Custom field (Budget)'].fillna('P0000')
         company_name = creating_company_column(budget)
         team_name = creating_team_column(assignee)
         issue_key = df['Issue key']
@@ -245,6 +247,7 @@ def read_excel_file(filename):
             'Issue id' : issue_id,
             'Issue_key' : issue_key,
         })
+
         return new_df
 
     except Exception as e:
@@ -259,7 +262,7 @@ def divide_by_months(df):
     # Create a new column 'Month' to store the month from the 'Date' column
     df['Month'] = df['Date'].dt.month
     # Assign a custom month value to records from December 2022
-    df.loc[((df['Month'] == 12) & (df['Date'].dt.year == 2022)) | ((df['Month'] == 11) & (df['Date'].dt.year == 2022)), 'Month'] = 1  # Change November & December 2022 to January 2023
+    df.loc[((df['Month'] == 10) & (df['Date'].dt.year == 2023)) | ((df['Month'] == 12) & (df['Date'].dt.year == 2023)) | ((df['Month'] == 11) & (df['Date'].dt.year == 2023)), 'Month'] = 1  # Change November & December 2022 to January 2023
     # Group the data by 'Month'
     grouped_data = dict(tuple(df.groupby('Month')))    # Perform aggregation or analysis on the grouped data, for example, calculate the mean
      # Find the number of the last month
@@ -377,12 +380,14 @@ def creating_company_column(budget_column):
 
     # Desired new list for dataframe
     res = []
+    i = 0
 
     # conditioning
     for item in budget_column:
         # Split the string by '-' and strip any whitespace
         parts = item.split('-')
         code = parts[0].strip()
+        i += 1
 
         # Check if the code exists in the comparison list
         if code in company_codes_dict:

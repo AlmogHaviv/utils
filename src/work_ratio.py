@@ -20,7 +20,7 @@ import zipfile
 
 ## global variabels ###
 
-file_name = "v1-yearly-jira.csv"
+file_name = "v1-yearly-jira2.csv"
 worker_file = "worker-names.csv"
 
 ### parsers ###
@@ -29,7 +29,7 @@ def setup_arg_parser():
     Set up the argument parser.
     """
     parser = argparse.ArgumentParser(description='parse for type of report')
-    parser.add_argument('-m', '--monthly', action='store_true', help='If entered, return the last month report')
+    parser.add_argument('-m', '--monthly', type=int, help='Specify a particular month number (1-12)')
     parser.add_argument('-y', '--yearly', action='store_true', help='If entered, return the last year report')
     parser.add_argument('-p', '--product', action='store_true', help='If entered, return the product report')
     parser.add_argument('-s', '--sprint', action='store_true', help='If entered, return the last month sprint report')
@@ -51,8 +51,9 @@ def main():
 
         # Check which report type was selected and perform corresponding action
         if args.monthly:
-            print("Generating the last month report...")
-            parsing_report(args, True)
+            month_abbr = calendar.month_abbr[int(args.monthly)]
+            print(f"Generating the monthly {month_abbr} report...")
+            parsing_report(args, True, int(args.monthly))
             zip_filename = 'monthly-report-work-ratio.zip'
             folder_to_zip = '\monthly-report-work-ratio'
             
@@ -95,6 +96,7 @@ def main():
         zipping_files(zip_filename, folder_to_zip)
 
         print(f"An exception occurred. Details saved in {filename}")
+        print(str(e))
 
 
     except Exception as e:
@@ -111,28 +113,30 @@ def main():
         zipping_files(zip_filename, folder_to_zip)
         
         print(f"An exception occurred. Details saved in {filename}")
+        print(str(e))
 
 
-def parsing_report(args, bol):
+def parsing_report(args, bol, month_number):
     if args.product:
         print("Generating the product report...")
-        pie_chart_by_product(file_name, worker_file, bol)
+        pie_chart_by_product(file_name, worker_file, bol, month_number)
 
     elif args.sprint:
         print("Generating the last month sprint report...")
-        pie_chart_by_sprint(file_name, worker_file, bol)
+        pie_chart_by_sprint(file_name, worker_file, bol, month_number)
 
     elif args.team:
         print("Generating the teams report...")
-        pie_chart_by_team(file_name, worker_file, bol)
+        pie_chart_by_team(file_name, worker_file, bol, month_number)
 
     elif args.all:
         print("Generating the product report...")
-        pie_chart_by_product(file_name, worker_file, bol)
+        pie_chart_by_product(file_name, worker_file, bol, month_number)
         print("Generating the last month sprint report...")
-        pie_chart_by_sprint(file_name, worker_file, bol)
+        pie_chart_by_sprint(file_name, worker_file, bol, month_number)
         print("Generating the teams report...")
-        pie_chart_by_team(file_name, worker_file, bol)
+        pie_chart_by_team(file_name, worker_file, bol, month_number)
+
     else:
         print("Please specify which report you want: product, team, or sprint")
         getting_to_the_right_dir("reports")
@@ -195,7 +199,7 @@ def worker_teams(worker_path, column_name):
     return df[column_name].tolist()
 
 
-def creating_dataframe(csv_file_path, worker_path, monthly):
+def creating_dataframe(csv_file_path, worker_path, monthly, month_number):
     getting_to_the_right_dir('data')
     # List of columns you want to select from the CSV file
     columns_to_select = ['Assignee', 'Work Ratio', 'Custom field (Product)', 'Issue key', 'Sprint', 'Issue id']
@@ -206,7 +210,7 @@ def creating_dataframe(csv_file_path, worker_path, monthly):
     # Filter the DataFrame to exclude rows with names in the 'names_to_remove' list
     df_filtered = df[~df['Assignee'].isin(names_to_remove)]
     # Convert 'Work Ratio' from percentage strings to float values
-    df_filtered['Work Ratio'] = df_filtered['Work Ratio'].str.rstrip('%').astype(float) / 100
+    df_filtered['Work Ratio'] = pd.to_numeric(df_filtered['Work Ratio'].str.rstrip('%'), errors='coerce') / 100
     # Create a new column 'Number for Ratio' based on 'Work Ratio' values
     conditions = [
         (df_filtered['Work Ratio'].isna()),  # Condition for empty cells
@@ -226,12 +230,11 @@ def creating_dataframe(csv_file_path, worker_path, monthly):
         # Create a new column 'Month' to store the month from the 'Date' column
         df_filtered['Month'] = df_filtered['Date'].dt.month
         # Assign a custom month value to records from December 2022
-        df_filtered.loc[((df_filtered['Month'] == 12) & (df_filtered['Date'].dt.year == last_year)) | ((df_filtered['Month'] == 11) & (df_filtered['Date'].dt.year == last_year)), 'Month'] = 1  # Change November & December 2022 to January 2023
+        df_filtered.loc[((df_filtered['Month'] == 12) & (df_filtered['Date'].dt.year == last_year)) | ((df_filtered['Month'] == 11) & (df_filtered['Date'].dt.year == last_year)), 'Month'] = 1  # Change November & December to January
         # Group the data by 'Month'
         grouped_data = dict(tuple(df_filtered.groupby('Month')))    # Perform aggregation or analysis on the grouped data, for example, calculate the mean
-        # Find the number of the last month
-        last_month = df_filtered['Month'].max()
-        df_filtered = grouped_data[last_month]
+        # extracting the neccesery month
+        df_filtered = grouped_data[month_number]
 
     return df_filtered
 
@@ -321,8 +324,8 @@ def pie_chart_data(title, labels, sizes, monthly):
 
 
 #  creates pie chart for  full sprint
-def pie_chart_by_sprint(file_name, worker_path, monthly):
-    df = creating_dataframe(file_name, worker_path, monthly)
+def pie_chart_by_sprint(file_name, worker_path, monthly, month_number):
+    df = creating_dataframe(file_name, worker_path, monthly, month_number)
     full_data_for_sprint = data_for_sprint_visualition(df, monthly)
     file_path = pie_chart_data(full_data_for_sprint[0], full_data_for_sprint[1], full_data_for_sprint[2], monthly)
     output_file_path = os.path.join(file_path, f'{full_data_for_sprint[0]}.xlsx')
@@ -331,8 +334,8 @@ def pie_chart_by_sprint(file_name, worker_path, monthly):
 
 
 #creates the pie chart for team
-def pie_chart_by_team(file_name, worker_path, monthly):
-    df = creating_dataframe(file_name, worker_path, monthly)
+def pie_chart_by_team(file_name, worker_path, monthly, month_number):
+    df = creating_dataframe(file_name, worker_path, monthly, month_number)
     teams = [("Bi", worker_teams(worker_path, "Bi")), ("Algo", worker_teams(worker_path, "Algo")), ("Dev", worker_teams(worker_path, "Dev"))]
     for team_name, team_list in teams:
         filtered_df = df[df['Assignee'].isin(team_list)]
@@ -345,8 +348,8 @@ def pie_chart_by_team(file_name, worker_path, monthly):
 
 
 #creates the pie chart for product
-def pie_chart_by_product(file_name, worker_path, monthly):
-    df = creating_dataframe(file_name, worker_path, monthly)
+def pie_chart_by_product(file_name, worker_path, monthly, month_number):
+    df = creating_dataframe(file_name, worker_path, monthly, month_number)
     grouped = df.groupby("Custom field (Product)")
     for product, group_df in grouped:
         data_for_chart = data_for_team_visualizion(group_df, product)
@@ -355,7 +358,7 @@ def pie_chart_by_product(file_name, worker_path, monthly):
         filter_and_export_work_ratio(group_df, output_file_path)
         print(f'excel file: {data_for_chart[0]}.xlsx was created')
 
-            
+
 ## excel creator ##
 def filter_and_export_work_ratio(dataframe, name):
     # Create a new Excel writer object
