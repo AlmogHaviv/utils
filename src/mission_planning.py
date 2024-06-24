@@ -15,7 +15,7 @@ import argparse
 import traceback
 
 
-### parsers ###
+# parsers ###
 def setup_arg_parser():
     """
     Set up the argument parser.
@@ -34,7 +34,7 @@ def main():
         Main logic of the script using parsed arguments.
         """
         # Input file names
-        jira_data_filename = 'v1-yearly-jira2.csv'
+        jira_data_filename = 'v1-yearly-jira4.csv'
         planning_data_filename = 'yearly-company-budget.xlsx'
 
         parser = setup_arg_parser()
@@ -43,7 +43,6 @@ def main():
         args = parser.parse_args()
 
         df = full_dataframe(jira_data_filename, planning_data_filename)
-        print(df)
 
         # Check which report type was selected and perform corresponding action
         if args.full_report:
@@ -54,7 +53,7 @@ def main():
             adding_months_to_output(output_filename, jira_data_filename, None)
             
         elif args.yearly_report:
-            print("Generating the yearly summert report...")
+            print("Generating the yearly summery report...")
             selected_columns = ['Total Planned - Yearly', 'Total Time Spent - Yearly', 'Total Difference - Yearly']
             output_filename = 'yearly-data-planning-summery.xlsx'
             col_needed = extract_columns(df, selected_columns)
@@ -89,14 +88,13 @@ def main():
         filename = "exception_report.txt"
         with open(filename, "a") as file:
             file.write("Exception occurred in work_ratio.py:\n")
-            file.write("You have letters that are not in english in the excel file you have inputed in one of the following columns:\n")
+            file.write("You have letters that are not in english in the excel file you have inputted in one of the following columns:\n")
             file.write("Assignee,  Custom field (Budget), Issue key, Sprint, Time Spent (Days), Issue id\n")
-            file.write("It is probably on Sprint column, please check that the dates are formated like this: 01/01/2023\n")
+            file.write("It is probably on Sprint column, please check that the dates are formatted like this: 01/01/2023\n")
             file.write("For the developer this is the exception:\n")
             file.write("Thank You\n")
 
         print(f"An exception occurred. Details saved in {filename}")
-
 
     # except Exception as e:
     #     # Handle other exceptions here
@@ -115,13 +113,13 @@ def getting_to_the_right_dir(dir_name):
     # gives the path of demo.py
     path = os.path.realpath(__file__)
     # gives the directory where the data exists
-    dir = os.path.dirname(path)
+    dirc = os.path.dirname(path)
   
-     #replaces folder names 
-    dir = dir.replace('src', dir_name)
+    # Replaces folder names
+    dirc = dirc.replace('src', dir_name)
   
     # changes the current directory to data 
-    os.chdir(dir)
+    os.chdir(dirc)
 
 
 def filter_by_company_name(df, company_name):
@@ -182,17 +180,16 @@ def full_dataframe(jira_data_filename, planning_data_filename):
     
     # Read the Excel file into a DataFrame
     df = read_excel_file(jira_data_filename)
-    
-    
+
     # Group the data by months
     grouped_data_by_months = divide_by_months(df)
-    print(grouped_data_by_months)
+    # print(grouped_data_by_months)
     
     # Initialize a list to store monthly data
     yearly_data = []
     
     # Get the number of months and iterate through them
-    last_month = grouped_data_by_months[1]
+    last_month = grouped_data_by_months[1] + 1
     for num in range(1, last_month):
         # Get the monthly data and append it to the yearly_data list
         df2 = actual_effort_utilization_monthly(grouped_data_by_months[0], num)
@@ -212,13 +209,13 @@ def read_excel_file(filename):
         path = os.path.realpath(__file__)
   
         # gives the directory where the data exists
-        dir = os.path.dirname(path)
+        dirc = os.path.dirname(path)
   
-        #replaces folder names 
-        dir = dir.replace('src', 'data')
+        # replaces folder names
+        dirc = dirc.replace('src', 'data')
   
         # changes the current directory to data 
-        os.chdir(dir)
+        os.chdir(dirc)
 
         # Attempt to read the Excel file into a DataFrame
         df = pd.read_csv(filename)
@@ -230,7 +227,7 @@ def read_excel_file(filename):
         time_spent = df['Time Spent (Days)']    
         sprint = df['Sprint']         
         assignee = df['Assignee']
-        budget  = df['Custom field (Budget)'].fillna('P0000')
+        budget = df['Custom field (Budget)'].fillna('P0000')
         company_name = creating_company_column(budget)
         team_name = creating_team_column(assignee)
         issue_key = df['Issue key']
@@ -242,30 +239,32 @@ def read_excel_file(filename):
             'Sprint': sprint,
             'Assignee': assignee,
             'Custom field (Budget)': budget,
-            'Company Name' : company_name,
-            'Team Name' : team_name,
-            'Issue id' : issue_id,
-            'Issue_key' : issue_key,
+            'Company Name': company_name,
+            'Team Name': team_name,
+            'Issue id': issue_id,
+            'Issue_key': issue_key,
         })
 
+        print(new_df)
         return new_df
 
     except Exception as e:
         # Return None if there's an error while reading the file
+        print(e)
         return None
     
 
 # adds to the dataframe the monthly column
 def divide_by_months(df):
     # Convert the 'Date' column to datetime
-    df['Date'] = pd.to_datetime(df['Sprint'])
+    df['Date'] = pd.to_datetime(df['Sprint'], format='%d/%m/%Y')
     # Create a new column 'Month' to store the month from the 'Date' column
     df['Month'] = df['Date'].dt.month
     # Assign a custom month value to records from December 2022
     df.loc[((df['Month'] == 10) & (df['Date'].dt.year == 2023)) | ((df['Month'] == 12) & (df['Date'].dt.year == 2023)) | ((df['Month'] == 11) & (df['Date'].dt.year == 2023)), 'Month'] = 1  # Change November & December 2022 to January 2023
     # Group the data by 'Month'
     grouped_data = dict(tuple(df.groupby('Month')))    # Perform aggregation or analysis on the grouped data, for example, calculate the mean
-     # Find the number of the last month
+    # Find the number of the last month
     last_month = df['Month'].max()
     return grouped_data, last_month
 
@@ -308,19 +307,19 @@ def dividing_by_team(grouped_data, month_number):
         return None
 
 
-# the func using in read_excel_file to creates the coulmn of team name
+# the func using in read_excel_file to create the column of team name
 def creating_team_column(assignee_column):
     # gives the path of demo.py
     path = os.path.realpath(__file__)
   
     # gives the directory where the data exists
-    dir = os.path.dirname(path)
+    dirc = os.path.dirname(path)
     
-    #replaces folder names 
-    dir = dir.replace('src', 'config')
+    # replaces folder names
+    dirc = dirc.replace('src', 'config')
   
     # changes the current directory to data 
-    os.chdir(dir)
+    os.chdir(dirc)
 
     # creating company column
     df = pd.read_csv("worker-names.csv")
@@ -333,8 +332,6 @@ def creating_team_column(assignee_column):
 
     # creating a list
     res = []
-
-
     for name in assignee_column:
         # Remove leading and trailing whitespace from the name
         name = name.strip()
@@ -357,13 +354,13 @@ def creating_company_column(budget_column):
     path = os.path.realpath(__file__)
   
     # gives the directory where the data exists
-    dir = os.path.dirname(path)
+    dirc = os.path.dirname(path)
     
-    #replaces folder names 
-    dir = dir.replace('src', 'config')
+    # replaces folder names
+    dirc = dirc.replace('src', 'config')
   
     # changes the current directory to data 
-    os.chdir(dir)
+    os.chdir(dirc)
     
     # creating company column
     df = pd.read_excel("budget-naming.xlsx")
@@ -425,10 +422,10 @@ def actual_effort_utilization_monthly(grouped_data, month_number):
 
     result_melted.rename(columns={'Time Spent (Days)': f'{month_name} Time Spent'}, inplace=True)
     
-    return (result_melted, f'{month_name} Time Spent')
+    return result_melted, f'{month_name} Time Spent'
 
 
-# Creates he final dataframe for the  excel sheet
+# Creates the final dataframe for the Excel sheet
 def merge_dataframes(df1, df2, column_names1, column_names2):
     # Merge the two DataFrames using an outer join on the specified key columns
     merged_df = pd.merge(df1, df2, on=['Company Name', 'Team Name'], how='outer')
@@ -484,7 +481,6 @@ def fully_time_spent_dataframe(list_of_months_data):
     # Calculate the sum of difference columns for each row
     difference_columns = filtered_df.columns[filtered_df.columns.str.contains(' Difference')]
     filtered_df['Total Difference'] = filtered_df[difference_columns].sum(axis=1)
-    
 
     # Create the new columns for yearly
     filtered_df['Total Planned - Yearly'] = filtered_df['January Planned'] * 12
@@ -504,13 +500,13 @@ def transform_yearly_to_monthly_and_divide_by_12(filename):
     path = os.path.realpath(__file__)
   
     # gives the directory where the data exists
-    dir = os.path.dirname(path)
+    dirc = os.path.dirname(path)
     
-    #replaces folder names 
-    dir = dir.replace('src', 'config')
+    # replaces folder names
+    dirc = dirc.replace('src', 'config')
   
     # changes the current directory to data 
-    os.chdir(dir)
+    os.chdir(dirc)
 
     df = pd.read_excel(filename)
 
@@ -529,7 +525,7 @@ def transform_yearly_to_monthly_and_divide_by_12(filename):
     # Fill NaN values with 0
     df.fillna(0, inplace=True)
 
-     # Melt the DataFrame to transform columns to rows
+    # Melt the DataFrame to transform columns to rows
     df = pd.melt(df, id_vars=['Company Name'], var_name='Team Name', value_name='Monthly Planned')
 
     # Sort the DataFrame by 'Company Name' for better readability
@@ -562,28 +558,28 @@ def export_dataframe_to_excel_with_merged(df, output_filename):
     path = os.path.realpath(__file__)
   
     # gives the directory where the data exists
-    dir = os.path.dirname(path)
+    dirc = os.path.dirname(path)
   
-    #replaces folder names 
-    dir = dir.replace('src', 'reports')
+    # replaces folder names
+    dirc = dirc.replace('src', 'reports')
   
     # changes the current directory to data 
-    os.chdir(dir)
+    os.chdir(dirc)
 
     # Get the current working directory as the main folder
     main_folder = os.getcwd()
 
-    # Define the name of the subfolder you want to enter
+    # Define the name of the sub-folder you want to enter
     subfolder_name = "yearly-report-excel"
 
-    # Create the path to the subfolder
+    # Create the path to the sub-folder
     subfolder_path = os.path.join(main_folder, subfolder_name)
 
-    # Check if the subfolder exists; if not, create it
+    # Check if the sub-folder exists; if not, create it
     if not os.path.exists(subfolder_path):
         os.makedirs(subfolder_path)
 
-    # Now you can save files or outputs to the subfolder
+    # Now you can save files or outputs to the sub-folder
     output_file_path = os.path.join(subfolder_path, output_filename)
 
     # Create a new Excel writer object
@@ -793,20 +789,19 @@ def adding_months_to_output(excel_output_filename, jira_filename, company_name):
         df = grouped_data_by_months[month]
         month_name = calendar.month_name[month]
 
-        if company_name != None:
+        if company_name is not None:
             filtered_df = df[df['Company Name'].str.contains(company_name)]
-            filtered_df = filtered_df.sort_values(['Custom field (Budget)', 'Team Name'], ascending = [True, True])
+            filtered_df = filtered_df.sort_values(['Custom field (Budget)', 'Team Name'], ascending=[True, True])
             # Add the DataFrame to a new sheet in the Excel file
             filtered_df.to_excel(writer, sheet_name=f'{month_name}', index=False)
         else:
             # Add the DataFrame to a new sheet in the Excel file
-            df = df.sort_values(['Custom field (Budget)', 'Team Name'], ascending = [True, True])
+            df = df.sort_values(['Custom field (Budget)', 'Team Name'], ascending=[True, True])
             df.to_excel(writer, sheet_name=f'{month_name}', index=False)
 
     writer.close()
 
     style_sub_sheets(excel_output_filename, month_num)
-
 
 
 def style_sub_sheets(excel_output_filename, month_num):
@@ -862,16 +857,15 @@ def style_sub_sheets(excel_output_filename, month_num):
             cell.border = thin_border_format
             cell.fill = header_fill
         
-
     # Define the border style (thick)
     thick_border = Border(top=Side(style='thick'))
 
-            # Save the modified workbook
+    # Save the modified workbook
     wb.save(excel_output_filename)
     print("Sub sheets styls applied")
 
 
-### excecution###
+# Execution ###
 if __name__ == "__main__":
     main()
     
