@@ -1,0 +1,9 @@
+Exception occurred in work_ratio.py:
+Please specify the type of report, use -h to know which types there are
+Thank You
+Exception occurred in work_ratio.py:
+Please specify the type of report, use -h to know which types there are
+Thank You
+Exception occurred in work_ratio.py:
+Please specify the type of report, use -h to know which types there are
+Thank You
