@@ -90,6 +90,8 @@ To set up the environment for these scripts, follow these steps:
 - numpy
 - argparse
 - datetime
+- re
+If updates needed, please weach out to the requierments.txt who automatically update itself.
 
 ## Configuration
 
