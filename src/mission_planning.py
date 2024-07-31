@@ -266,12 +266,22 @@ def read_excel_file(filename):
         # Attempt to read the Excel file into a DataFrame
         df = pd.read_csv(filename)
 
+        # Identify the Sprint columns
+        sprint_columns = [col for col in df.columns if 'Sprint' in col]
+
+        # Convert Sprint columns to datetime, ignoring errors
+        for col in sprint_columns:
+            df[col] = pd.to_datetime(df[col], errors='coerce')
+
+        # Determine the latest non-null date for each row in the Sprint columns
+        df['Latest Sprint Date'] = df[sprint_columns].max(axis=1)
+
         # Convert 'Time Spent' from seconds to days
         df['Time Spent (Days)'] = df['Time Spent'] / 3600 / 8  # Convert seconds to days (8-hour workdays)
 
         # Extract the desired columns by their names
         time_spent = df['Time Spent (Days)']    
-        sprint = df['Sprint']         
+        sprint = df["Latest Sprint Date"]
         assignee = df['Assignee']
         budget = df['Custom field (Budget)'].fillna('P0000')
         company_name = creating_company_column(budget)
