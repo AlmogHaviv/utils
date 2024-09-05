@@ -27,9 +27,9 @@ This project includes multiple Python scripts, each serving a specific purpose. 
 - `v1-yearly-jira.csv` (dynamic CSV file, updated for each run with yearly work ratio data from Jira)
 - To generate v1-yearly-jira.csv, you need to export yearly mission data from Jira. It's crucial to note that all the data should be in English. While exporting, please ensure that the following essential columns are included: 'Assignee', 'Work Ratio', 'Custom field (Product)', 'Issue key', 'Sprint', 'Issue id'. Please be aware that sometimes the 'Sprint' column may display dates in Hebrew.
 
-### 2. Script 2: mission_planning.py
+### 2. Script 2 + 3: mission_planning.py and BVA_cost.py
 
-- **Description**: Generates an Excel file displaying monthly planned, actual, and usage differences for BI, Algo, and Dev teams. Also includes yearly totals.
+- **Description**: Generates an Excel file displaying monthly planned, actual, and usage differences for BI, Algo, and Dev teams. Also includes yearly totals. the mission planning shows the results measured in days and the BVA_cost show the resilt measured by cost of the developers.
 
 - **Dependencies**: 
 - `worker-names.csv` (static CSV file, updated only when team member names change).
